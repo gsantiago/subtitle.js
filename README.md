@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
+
 # subtitle.js
 
 Parse and manipulate SRT (SubRip) format.

@@ -31,8 +31,6 @@ Subtitle.prototype.parse = function () {
   var end;
   var srt = this.srt.split('\n');
 
-  console.log('srt:', srt);
-
   srt.forEach(function (line) {
     line = line.toString();
 

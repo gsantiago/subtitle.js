@@ -2,6 +2,7 @@
  * Module Dependencies
 */
 var fs = require('fs');
+var join = require('path').join;
 var expect = require('chai').expect;
 var Subtitle = require('../subtitle');
 
@@ -17,23 +18,36 @@ describe('Parser SRT', function () {
       index: 1,
       start: '00:00:20,000',
       end: '00:00:24,400',
-      text: 'Devido ao aumento dramático\nno número de crimes em certos bairros'
+      text: 'This is the first line\nand this is the second one'
     },
     {
       index: 2,
       start: '00:00:24,600',
       end: '00:00:27,800',
-      text: 'o governo está implantando nova política...'
+      text: 'Hello, World!'
     }
   ];
 
-  beforeEach(function () {
-    srt = fs.readFileSync(__dirname + '/sample.srt', 'utf8');
-    subtitle = new Subtitle(srt);
-  });
+  describe('Small SRT', function () {
+    beforeEach(function () {
+      srt = fs.readFileSync(join(__dirname, 'fixtures/sample.srt'), 'utf8');
+      subtitle = new Subtitle(srt);
+    });
 
-  it('should return an object with the SRT parsed', function () {
-    expect(subtitle.parse()).deep.equal(parsedSrt);
+    it('should return an object with the SRT parsed', function () {
+      expect(subtitle.parse()).deep.equal(parsedSrt);
+    });
+  })
+
+  describe('Big SRT', function () {
+    beforeEach(function () {
+      srt = fs.readFileSync(join(__dirname, 'fixtures/big.srt'), 'utf8');
+      subtitle = new Subtitle(srt);
+    });
+
+    it('should parse a big SRT without errors', function () {
+      var bigSrt = subtitle.parse();
+    });
   });
 
 });

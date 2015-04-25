@@ -1,8 +1,0 @@
-1
-00:00:20,000 --> 00:00:24,400
-Devido ao aumento dramático
-no número de crimes em certos bairros
-
-2
-00:00:24,600 --> 00:00:27,800
-o governo está implantando nova política...

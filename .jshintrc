@@ -2,5 +2,6 @@
   "node": true,
   "undef": true,
   "curly": true,
-  "eqeqeq": true
+  "eqeqeq": true,
+  "laxbreak": true
 }

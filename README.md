@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
 [![Code Climate](https://codeclimate.com/github/gsantiago/subtitle.js/badges/gpa.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
 [![Test Coverage](https://codeclimate.com/github/gsantiago/subtitle.js/badges/coverage.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
+[![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
 
 Parse and manipulate SRT (SubRip) format.
 

@@ -49,7 +49,7 @@ It's gonna return an array like this:
 * [x] Basic SRT parser
 * [ ] Basic manipulation
 * [ ] Stringfy
-* [ ] Time conversion
+* [x] Time conversion
 * [ ] Duration property
 * [ ] WebVTT support
 * [ ] Browser support (including for Browserify)

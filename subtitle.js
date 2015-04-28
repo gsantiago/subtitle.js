@@ -10,13 +10,13 @@
 
 /**
  * @constructor
- * @param {String} The SRT content to be parsed
+ * @param {String} Optional SRT content to be parsed
 */
 function Subtitle (srt) {
   this.subtitles = [];
 
   if (srt) {
-    this.srt = srt;
+    this.parse(srt);
   }
 }
 
@@ -24,14 +24,19 @@ function Subtitle (srt) {
 /**
  * SRT parser
 */
-Subtitle.prototype.parse = function () {
+Subtitle.prototype.parse = function (srt) {
   var subs = [];
   var index;
   var time;
   var text;
   var start;
   var end;
-  var srt = this.srt.split('\n');
+
+  if (!srt) {
+    throw new Error('No SRT to parse');
+  }
+
+  srt = srt.split('\n');
 
   srt.forEach(function (line) {
     line = line.toString();
@@ -74,7 +79,9 @@ Subtitle.prototype.parse = function () {
 
   });
 
-  return subs;
+  this.subtitles = subs;
+
+  return this;
 };
 
 

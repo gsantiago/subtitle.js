@@ -13,6 +13,8 @@
  * @param {String} The SRT content to be parsed
 */
 function Subtitle (srt) {
+  this.subtitles = [];
+
   if (srt) {
     this.srt = srt;
   }
@@ -73,6 +75,56 @@ Subtitle.prototype.parse = function () {
   });
 
   return subs;
+};
+
+
+/**
+ * Add a caption
+ * You have to pass an object containing the following data:
+ * start - The start time
+ * end - The end time
+ * text - The caption text
+ *
+ * The start and end time support two patterns:
+ * The SRT: '00:00:24,400'
+ * Or a positive integer representing milliseconds
+ *
+ * @public
+ * @param {Object} Caption data
+*/
+Subtitle.prototype.add = function (caption) {
+  if (!caption.start || !caption.end || !caption.text) {
+    throw new Error('Invalid caption data');
+  }
+
+  var start = caption.start;
+  var end = caption.end;
+  var text = caption.text;
+
+  if (/^\d+$/.test(start)) {
+    start = Subtitle.toSrtTime(start);
+  } else if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(start)) {
+    start = start;
+  } else {
+    throw new Error('Invalid caption time format');
+  }
+
+  if (/^\d+$/.test(end)) {
+    end = Subtitle.toSrtTime(end);
+  } else if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(end)) {
+    end = end;
+  } else {
+    throw new Error('Invalid caption time format');
+  }
+
+  this.subtitles.push({
+    index: this.subtitles.length + 1,
+    start: start,
+    end: end,
+    text: text
+  });
+
+  return this;
 };
 
 

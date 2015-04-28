@@ -17,9 +17,15 @@ Parse and manipulate SRT (SubRip) format.
 ```javascript
 var Subtitle = require('subtitle');
 
-var subtitle = new Subtitle('your srt here');
+var captions = new Subtitle();
 
-console.log(subtitle.parse());
+captions.parse('your srt here');
+
+console.log(captions.subtitles)
+
+
+
+console.log(subtitle.parse('your srt here));
 ```
 
 It's gonna return an array like this:

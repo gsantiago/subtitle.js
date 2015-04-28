@@ -23,9 +23,6 @@ captions.parse('your srt here');
 
 console.log(captions.subtitles)
 
-
-
-console.log(subtitle.parse('your srt here));
 ```
 
 It's gonna return an array like this:

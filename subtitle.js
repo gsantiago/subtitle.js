@@ -108,6 +108,9 @@ Subtitle.prototype.add = function (caption) {
   var end = caption.end;
   var text = caption.text;
 
+  // TODO:
+  // Refactoring the code below.
+  // There are too much repetition
   if (/^\d+$/.test(start)) {
     start = Subtitle.toSrtTime(start);
   } else if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(start)) {

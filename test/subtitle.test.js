@@ -6,6 +6,103 @@ var join = require('path').join;
 var expect = require('chai').expect;
 var Subtitle = require('../subtitle');
 
+
+/**
+ * Add new captions
+*/
+describe('Add captions', function () {
+
+  var sub;
+
+  beforeEach(function () {
+    sub = new Subtitle();
+  });
+
+  it('should add a new caption', function () {
+    sub.add({
+      start: '00:02:11,031',
+      end: '00:02:14,979',
+      text: 'No. Everybody here is already dead.'
+    });
+
+    expect(sub.subtitles).deep.equal([
+      {
+        index: 1,
+        start: '00:02:11,031',
+        end: '00:02:14,979',
+        text: 'No. Everybody here is already dead.'
+      }
+    ]);
+
+  });
+
+
+  it('should add three captions', function () {
+    sub
+    .add({
+      start: '00:02:11,031',
+      end: '00:02:14,979',
+      text: 'No. Everybody here is already dead.'
+    })
+    .add({
+      start: '00:03:27,174',
+      end: '00:03:28,209',
+      text: 'These lawmakers...'
+    })
+    .add({
+      start: '00:04:52,259',
+      end: '00:04:54,261',
+      text: 'Lara, you have to ready the launch.'
+    });
+
+    expect(sub.subtitles).deep.equal([
+      {
+        index: 1,
+        start: '00:02:11,031',
+        end: '00:02:14,979',
+        text: 'No. Everybody here is already dead.'
+      },
+      {
+        index: 2,
+        start: '00:03:27,174',
+        end: '00:03:28,209',
+        text: 'These lawmakers...'
+      },
+      {
+        index: 3,
+        start: '00:04:52,259',
+        end: '00:04:54,261',
+        text: 'Lara, you have to ready the launch.'
+      }
+    ])
+  });
+
+  it('should accept caption with time in ms', function () {
+    var time1 = '00:02:22,542';
+    var time1ms = 120000 + 22000 + 542;
+
+    var time2 = '01:51:58,219';
+    var time2ms = 3600000 + 3060000 + 58000 + 219;
+
+    sub.add({
+      start: time1ms,
+      end: time2ms,
+      text: 'The world is about to come to an end.'
+    });
+
+    expect(sub.subtitles).deep.equal([
+      {
+        index: 1,
+        start: time1,
+        end: time2,
+        text: 'The world is about to come to an end.'
+      }
+    ]);
+  });
+
+});
+
+
 /**
  * Suit for parsing
 */

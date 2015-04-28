@@ -3,7 +3,7 @@
  * Parse and manipulate SRT (SubRip)
  * https://github.com/gsantiago/subtitle.js
  *
- * @version 0.0.2
+ * @version 0.0.3
  * @author Guilherme Santiago
 */
 

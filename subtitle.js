@@ -104,34 +104,28 @@ Subtitle.prototype.add = function (caption) {
     throw new Error('Invalid caption data');
   }
 
-  var start = caption.start;
-  var end = caption.end;
-  var text = caption.text;
+  for (var prop in caption) {
+    if (!caption.hasOwnProperty(prop) || prop === 'text') {
+      continue;
+    }
 
-  // TODO:
-  // Refactoring the code below.
-  // There are too much repetition
-  if (/^\d+$/.test(start)) {
-    start = Subtitle.toSrtTime(start);
-  } else if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(start)) {
-    start = start;
-  } else {
-    throw new Error('Invalid caption time format');
-  }
-
-  if (/^\d+$/.test(end)) {
-    end = Subtitle.toSrtTime(end);
-  } else if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(end)) {
-    end = end;
-  } else {
-    throw new Error('Invalid caption time format');
+    if (prop === 'start' || prop === 'end') {
+      if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(caption[prop])) {
+        continue;
+      }
+      if (/^\d+$/.test(caption[prop])) {
+        caption[prop] = Subtitle.toSrtTime(caption[prop]);
+      } else {
+        throw new Error('Invalid caption time format');
+      }
+    }
   }
 
   this.subtitles.push({
     index: this.subtitles.length + 1,
-    start: start,
-    end: end,
-    text: text
+    start: caption.start,
+    end: caption.end,
+    text: caption.text
   });
 
   return this;

@@ -5,6 +5,7 @@ var fs = require('fs');
 var join = require('path').join;
 var expect = require('chai').expect;
 var Subtitle = require('../subtitle');
+var _ = require('underscore');
 
 
 /**
@@ -25,7 +26,7 @@ describe('Add captions', function () {
       text: 'No. Everybody here is already dead.'
     });
 
-    expect(sub.subtitles).deep.equal([
+    expect(sub.getSubtitles()).deep.equal([
       {
         index: 1,
         start: '00:02:11,031',
@@ -39,23 +40,23 @@ describe('Add captions', function () {
 
   it('should add three captions', function () {
     sub
-    .add({
+      .add({
       start: '00:02:11,031',
       end: '00:02:14,979',
       text: 'No. Everybody here is already dead.'
     })
-    .add({
+      .add({
       start: '00:03:27,174',
       end: '00:03:28,209',
       text: 'These lawmakers...'
     })
-    .add({
+      .add({
       start: '00:04:52,259',
       end: '00:04:54,261',
       text: 'Lara, you have to ready the launch.'
     });
 
-    expect(sub.subtitles).deep.equal([
+    expect(sub.getSubtitles()).deep.equal([
       {
         index: 1,
         start: '00:02:11,031',
@@ -90,7 +91,7 @@ describe('Add captions', function () {
       text: 'The world is about to come to an end.'
     });
 
-    expect(sub.subtitles).deep.equal([
+    expect(sub.getSubtitles()).deep.equal([
       {
         index: 1,
         start: time1,
@@ -125,6 +126,7 @@ describe('Parser SRT', function () {
     }
   ];
 
+
   describe('Small SRT', function () {
     beforeEach(function () {
       srt = fs.readFileSync(join(__dirname, 'fixtures/sample.srt'), 'utf8');
@@ -132,7 +134,17 @@ describe('Parser SRT', function () {
     });
 
     it('should return an object with the SRT parsed', function () {
-      expect(subtitle.subtitles).deep.equal(parsedSrt);
+      expect(subtitle.getSubtitles()).deep.equal(parsedSrt);
+    });
+
+    it('should return an object with the SRT parsed, with time in MS', function () {
+      var parsedSrtMS = _.map(parsedSrt, function (caption) {
+        caption.start = Subtitle.toMS(caption.start);
+        caption.end = Subtitle.toMS(caption.end);
+        return caption;
+      });
+
+      expect(subtitle.getSubtitles({timeFormat: 'ms'})).deep.equal(parsedSrtMS);
     });
   })
 
@@ -143,7 +155,7 @@ describe('Parser SRT', function () {
     });
 
     it('should parse a big SRT without errors', function () {
-      //subtitle.parse(srt);
+      subtitle.parse(srt);
     });
   });
 

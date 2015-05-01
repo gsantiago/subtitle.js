@@ -3,9 +3,15 @@
  * Parse and manipulate SRT (SubRip)
  * https://github.com/gsantiago/subtitle.js
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @author Guilherme Santiago
 */
+
+
+/**
+ * Dependencies
+*/
+var _ = require('underscore');
 
 
 /**
@@ -13,7 +19,7 @@
  * @param {String} Optional SRT content to be parsed
 */
 function Subtitle (srt) {
-  this.subtitles = [];
+  this._subtitles = [];
 
   if (srt) {
     this.parse(srt);
@@ -79,7 +85,7 @@ Subtitle.prototype.parse = function (srt) {
 
   });
 
-  this.subtitles = subs;
+  this._subtitles = subs;
 
   return this;
 };
@@ -121,8 +127,8 @@ Subtitle.prototype.add = function (caption) {
     }
   }
 
-  this.subtitles.push({
-    index: this.subtitles.length + 1,
+  this._subtitles.push({
+    index: this._subtitles.length + 1,
     start: caption.start,
     end: caption.end,
     text: caption.text
@@ -196,6 +202,33 @@ Subtitle.toSrtTime = function (time) {
   var srtTime = hours + ':' + minutes + ':' + seconds + ',' + ms;
 
   return srtTime;
+};
+
+
+/**
+ * Return the subtitles
+ *
+ * @param {Object} Options
+ * @returns {Array} Subtitles
+*/
+Subtitle.prototype.getSubtitles = function (options) {
+  var subtitles = this._subtitles;
+
+  var defaults = {
+    timeFormat: 'srt'
+  };
+
+  options = _.extendOwn(defaults, options);
+
+  if (options.timeFormat === 'ms') {
+    subtitles = _.map(subtitles, function (caption) {
+      caption.start = Subtitle.toMS(caption.start);
+      caption.end = Subtitle.toMS(caption.end);
+      return caption;
+    });
+  }
+
+  return subtitles;
 };
 
 

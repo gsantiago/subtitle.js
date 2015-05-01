@@ -53,7 +53,7 @@ It's gonna return an array like this:
 * [ ] Basic manipulation
 * [ ] Stringfy
 * [x] Time conversion
-* [ ] Duration property
+* [x] Duration property
 * [ ] WebVTT support
 * [ ] Browser support (including for Browserify)
 * [ ] Better docs

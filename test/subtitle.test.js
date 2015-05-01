@@ -26,11 +26,12 @@ describe('Add captions', function () {
       text: 'No. Everybody here is already dead.'
     });
 
-    expect(sub.getSubtitles()).deep.equal([
+    expect(sub.getSubtitles({duration: true})).deep.equal([
       {
         index: 1,
         start: '00:02:11,031',
         end: '00:02:14,979',
+        duration: 3948,
         text: 'No. Everybody here is already dead.'
       }
     ]);
@@ -116,12 +117,14 @@ describe('Parser SRT', function () {
       index: 1,
       start: '00:00:20,000',
       end: '00:00:24,400',
+      duration: 4400,
       text: 'This is the first line\nand this is the second one'
     },
     {
       index: 2,
       start: '00:00:24,600',
       end: '00:00:27,800',
+      duration: 3200,
       text: 'Hello, World!'
     }
   ];
@@ -133,8 +136,8 @@ describe('Parser SRT', function () {
       subtitle = new Subtitle(srt);
     });
 
-    it('should return an object with the SRT parsed', function () {
-      expect(subtitle.getSubtitles()).deep.equal(parsedSrt);
+    it('should return an object with the SRT parsed and duration property', function () {
+      expect(subtitle.getSubtitles({duration: true})).deep.equal(parsedSrt);
     });
 
     it('should return an object with the SRT parsed, with time in MS', function () {
@@ -144,7 +147,7 @@ describe('Parser SRT', function () {
         return caption;
       });
 
-      expect(subtitle.getSubtitles({timeFormat: 'ms'})).deep.equal(parsedSrtMS);
+      expect(subtitle.getSubtitles({timeFormat: 'ms', duration: true})).deep.equal(parsedSrtMS);
     });
   })
 

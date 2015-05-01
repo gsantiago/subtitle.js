@@ -21,7 +21,7 @@ var captions = new Subtitle();
 
 captions.parse('your srt here');
 
-console.log(captions.subtitles)
+console.log(captions.getSubtitles());
 
 ```
 

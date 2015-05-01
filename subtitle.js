@@ -72,6 +72,7 @@ Subtitle.prototype.parse = function (srt) {
         index: index,
         start: start,
         end: end,
+        duration: Subtitle.toMS(end) - Subtitle.toMS(start),
         text: text
       });
       index = time = start = end = text = null;
@@ -131,6 +132,7 @@ Subtitle.prototype.add = function (caption) {
     index: this._subtitles.length + 1,
     start: caption.start,
     end: caption.end,
+    duration: Subtitle.toMS(caption.end) - Subtitle.toMS(caption.start),
     text: caption.text
   });
 
@@ -215,7 +217,8 @@ Subtitle.prototype.getSubtitles = function (options) {
   var subtitles = this._subtitles;
 
   var defaults = {
-    timeFormat: 'srt'
+    timeFormat: 'srt',
+    duration: false
   };
 
   options = _.extendOwn(defaults, options);
@@ -224,6 +227,13 @@ Subtitle.prototype.getSubtitles = function (options) {
     subtitles = _.map(subtitles, function (caption) {
       caption.start = Subtitle.toMS(caption.start);
       caption.end = Subtitle.toMS(caption.end);
+      return caption;
+    });
+  }
+
+  if (!options.duration) {
+    subtitles = _.map(subtitles, function (caption) {
+      delete caption.duration;
       return caption;
     });
   }

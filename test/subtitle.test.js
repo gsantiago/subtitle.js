@@ -237,3 +237,36 @@ describe('Time Conversion', function () {
   });
 
 });
+
+/**
+ * Suit for Stringfy
+*/
+describe('Stringfy', function () {
+
+  var srt;
+  var subtitle;
+
+  beforeEach(function () {
+    srt = fs.readFileSync(join(__dirname, 'fixtures/sample.srt'), 'utf8');
+    subtitle = new Subtitle();
+  });
+
+  it('should return the stringfied version of the subtitles', function () {
+
+    subtitle.add({
+      start: '00:00:20,000',
+      end: '00:00:24,400',
+      text: 'This is the first line\nand this is the second one'
+    });
+
+    subtitle.add({
+      start: '00:00:24,600',
+      end: '00:00:27,800',
+      text: 'Hello, World!'
+    });
+
+    expect(subtitle.stringfy()).equal(srt);
+
+  });
+
+});

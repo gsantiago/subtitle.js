@@ -51,7 +51,7 @@ It's gonna return an array like this:
 ## Roadmap
 * [x] Basic SRT parser
 * [ ] Basic manipulation
-* [ ] Stringfy
+* [x] Stringfy
 * [x] Time conversion
 * [x] Duration property
 * [ ] WebVTT support

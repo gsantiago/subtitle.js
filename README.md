@@ -44,6 +44,37 @@ It's gonna return an array like this:
 ]
 ```
 
+You can also pass options to the `getSubtitles()` method.
+
+```javascript
+captions.getSubtitles({
+  duration: true, // Include the `duration` property
+  timeFormat: 'ms' // Set time format to milliseconds
+});
+```
+
+Here's the result:
+
+```javascript
+[
+  {
+    index: 1,
+    start: 20000,
+    end: 24400,
+    duration: 4400,
+    text: 'Bla Bla Bla Bla'
+  },
+  {
+    index: 2,
+    start: 24600,
+    end: 27800,
+    duration: 3200,
+    text: 'Bla Bla Bla Bla'
+  }
+]
+```
+
+
 ## Tests
 
 `npm test`

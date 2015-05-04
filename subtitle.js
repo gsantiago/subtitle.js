@@ -29,6 +29,9 @@ function Subtitle (srt) {
 
 /**
  * SRT parser
+ *
+ * @public
+ * @param {String} SRT
 */
 Subtitle.prototype.parse = function (srt) {
   var subs = [];

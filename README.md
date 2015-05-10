@@ -8,7 +8,7 @@
 
 Parse and manipulate SRT (SubRip) format.
 
-## Installing
+## Installation
 
 `npm install subtitle --save`
 
@@ -74,6 +74,40 @@ Here's the result:
 ]
 ```
 
+You can also add new captions.
+
+```javascript
+var captions = new Subtitle();
+
+captions.add({
+  start: '00:00:20,000',
+  end: '00:00:21,900',
+  text: 'Text here'
+});
+
+// You can use time in MS if you prefer
+captions.add({
+  start: 22000,
+  end: 22580,
+  text: 'Another text here...'
+});
+```
+
+And what about resync your captions?
+
+```javascript
+// Advance 1s
+captions.resync(1000);
+
+// Delay 500ms
+captions.resync(-500);
+```
+
+Then, you can stringfy your changes:
+
+```javascript
+captions.stringfy(); // Returns a valid SRT
+```
 
 ## Tests
 

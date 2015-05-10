@@ -198,7 +198,7 @@ Subtitle.toSrtTime = function (time) {
 
   var ms = time - ((hours * 3600000) + (minutes * 60000) + (seconds * 1000));
 
-  if (ms < 100 && ms > 10) {
+  if (ms < 100 && ms >= 10) {
     ms = '0' + ms;
   } else if (ms < 10) {
     ms = '00' + ms;

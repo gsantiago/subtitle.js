@@ -268,4 +268,37 @@ Subtitle.prototype.stringfy = function () {
   return buffer;
 };
 
+
+/**
+ * Resync the captions
+ * @param {Integer} Time in milleseconds
+*/
+Subtitle.prototype.resync = function (time) {
+  if (!/(-|\+)?\d+/.test(time.toString())) {
+    throw new Error('Invalid time: ' + time + '.Expected a valid integer');
+  }
+
+  time = parseInt(time, 10);
+
+  this._subtitles = _.map(this._subtitles, function (caption) {
+    var start = Subtitle.toMS(caption.start);
+    var end = Subtitle.toMS(caption.end);
+
+    start = start + time;
+    end = end + time;
+
+    caption.start = start < 0
+      ? Subtitle.toSrtTime(0)
+      : Subtitle.toSrtTime(start);
+
+    caption.end = end < 0
+      ? Subtitle.toSrtTime(0)
+      : Subtitle.toSrtTime(end);
+
+    return caption;
+  });
+
+  return this;
+};
+
 module.exports = Subtitle;

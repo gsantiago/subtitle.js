@@ -1,6 +1,6 @@
 {
   "name": "subtitle",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Parse and manipulate SRT (SubRip)",
   "repository": {
     "type": "git",

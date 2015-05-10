@@ -81,7 +81,7 @@ Here's the result:
 
 ## Roadmap
 * [x] Basic SRT parser
-* [ ] Basic manipulation
+* [x] Basic manipulation
 * [x] Stringfy
 * [x] Time conversion
 * [x] Duration property

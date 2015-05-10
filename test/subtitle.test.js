@@ -270,3 +270,67 @@ describe('Stringfy', function () {
   });
 
 });
+
+
+/**
+ * Suit for Resync method
+*/
+describe('Resync', function () {
+  var subtitle;
+
+  beforeEach(function () {
+    subtitle = new Subtitle();
+
+    subtitle.add({
+      start: '00:00:10,100',
+      end: '00:00:10,500',
+      text: 'Text'
+    });
+
+    subtitle.add({
+      start: '00:00:20,650',
+      end: '00:00:23,300',
+      text: 'Text'
+    });
+
+    subtitle.add({
+      start: '00:05:00,000',
+      end: '00:05:10,150',
+      text: 'Text'
+    });
+  });
+
+  it('should delay 100ms', function () {
+    subtitle.resync(-100);
+
+    expect(subtitle.getSubtitles()[0]).deep.equal({
+      index: 1,
+      start: '00:00:10,000',
+      end: '00:00:10,400',
+      text: 'Text'
+    });
+  });
+
+  it('should advance 1s', function () {
+    subtitle.resync(1000);
+
+    expect(subtitle.getSubtitles()[1]).deep.equal({
+      index: 2,
+      start: '00:00:21,650',
+      end: '00:00:24,300',
+      text: 'Text'
+    });
+  });
+
+  it('should delay two hours', function () {
+    subtitle.resync(2*60*1000*-1);
+
+    expect(subtitle.getSubtitles()[2]).deep.equal({
+      index: 3,
+      start: '00:03:00,000',
+      end: '00:03:10,150',
+      text: 'Text'
+    });
+  });
+
+});

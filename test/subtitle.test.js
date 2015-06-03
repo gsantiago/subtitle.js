@@ -248,6 +248,7 @@ describe('Stringfy', function () {
 
   beforeEach(function () {
     srt = fs.readFileSync(join(__dirname, 'fixtures/sample.srt'), 'utf8');
+    srt = srt.replace(/\r\n/g, '\n');
     subtitle = new Subtitle();
   });
 

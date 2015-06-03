@@ -3,7 +3,7 @@
  * Parse and manipulate SRT (SubRip)
  * https://github.com/gsantiago/subtitle.js
  *
- * @version 0.0.8
+ * @version 0.0.9
  * @author Guilherme Santiago
 */
 
@@ -45,7 +45,7 @@ Subtitle.prototype.parse = function (srt) {
     throw new Error('No SRT to parse');
   }
 
-  srt = srt.split('\n');
+  srt = srt.replace(/\r\n/g, '\n').split('\n');
 
   srt.forEach(function (line) {
     line = line.toString();

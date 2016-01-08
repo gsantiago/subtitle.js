@@ -17,7 +17,7 @@
     "captions",
     "subrip",
     "parser",
-    "stringfy"
+    "stringify"
   ],
   "author": "Guilherme Santiago",
   "license": "MIT",

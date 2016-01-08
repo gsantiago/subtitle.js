@@ -103,10 +103,10 @@ captions.resync(1000);
 captions.resync(-500);
 ```
 
-Then, you can stringfy your changes:
+Then, you can stringify your changes:
 
 ```javascript
-captions.stringfy(); // Returns a valid SRT
+captions.stringify(); // Returns a valid SRT
 ```
 
 ## Tests
@@ -116,7 +116,7 @@ captions.stringfy(); // Returns a valid SRT
 ## Roadmap
 * [x] Basic SRT parser
 * [x] Basic manipulation
-* [x] Stringfy
+* [x] Stringify
 * [x] Time conversion
 * [x] Duration property
 * [ ] WebVTT support

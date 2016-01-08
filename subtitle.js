@@ -249,7 +249,7 @@ Subtitle.prototype.getSubtitles = function (options) {
  * Returns the subtitles in SRT string
  * @returns {String} srt
 */
-Subtitle.prototype.stringfy = function () {
+Subtitle.prototype.stringify = function () {
   var self = this;
   var buffer = '';
 

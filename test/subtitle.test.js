@@ -239,9 +239,9 @@ describe('Time Conversion', function () {
 });
 
 /**
- * Suit for Stringfy
+ * Suit for Stringify
 */
-describe('Stringfy', function () {
+describe('Stringify', function () {
 
   var srt;
   var subtitle;
@@ -266,7 +266,7 @@ describe('Stringfy', function () {
       text: 'Hello, World!'
     });
 
-    expect(subtitle.stringfy()).equal(srt);
+    expect(subtitle.stringify()).equal(srt);
 
   });
 

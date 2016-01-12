@@ -44,7 +44,9 @@ Subtitle.prototype.parse = function (srt) {
   if (!srt) {
     throw new Error('No SRT to parse');
   }
-
+  
+  srt = srt.trim();
+  srt += '\n';
   srt = srt.replace(/\r\n/g, '\n').split('\n');
 
   srt.forEach(function (line) {

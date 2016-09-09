@@ -1,3 +1,5 @@
+'use strict'
+
 /*!
  * Subtitle.js
  * Parse and manipulate SRT (SubRip)
@@ -17,6 +19,8 @@ var extend = require('xtend/immutable')
  * @param {String} Optional SRT content to be parsed
 */
 function Subtitle (srt) {
+  if (!(this instanceof Subtitle)) return new Subtitle(srt)
+
   this._subtitles = []
 
   if (srt) {

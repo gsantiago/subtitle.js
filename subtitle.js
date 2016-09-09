@@ -11,8 +11,7 @@
 /**
  * Dependencies
 */
-var _ = require('underscore');
-
+var extend = require('xtend/immutable');
 
 /**
  * @constructor
@@ -44,7 +43,7 @@ Subtitle.prototype.parse = function (srt) {
   if (!srt) {
     throw new Error('No SRT to parse');
   }
-  
+
   srt = srt.trim();
   srt += '\n';
   srt = srt.replace(/\r\n/g, '\n').split('\n');
@@ -226,10 +225,10 @@ Subtitle.prototype.getSubtitles = function (options) {
     duration: false
   };
 
-  options = _.extendOwn(defaults, options);
+  options = extend(defaults, options);
 
   if (options.timeFormat === 'ms') {
-    subtitles = _.map(subtitles, function (caption) {
+    subtitles = subtitles.map(function (caption) {
       caption.start = Subtitle.toMS(caption.start);
       caption.end = Subtitle.toMS(caption.end);
       return caption;
@@ -237,7 +236,7 @@ Subtitle.prototype.getSubtitles = function (options) {
   }
 
   if (!options.duration) {
-    subtitles = _.map(subtitles, function (caption) {
+    subtitles = subtitles.map(function (caption) {
       delete caption.duration;
       return caption;
     });
@@ -282,7 +281,7 @@ Subtitle.prototype.resync = function (time) {
 
   time = parseInt(time, 10);
 
-  this._subtitles = _.map(this._subtitles, function (caption) {
+  this._subtitles = this._subtitles.map(function (caption) {
     var start = Subtitle.toMS(caption.start);
     var end = Subtitle.toMS(caption.end);
 

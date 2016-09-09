@@ -25,9 +25,10 @@
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "jshint": "^2.7.0",
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.4",
+    "underscore": "^1.8.3"
   },
   "dependencies": {
-    "underscore": "^1.8.3"
+    "xtend": "^4.0.1"
   }
 }

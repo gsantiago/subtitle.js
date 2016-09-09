@@ -7,24 +7,22 @@
  * @author Guilherme Santiago
 */
 
-
 /**
  * Dependencies
 */
-var extend = require('xtend/immutable');
+var extend = require('xtend/immutable')
 
 /**
  * @constructor
  * @param {String} Optional SRT content to be parsed
 */
 function Subtitle (srt) {
-  this._subtitles = [];
+  this._subtitles = []
 
   if (srt) {
-    this.parse(srt);
+    this.parse(srt)
   }
 }
-
 
 /**
  * SRT parser
@@ -33,40 +31,40 @@ function Subtitle (srt) {
  * @param {String} SRT
 */
 Subtitle.prototype.parse = function (srt) {
-  var subs = [];
-  var index;
-  var time;
-  var text;
-  var start;
-  var end;
+  var subs = []
+  var index
+  var time
+  var text
+  var start
+  var end
 
   if (!srt) {
-    throw new Error('No SRT to parse');
+    throw new Error('No SRT to parse')
   }
 
-  srt = srt.trim();
-  srt += '\n';
-  srt = srt.replace(/\r\n/g, '\n').split('\n');
+  srt = srt.trim()
+  srt += '\n'
+  srt = srt.replace(/\r\n/g, '\n').split('\n')
 
   srt.forEach(function (line) {
-    line = line.toString();
+    line = line.toString()
 
     // if we don't have an index, so we should expect an index
     if (!index) {
       if (/^\d+$/.test(line)) {
-        index = parseInt(line);
-        return;
+        index = parseInt(line)
+        return
       }
     }
 
     // now we have to check for the time
     if (!time) {
-      var match = line.match(/^(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})$/);
+      var match = line.match(/^(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})$/)
       if (match) {
-        start = match[1];
-        end = match[2];
-        time = true;
-        return;
+        start = match[1]
+        end = match[2]
+        time = true
+        return
       }
     }
 
@@ -78,23 +76,21 @@ Subtitle.prototype.parse = function (srt) {
         end: end,
         duration: Subtitle.toMS(end) - Subtitle.toMS(start),
         text: text
-      });
-      index = time = start = end = text = null;
+      })
+      index = time = start = end = text = null
     } else {
       if (!text) {
-        text = line;
+        text = line
       } else {
-        text += '\n' + line;
+        text += '\n' + line
       }
     }
+  })
 
-  });
+  this._subtitles = subs
 
-  this._subtitles = subs;
-
-  return this;
-};
-
+  return this
+}
 
 /**
  * Add a caption
@@ -112,22 +108,22 @@ Subtitle.prototype.parse = function (srt) {
 */
 Subtitle.prototype.add = function (caption) {
   if (!caption.start || !caption.end || !caption.text) {
-    throw new Error('Invalid caption data');
+    throw new Error('Invalid caption data')
   }
 
   for (var prop in caption) {
     if (!caption.hasOwnProperty(prop) || prop === 'text') {
-      continue;
+      continue
     }
 
     if (prop === 'start' || prop === 'end') {
       if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(caption[prop])) {
-        continue;
+        continue
       }
       if (/^\d+$/.test(caption[prop])) {
-        caption[prop] = Subtitle.toSrtTime(caption[prop]);
+        caption[prop] = Subtitle.toSrtTime(caption[prop])
       } else {
-        throw new Error('Invalid caption time format');
+        throw new Error('Invalid caption time format')
       }
     }
   }
@@ -138,11 +134,10 @@ Subtitle.prototype.add = function (caption) {
     end: caption.end,
     duration: Subtitle.toMS(caption.end) - Subtitle.toMS(caption.start),
     text: caption.text
-  });
+  })
 
-  return this;
-};
-
+  return this
+}
 
 /**
  * Convert the SRT time format to milliseconds
@@ -151,24 +146,23 @@ Subtitle.prototype.add = function (caption) {
  * @param {String} SRT time format
 */
 Subtitle.toMS = function (time) {
-  var match = time.match(/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/);
+  var match = time.match(/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/)
 
   if (!match) {
-    throw new Error('Invalid SRT time format');
+    throw new Error('Invalid SRT time format')
   }
 
-  var hours = parseInt(match[1], 10);
-  var minutes = parseInt(match[2], 10);
-  var seconds = parseInt(match[3], 10);
-  var milliseconds = parseInt(match[4], 10);
+  var hours = parseInt(match[1], 10)
+  var minutes = parseInt(match[2], 10)
+  var seconds = parseInt(match[3], 10)
+  var milliseconds = parseInt(match[4], 10)
 
-  hours *= 3600000;
-  minutes *= 60000;
-  seconds *= 1000;
+  hours *= 3600000
+  minutes *= 60000
+  seconds *= 1000
 
-  return hours + minutes + seconds + milliseconds;
-};
-
+  return hours + minutes + seconds + milliseconds
+}
 
 /**
  * Convert milliseconds to SRT time format
@@ -178,38 +172,37 @@ Subtitle.toMS = function (time) {
 */
 Subtitle.toSrtTime = function (time) {
   if (!/^\d+$/.test(time.toString())) {
-    throw new Error('Time should be an Integer value in milliseconds');
+    throw new Error('Time should be an Integer value in milliseconds')
   }
 
-  time = parseInt(time);
+  time = parseInt(time)
 
-  var date = new Date(0, 0, 0, 0, 0, 0, time);
+  var date = new Date(0, 0, 0, 0, 0, 0, time)
 
   var hours = date.getHours() < 10
     ? '0' + date.getHours()
-    : date.getHours();
+    : date.getHours()
 
   var minutes = date.getMinutes() < 10
     ? '0' + date.getMinutes()
-    : date.getMinutes();
+    : date.getMinutes()
 
   var seconds = date.getSeconds() < 10
     ? '0' + date.getSeconds()
-    : date.getSeconds();
+    : date.getSeconds()
 
-  var ms = time - ((hours * 3600000) + (minutes * 60000) + (seconds * 1000));
+  var ms = time - ((hours * 3600000) + (minutes * 60000) + (seconds * 1000))
 
   if (ms < 100 && ms >= 10) {
-    ms = '0' + ms;
+    ms = '0' + ms
   } else if (ms < 10) {
-    ms = '00' + ms;
+    ms = '00' + ms
   }
 
-  var srtTime = hours + ':' + minutes + ':' + seconds + ',' + ms;
+  var srtTime = hours + ':' + minutes + ':' + seconds + ',' + ms
 
-  return srtTime;
-};
-
+  return srtTime
+}
 
 /**
  * Return the subtitles
@@ -218,57 +211,54 @@ Subtitle.toSrtTime = function (time) {
  * @returns {Array} Subtitles
 */
 Subtitle.prototype.getSubtitles = function (options) {
-  var subtitles = this._subtitles;
+  var subtitles = this._subtitles
 
   var defaults = {
     timeFormat: 'srt',
     duration: false
-  };
+  }
 
-  options = extend(defaults, options);
+  options = extend(defaults, options)
 
   if (options.timeFormat === 'ms') {
     subtitles = subtitles.map(function (caption) {
-      caption.start = Subtitle.toMS(caption.start);
-      caption.end = Subtitle.toMS(caption.end);
-      return caption;
-    });
+      caption.start = Subtitle.toMS(caption.start)
+      caption.end = Subtitle.toMS(caption.end)
+      return caption
+    })
   }
 
   if (!options.duration) {
     subtitles = subtitles.map(function (caption) {
-      delete caption.duration;
-      return caption;
-    });
+      delete caption.duration
+      return caption
+    })
   }
 
-  return subtitles;
-};
-
+  return subtitles
+}
 
 /**
  * Returns the subtitles in SRT string
  * @returns {String} srt
 */
 Subtitle.prototype.stringify = function () {
-  var self = this;
-  var buffer = '';
+  var buffer = ''
 
   this._subtitles.forEach(function (caption, index) {
     if (index > 0) {
-      buffer += '\n';
+      buffer += '\n'
     }
-    buffer += caption.index;
-    buffer += '\n';
-    buffer += caption.start + ' --> ' + caption.end;
-    buffer += '\n';
-    buffer += caption.text;
-    buffer += '\n';
-  });
+    buffer += caption.index
+    buffer += '\n'
+    buffer += caption.start + ' --> ' + caption.end
+    buffer += '\n'
+    buffer += caption.text
+    buffer += '\n'
+  })
 
-  return buffer;
-};
-
+  return buffer
+}
 
 /**
  * Resync the captions
@@ -276,30 +266,30 @@ Subtitle.prototype.stringify = function () {
 */
 Subtitle.prototype.resync = function (time) {
   if (!/(-|\+)?\d+/.test(time.toString())) {
-    throw new Error('Invalid time: ' + time + '.Expected a valid integer');
+    throw new Error('Invalid time: ' + time + '.Expected a valid integer')
   }
 
-  time = parseInt(time, 10);
+  time = parseInt(time, 10)
 
   this._subtitles = this._subtitles.map(function (caption) {
-    var start = Subtitle.toMS(caption.start);
-    var end = Subtitle.toMS(caption.end);
+    var start = Subtitle.toMS(caption.start)
+    var end = Subtitle.toMS(caption.end)
 
-    start = start + time;
-    end = end + time;
+    start = start + time
+    end = end + time
 
     caption.start = start < 0
       ? Subtitle.toSrtTime(0)
-      : Subtitle.toSrtTime(start);
+      : Subtitle.toSrtTime(start)
 
     caption.end = end < 0
       ? Subtitle.toSrtTime(0)
-      : Subtitle.toSrtTime(end);
+      : Subtitle.toSrtTime(end)
 
-    return caption;
-  });
+    return caption
+  })
 
-  return this;
-};
+  return this
+}
 
-module.exports = Subtitle;
+module.exports = Subtitle

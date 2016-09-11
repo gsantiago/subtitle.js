@@ -124,5 +124,6 @@ captions.stringify(); // Returns a valid SRT
 * [x] Time conversion
 * [x] Duration property
 * [x] Browser support
+* [ ] Stream interface
 * [ ] WebVTT support
 * [ ] Better docs

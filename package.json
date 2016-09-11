@@ -9,7 +9,10 @@
   "main": "subtitle.js",
   "scripts": {
     "test": "standard subtitle.js && mocha",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha"
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
+    "browserify": "browserify subtitle.js -s Subtitle -o browser/subtitle.browser.js",
+    "uglify": "uglifyjs browser/subtitle.browser.js -c -o browser/subtitle.browser.min.js",
+    "build": "npm run browserify && npm run uglify"
   },
   "keywords": [
     "subtitle",
@@ -23,10 +26,12 @@
   "author": "Guilherme Santiago",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^13.1.0",
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "mocha": "^2.2.4",
     "standard": "^8.0.0",
+    "uglify-js": "^2.7.3",
     "underscore": "^1.8.3"
   },
   "dependencies": {

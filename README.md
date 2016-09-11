@@ -13,6 +13,9 @@ Parse and manipulate SRT (SubRip) format.
 
 `npm install subtitle --save`
 
+For browser usage, you can copy the script `subtitle.browser.js`
+from the `browser` folder.
+
 ## Usage
 
 ```javascript
@@ -120,6 +123,6 @@ captions.stringify(); // Returns a valid SRT
 * [x] Stringify
 * [x] Time conversion
 * [x] Duration property
+* [x] Browser support
 * [ ] WebVTT support
-* [ ] Browser support (including for Browserify)
 * [ ] Better docs

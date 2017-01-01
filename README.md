@@ -134,6 +134,7 @@ If you want a pretty HTML report, run the following:
 
 `npm run report`
 
+Your report will be available in the `coverage` folder.
 
 ## Roadmap
 * [x] Basic SRT parser

@@ -1,4 +1,3 @@
-
 # subtitle.js
 
 [![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
@@ -115,7 +114,26 @@ captions.stringify(); // Returns a valid SRT
 
 ## Tests
 
+Subtitle.js uses [AVA](https://github.com/avajs/ava) for running tests and [nyc](https://github.com/istanbuljs/nyc) for code coverage.
+
+If you want to run these tests, you need to install all devDependencies:
+
+`npm install`
+
+Now you can run the tests with the following command:
+
 `npm test`
+
+**Code Coverage**
+
+You can check the code coverage by running the following command:
+
+`npm run coverage`
+
+If you want a pretty HTML report, run the following:
+
+`npm run report`
+
 
 ## Roadmap
 * [x] Basic SRT parser

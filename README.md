@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
 [![Code Climate](https://codeclimate.com/github/gsantiago/subtitle.js/badges/gpa.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
-[![Test Coverage](https://codeclimate.com/github/gsantiago/subtitle.js/badges/coverage.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
+[![Coverage Status](https://coveralls.io/repos/github/gsantiago/subtitle.js/badge.svg?branch=master)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
 [![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 

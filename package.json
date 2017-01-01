@@ -11,7 +11,9 @@
     "test": "npm run lint && npm run ava",
     "ava": "ava test/*.test.js",
     "lint": "standard subtitle.js test/*.test.js",
-    "coverage": "",
+    "coverage": "nyc npm test",
+    "report": "nyc report --reporter=html",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "browserify": "browserify subtitle.js -s Subtitle -o browser/subtitle.browser.js",
     "uglify": "uglifyjs browser/subtitle.browser.js -c -o browser/subtitle.browser.min.js",
     "build": "npm run browserify && npm run uglify"
@@ -31,8 +33,9 @@
     "ava": "^0.17.0",
     "browserify": "^13.1.0",
     "chai": "^2.2.0",
+    "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
-    "istanbul": "^0.3.13",
+    "nyc": "^10.0.0",
     "standard": "^8.0.0",
     "uglify-js": "^2.7.3",
     "underscore": "^1.8.3"

@@ -1,10 +1,6 @@
 language: node_js
 node_js:
   - "stable"
-after_script:
+after_success:
   - npm run coverage
-  - codeclimate < coverage/lcov.info
-addons:
-  code_climate:
-    repo_token:
-      secure: Te6R3m7vKL1XNrtkT6SixFjs+SpCqn7CznV4nCMgiJv7zRf2iaJayH4CXJ2DuhC7TtnUjo7ucEcFo/8EDJkuYdhClX4fiX8qT1Zla5lRl0A5HplA7elbVctG88oHparsDTFTXPbrsljT4ptoykYiaBH0zoSYaVY+O5zd5TLrz/o=
+  - npm run coveralls

@@ -13,12 +13,12 @@
  * Module dependencies.
  */
 
-var extend = require('xtend/immutable')
 var toMS = require('./lib/toMS')
 var toSrtTime = require('./lib/toSrtTime')
 var parse = require('./lib/parse')
 var stringify = require('./lib/stringify')
 var resync = require('./lib/resync')
+var getSubtitles = require('./lib/getSubtitles')
 
 /**
  * @constructor
@@ -121,33 +121,10 @@ Subtitle.toSrtTime = toSrtTime
  *
  * @param {Object} Options
  * @returns {Array} Subtitles
-*/
-fn.getSubtitles = function (options) {
-  var subtitles = this._subtitles
+ */
 
-  var defaults = {
-    timeFormat: 'srt',
-    duration: false
-  }
-
-  options = extend(defaults, options)
-
-  if (options.timeFormat === 'ms') {
-    subtitles = subtitles.map(function (caption) {
-      caption.start = Subtitle.toMS(caption.start)
-      caption.end = Subtitle.toMS(caption.end)
-      return caption
-    })
-  }
-
-  if (!options.duration) {
-    subtitles = subtitles.map(function (caption) {
-      delete caption.duration
-      return caption
-    })
-  }
-
-  return subtitles
+fn.getSubtitles = function _getSubtitles (options) {
+  return getSubtitles(this._subtitles, options)
 }
 
 /**

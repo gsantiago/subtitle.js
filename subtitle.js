@@ -141,7 +141,7 @@ fn.stringify = function _stringify () {
  * @param {Integer} Time in milleseconds
  */
 
-fn.resync = function (time) {
+fn.resync = function _resync (time) {
   this._subtitles = resync(this._subtitles, time)
   return this
 }

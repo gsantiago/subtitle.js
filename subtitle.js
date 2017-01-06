@@ -17,6 +17,7 @@ var extend = require('xtend/immutable')
 var toMS = require('./lib/toMS')
 var toSrtTime = require('./lib/toSrtTime')
 var parse = require('./lib/parse')
+var stringify = require('./lib/stringify')
 
 /**
  * @constructor
@@ -143,26 +144,11 @@ Subtitle.prototype.getSubtitles = function (options) {
 }
 
 /**
- * Returns the subtitles in SRT string
+ * Stringifies the subtitles.
  * @returns {String} srt
-*/
-Subtitle.prototype.stringify = function () {
-  var buffer = ''
+ */
 
-  this._subtitles.forEach(function (caption, index) {
-    if (index > 0) {
-      buffer += '\n'
-    }
-    buffer += caption.index
-    buffer += '\n'
-    buffer += caption.start + ' --> ' + caption.end
-    buffer += '\n'
-    buffer += caption.text
-    buffer += '\n'
-  })
-
-  return buffer
-}
+Subtitle.prototype.stringify = stringify
 
 /**
  * Resync the captions

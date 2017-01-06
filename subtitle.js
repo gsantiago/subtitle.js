@@ -19,6 +19,7 @@ var parse = require('./lib/parse')
 var stringify = require('./lib/stringify')
 var resync = require('./lib/resync')
 var getSubtitles = require('./lib/getSubtitles')
+var add = require('./lib/add')
 
 /**
  * @constructor
@@ -64,37 +65,10 @@ fn.parse = function _parse (srt) {
  *
  * @public
  * @param {Object} Caption data
-*/
-fn.add = function (caption) {
-  if (!caption.start || !caption.end || !caption.text) {
-    throw new Error('Invalid caption data')
-  }
+ */
 
-  for (var prop in caption) {
-    if (!caption.hasOwnProperty(prop) || prop === 'text') {
-      continue
-    }
-
-    if (prop === 'start' || prop === 'end') {
-      if (/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/.test(caption[prop])) {
-        continue
-      }
-      if (/^\d+$/.test(caption[prop])) {
-        caption[prop] = Subtitle.toSrtTime(caption[prop])
-      } else {
-        throw new Error('Invalid caption time format')
-      }
-    }
-  }
-
-  this._subtitles.push({
-    index: this._subtitles.length + 1,
-    start: caption.start,
-    end: caption.end,
-    duration: Subtitle.toMS(caption.end) - Subtitle.toMS(caption.start),
-    text: caption.text
-  })
-
+fn.add = function _add (caption) {
+  add(this._subtitles, caption)
   return this
 }
 

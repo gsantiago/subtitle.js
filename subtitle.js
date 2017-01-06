@@ -22,9 +22,17 @@ var getSubtitles = require('./lib/getSubtitles')
 var add = require('./lib/add')
 
 /**
+ * Exposes `Subtitle`.
+ */
+
+module.exports = Subtitle
+
+/**
+ * Subtitle constructor.
  * @constructor
- * @param {String} Optional SRT content to be parsed
-*/
+ * @param {String} srt
+ */
+
 function Subtitle (srt) {
   if (!(this instanceof Subtitle)) return new Subtitle(srt)
 
@@ -42,10 +50,10 @@ function Subtitle (srt) {
 var fn = Subtitle.prototype
 
 /**
- * SRT parser
+ * Parses the given SRT.
  *
  * @method
- * @param {String} SRT
+ * @param {String} srt
  */
 
 fn.parse = function _parse (srt) {
@@ -71,24 +79,6 @@ fn.add = function _add (caption) {
   add(this._subtitles, caption)
   return this
 }
-
-/**
- * Convert the SRT time format to milliseconds
- *
- * @static
- * @param {String} SRT time format
- */
-
-Subtitle.toMS = toMS
-
-/**
- * Convert milliseconds to SRT time format
- *
- * @static
- * @param {Integer} Milleseconds
- */
-
-Subtitle.toSrtTime = toSrtTime
 
 /**
  * Return the subtitles
@@ -120,4 +110,20 @@ fn.resync = function _resync (time) {
   return this
 }
 
-module.exports = Subtitle
+/**
+ * Convert the SRT time format to milliseconds
+ *
+ * @static
+ * @param {String} SRT time format
+ */
+
+Subtitle.toMS = toMS
+
+/**
+ * Convert milliseconds to SRT time format
+ *
+ * @static
+ * @param {Integer} Milleseconds
+ */
+
+Subtitle.toSrtTime = toSrtTime

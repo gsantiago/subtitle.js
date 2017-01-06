@@ -35,13 +35,19 @@ function Subtitle (srt) {
 }
 
 /**
+ * Alias for `Subtitle.prototype`.
+ */
+
+var fn = Subtitle.prototype
+
+/**
  * SRT parser
  *
  * @method
  * @param {String} SRT
  */
 
-Subtitle.prototype.parse = function (srt) {
+fn.parse = function (srt) {
   this._subtitles = parse(srt)
 }
 
@@ -59,7 +65,7 @@ Subtitle.prototype.parse = function (srt) {
  * @public
  * @param {Object} Caption data
 */
-Subtitle.prototype.add = function (caption) {
+fn.add = function (caption) {
   if (!caption.start || !caption.end || !caption.text) {
     throw new Error('Invalid caption data')
   }
@@ -116,7 +122,7 @@ Subtitle.toSrtTime = toSrtTime
  * @param {Object} Options
  * @returns {Array} Subtitles
 */
-Subtitle.prototype.getSubtitles = function (options) {
+fn.getSubtitles = function (options) {
   var subtitles = this._subtitles
 
   var defaults = {
@@ -149,7 +155,7 @@ Subtitle.prototype.getSubtitles = function (options) {
  * @returns {String} srt
  */
 
-Subtitle.prototype.stringify = function _stringify () {
+fn.stringify = function _stringify () {
   return stringify(this._subtitles)
 }
 
@@ -158,7 +164,7 @@ Subtitle.prototype.stringify = function _stringify () {
  * @param {Integer} Time in milleseconds
  */
 
-Subtitle.prototype.resync = function (time) {
+fn.resync = function (time) {
   this._subtitles = resync(this._subtitles, time)
   return this
 }

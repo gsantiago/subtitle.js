@@ -149,7 +149,9 @@ Subtitle.prototype.getSubtitles = function (options) {
  * @returns {String} srt
  */
 
-Subtitle.prototype.stringify = stringify
+Subtitle.prototype.stringify = function _stringify () {
+  return stringify(this._subtitles)
+}
 
 /**
  * Resync the captions

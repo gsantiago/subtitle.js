@@ -18,6 +18,7 @@ var toMS = require('./lib/toMS')
 var toSrtTime = require('./lib/toSrtTime')
 var parse = require('./lib/parse')
 var stringify = require('./lib/stringify')
+var resync = require('./lib/resync')
 
 /**
  * @constructor
@@ -153,32 +154,10 @@ Subtitle.prototype.stringify = stringify
 /**
  * Resync the captions
  * @param {Integer} Time in milleseconds
-*/
+ */
+
 Subtitle.prototype.resync = function (time) {
-  if (!/(-|\+)?\d+/.test(time.toString())) {
-    throw new Error('Invalid time: ' + time + '.Expected a valid integer')
-  }
-
-  time = parseInt(time, 10)
-
-  this._subtitles = this._subtitles.map(function (caption) {
-    var start = Subtitle.toMS(caption.start)
-    var end = Subtitle.toMS(caption.end)
-
-    start = start + time
-    end = end + time
-
-    caption.start = start < 0
-      ? Subtitle.toSrtTime(0)
-      : Subtitle.toSrtTime(start)
-
-    caption.end = end < 0
-      ? Subtitle.toSrtTime(0)
-      : Subtitle.toSrtTime(end)
-
-    return caption
-  })
-
+  this._subtitles = resync(this._subtitles, time)
   return this
 }
 

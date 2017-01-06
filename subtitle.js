@@ -47,7 +47,7 @@ var fn = Subtitle.prototype
  * @param {String} SRT
  */
 
-fn.parse = function (srt) {
+fn.parse = function _parse (srt) {
   this._subtitles = parse(srt)
 }
 

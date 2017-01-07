@@ -32,13 +32,11 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "browserify": "^13.1.0",
-    "chai": "^2.2.0",
     "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
     "nyc": "^10.0.0",
     "standard": "^8.0.0",
-    "uglify-js": "^2.7.3",
-    "underscore": "^1.8.3"
+    "uglify-js": "^2.7.3"
   },
   "dependencies": {
     "xtend": "^4.0.1"

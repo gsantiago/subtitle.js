@@ -72,3 +72,11 @@ test('should parse a big SRT file without any errors', t => {
 
   return promise
 })
+
+test('it should throw an exception if no argument is passed', t => {
+  const subs = subtitle()
+
+  t.throws(() => {
+    subs.parse()
+  })
+})

@@ -83,3 +83,17 @@ test('delay 2 hours', t => {
 
   t.deepEqual(result, expected)
 })
+
+test('resync should always return the instance itself', t => {
+  const subs1 = createSubs()
+  const subs2 = createSubs()
+  const subs3 = createSubs()
+
+  const return1 = subs1.resync(0)
+  const return2 = subs2.resync(100)
+  const return3 = subs3.resync(-100)
+
+  t.is(return1, subs1)
+  t.is(return2, subs2)
+  t.is(return3, subs3)
+})

@@ -136,3 +136,18 @@ test('add caption with time in milliseconds', t => {
 
   t.deepEqual(result, expected)
 })
+
+test('the `add` method should always return the instance itself', t => {
+  const subs = subtitle()
+
+  const result = subs.add({
+    index: 1,
+    start: subtitle.toSrtTime(250),
+    end: subtitle.toSrtTime(450),
+    text: 'Lorem Ipsum'
+  })
+
+  const expected = subs
+
+  t.is(result, expected)
+})

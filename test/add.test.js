@@ -151,3 +151,19 @@ test('the `add` method should always return the instance itself', t => {
 
   t.is(result, expected)
 })
+
+test('invalid caption should throw an exception', t => {
+  const subs = subtitle()
+
+  t.throws(() => {
+    subs.add('INVALID CAPTION')
+  })
+
+  t.throws(() => {
+    subs.add([])
+  })
+
+  t.throws(() => {
+    subs.add({})
+  })
+})

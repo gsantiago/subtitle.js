@@ -167,3 +167,25 @@ test('invalid caption should throw an exception', t => {
     subs.add({})
   })
 })
+
+test('invalid caption timestamp should throw an exception', t => {
+  const subs = subtitle()
+
+  t.throws(() => {
+    subs.add({
+      index: 1,
+      start: 'INVALID TIMESTAMP',
+      end: subtitle.toSrtTime(450),
+      text: 'Lorem Ipsum'
+    })
+  })
+
+  t.throws(() => {
+    subs.add({
+      index: 1,
+      start: subtitle.toSrtTime(450),
+      end: 'INVALID TIMESTAMP',
+      text: 'Lorem Ipsum'
+    })
+  })
+})

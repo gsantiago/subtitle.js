@@ -97,3 +97,27 @@ test('resync should always return the instance itself', t => {
   t.is(return2, subs2)
   t.is(return3, subs3)
 })
+
+test('invalid argument should throw an exception', t => {
+  const subs = createSubs()
+
+  t.throws(() => {
+    subs.resync()
+  })
+
+  t.throws(() => {
+    subs.resync('INVALID TIME')
+  })
+
+  t.throws(() => {
+    subs.resync({})
+  })
+
+  t.throws(() => {
+    subs.resync(null)
+  })
+
+  t.throws(() => {
+    subs.resync([])
+  })
+})

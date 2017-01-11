@@ -22,7 +22,7 @@ var getSubtitles = require('./lib/getSubtitles')
 var add = require('./lib/add')
 
 /**
- * Exposes `Subtitle`.
+ * Export `Subtitle`.
  */
 
 module.exports = Subtitle
@@ -50,7 +50,7 @@ function Subtitle (srt) {
 var fn = Subtitle.prototype
 
 /**
- * Parses the given SRT.
+ * Parse the given SRT.
  *
  * @method
  * @param {String} srt
@@ -61,14 +61,14 @@ fn.parse = function _parse (srt) {
 }
 
 /**
- * Add a caption
- * You have to pass an object containing the following data:
- * start - The start time
- * end - The end time
+ * Add a caption.
+ * You have to pass an object with the following data:
+ * start - The start timestamp
+ * end - The end timestamp
  * text - The caption text
  *
- * The start and end time support two patterns:
- * The SRT: '00:00:24,400'
+ * The timestamps support two patterns:
+ * The SRT pattern: '00:00:24,400'
  * Or a positive integer representing milliseconds
  *
  * @public
@@ -81,7 +81,7 @@ fn.add = function _add (caption) {
 }
 
 /**
- * Return the subtitles
+ * Return the subtitles.
  *
  * @param {Object} Options
  * @returns {Array} Subtitles
@@ -92,7 +92,8 @@ fn.getSubtitles = function _getSubtitles (options) {
 }
 
 /**
- * Stringifies the subtitles.
+ * Stringify the SRT.
+ *
  * @returns {String} srt
  */
 
@@ -101,7 +102,8 @@ fn.stringify = function _stringify () {
 }
 
 /**
- * Resync the captions
+ * Resync the captions.
+ *
  * @param {Integer} Time in milleseconds
  */
 

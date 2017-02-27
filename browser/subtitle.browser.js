@@ -119,7 +119,10 @@ module.exports = function parse (srt) {
 
   srt = srt.trim()
   srt += '\n'
-  srt = srt.replace(/\r\n/g, '\n').split('\n')
+  srt = srt
+    .replace(/\r\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .split('\n')
 
   srt.forEach(function (line) {
     line = line.toString()
@@ -150,7 +153,7 @@ module.exports = function parse (srt) {
         start: start,
         end: end,
         duration: toMS(end) - toMS(start),
-        text: text
+        text: text || ''
       })
       index = time = start = end = text = null
     } else {
@@ -326,7 +329,7 @@ function extend() {
  * Parse and manipulate SRT (SubRip)
  * https://github.com/gsantiago/subtitle.js
  *
- * @version 0.1.3
+ * @version 0.1.5
  * @author Guilherme Santiago
 */
 

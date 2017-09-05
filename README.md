@@ -15,50 +15,55 @@ Parse and manipulate SRT (SubRip) format.
 For browser usage, you can copy the script `subtitle.browser.js`
 from the `browser` folder.
 
-## Usage
+## API
 
-```javascript
-var Subtitle = require('subtitle');
+This lib provides four functions: [`parse`](), [`stringify`](), [`resync`]() and [`createSubtitles`]():
 
-var captions = new Subtitle();
+```js
+// ES6
+const { parse, stringify, resync, createSubtitles } = require('subtitle')
 
-captions.parse('your srt here');
+// ES5
+var subtitle = require('subtitle')
+subtitle.parse
+subtitle.stringify
+subtitle.resync
+subtitle.createSubtitles
 
-console.log(captions.getSubtitles());
-
+// Global
+window.subtitle.parse
+window.subtitle.stringify
+window.subtitle.resync
+window.subtitle.createSubtitles
 ```
 
-It's gonna return an array like this:
+### `parse(srt: String, [options: Object]) -> Array`
 
-```javascript
+Parses a SRT string and returns an array:
+
+```js
+parse(mySrtContent)
+
+// returns an array like this:
 [
   {
     index: 1,
     start: '00:00:20,000',
     end: '00:00:24,400',
+    duration: 4400,
     text: 'Bla Bla Bla Bla'
   },
   {
     index: 2,
     start: '00:00:24,600',
     end: '00:00:27,800',
+    duration: 4400,
     text: 'Bla Bla Bla Bla'
   }
 ]
-```
 
-You can also pass options to the `getSubtitles()` method.
-
-```javascript
-captions.getSubtitles({
-  duration: true, // Include the `duration` property
-  timeFormat: 'ms' // Set time format to milliseconds
-});
-```
-
-Here's the result:
-
-```javascript
+// with timestamp in millseconds:
+parse(mySrtContent, { timeFormat: 'ms' })
 [
   {
     index: 1,
@@ -77,40 +82,57 @@ Here's the result:
 ]
 ```
 
-You can also add new captions.
+#### Options
 
-```javascript
-var captions = new Subtitle();
+| Option | Description | Default |
+| ------ | ----------- | ------- |
+| `timeFormat` | The timestamp format. It supports `"srt"` ('00:00:24,600') and `"ms"` for milleseconds. | `"srt"`
 
-captions.add({
-  start: '00:00:20,000',
-  end: '00:00:21,900',
-  text: 'Text here'
-});
+### `stringify(subtitles: Array) -> String`
 
-// You can use time in MS if you prefer
-captions.add({
-  start: 22000,
-  end: 22580,
-  text: 'Another text here...'
-});
+The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
+
+```js
+const subtitles = [
+  {
+    {
+      index: 1,
+      start: '00:00:20,000',
+      end: '00:00:24,400',
+      duration: 4400, // OPTIONAL
+      text: 'Bla Bla Bla Bla'
+    },
+    {
+      {
+        index: 2,
+        start: 24600, // timestamp in millseconds is supported as well
+        end: 27800,
+        text: 'Bla Bla Bla Bla'
+      }
+    }
+  }
+]
+
+const srt = stringify(subtitles)
+// returns the following string:
+`
+1
+00:00:20,000 --> 00:00:24,400
+Bla Bla Bla Bla
+
+2
+00:00:24,600 --> 00:00:27,800
+Bla Bla Bla Bla
+``
 ```
 
-And what about resync your captions?
+### `resync(subtitles: Array, time: Number) -> Object`
 
-```javascript
-// Advance 1s
-captions.resync(1000);
+Resync all captions at once.
 
-// Delay 500ms
-captions.resync(-500);
-```
+### `createSubtitles(initialSubtitles: Array|String) -> Object`
 
-Then, you can stringify your changes:
-
-```javascript
-captions.stringify(); // Returns a valid SRT
-```
+TODO
 
 ## Tests
 

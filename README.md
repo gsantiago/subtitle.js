@@ -130,6 +130,37 @@ Bla Bla Bla Bla
 
 Resync all captions at once.
 
+```js
+const subtitles = [
+  {
+    {
+      index: 1,
+      start: '00:00:20,000',
+      end: '00:00:24,400',
+      duration: 4400, // OPTIONAL
+      text: 'Bla Bla Bla Bla'
+    },
+    {
+      {
+        index: 2,
+        start: 24600, // timestamp in millseconds is supported as well
+        end: 27800,
+        text: 'Bla Bla Bla Bla'
+      }
+    }
+  }
+]
+
+// Advance 1s
+const newSubtitles = resync(subtitles, 1000)
+
+// Delay 250ms
+const newSubtitles = resync(subtitles, 250) //
+
+// Then, you can stringify your new subtitles:
+stringify(newSubtitles)
+```
+
 ### `createSubtitles(initialSubtitles: Array|String) -> Object`
 
 TODO

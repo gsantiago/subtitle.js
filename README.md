@@ -17,7 +17,7 @@ from the `browser` folder.
 
 ## API
 
-This lib provides four functions: [`parse`](), [`stringify`](), [`resync`]() and [`createSubtitles`]():
+This lib provides four functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object) and [`createSubtitles`](#createsubtitlesinitialsubtitles-arraystring---object):
 
 ```js
 // ES6

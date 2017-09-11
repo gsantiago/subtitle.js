@@ -27,10 +27,17 @@
     "parser",
     "stringify"
   ],
+  "engines": {
+    "node": ">= 6"
+  },
   "author": "Guilherme Santiago",
   "license": "MIT",
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "devDependencies": {
     "ava": "^0.17.0",
+    "babel-eslint": "^7.2.3",
     "browserify": "^13.1.0",
     "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
@@ -39,6 +46,6 @@
     "uglify-js": "^2.7.3"
   },
   "dependencies": {
-    "xtend": "^4.0.1"
+    "zero-fill": "^2.2.3"
   }
 }

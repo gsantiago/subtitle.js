@@ -29,13 +29,3 @@ test('should convert time from milliseconds to SRT format', t => {
   t.is(toSrtTime(time2.ms), time2.srt)
   t.is(toSrtTime(time3.ms), time3.srt)
 })
-
-test('non-Integer and negative values should throw an error', t => {
-  const fn1 = toSrtTime.bind(null, 'test')
-  const fn2 = toSrtTime.bind(null, {})
-  const fn3 = toSrtTime.bind(null, -100)
-
-  t.throws(fn1)
-  t.throws(fn2)
-  t.throws(fn3)
-})

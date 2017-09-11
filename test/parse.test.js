@@ -3,7 +3,7 @@
  */
 
 const test = require('ava')
-const subtitle = require('..')
+const { parse, toMS } = require('..')
 const { readFile } = require('./helpers')
 
 /**
@@ -17,14 +17,12 @@ test('should parse a small SRT file', t => {
 
   const expected = [
     {
-      index: 1,
       start: '00:00:20,000',
       end: '00:00:24,400',
       duration: 4400,
       text: 'This is the first line\nand this is the second one'
     },
     {
-      index: 2,
       start: '00:00:24,600',
       end: '00:00:27,800',
       duration: 3200,
@@ -32,26 +30,20 @@ test('should parse a small SRT file', t => {
     }
   ]
 
-  const expectedWithTimeInmilliseconds = expected.map(caption => {
-    return Object.assign(caption, {
-      start: subtitle.toMS(caption.start),
-      end: subtitle.toMS(caption.end)
+  const expectedWithTimeInMS = expected.map(caption => {
+    return Object.assign({}, caption, {
+      start: toMS(caption.start),
+      end: toMS(caption.end)
     })
   })
 
   promise
   .then(content => {
-    const subs = subtitle(content)
-
-    const result = subs.getSubtitles({duration: true})
-
-    const resultWithTimeInmilliseconds = subs.getSubtitles({
-      timeFormat: 'ms',
-      duration: true
-    })
+    const result = parse(content)
+    const resultWithTimeMS = parse(content, { timeFormat: 'ms' })
 
     t.deepEqual(result, expected)
-    t.deepEqual(resultWithTimeInmilliseconds, expectedWithTimeInmilliseconds)
+    t.deepEqual(resultWithTimeMS, expectedWithTimeInMS)
   })
 
   return promise
@@ -64,19 +56,14 @@ test('should parse a big SRT file without any errors', t => {
 
   promise
   .then(content => {
-    const subs = subtitle()
-    subs.parse(content)
-    t.is(subs.getSubtitles().length, 1298)
+    const subs = parse(content)
+    t.is(subs.length, 1298)
   })
   .catch(t.fail)
 
   return promise
 })
 
-test('it should throw an exception if no argument is passed', t => {
-  const subs = subtitle()
-
-  t.throws(() => {
-    subs.parse()
-  })
+test('it should an empty array', t => {
+  t.deepEqual(parse(), [])
 })

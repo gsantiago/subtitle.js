@@ -17,24 +17,22 @@ from the `browser` folder.
 
 ## API
 
-This lib provides four functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object) and [`createSubtitles`](#createsubtitlesinitialsubtitles-arraystring---object):
+This lib provides four functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object):
 
 ```js
 // ES6
-const { parse, stringify, resync, createSubtitles } = require('subtitle')
+const { parse, stringify, resync } = require('subtitle')
 
 // ES5
 var subtitle = require('subtitle')
 subtitle.parse
 subtitle.stringify
 subtitle.resync
-subtitle.createSubtitles
 
 // Global
 window.subtitle.parse
 window.subtitle.stringify
 window.subtitle.resync
-window.subtitle.createSubtitles
 ```
 
 ### `parse(srt: String, [options: Object]) -> Array`
@@ -47,14 +45,12 @@ parse(mySrtContent)
 // returns an array like this:
 [
   {
-    index: 1,
     start: '00:00:20,000',
     end: '00:00:24,400',
     duration: 4400,
     text: 'Bla Bla Bla Bla'
   },
   {
-    index: 2,
     start: '00:00:24,600',
     end: '00:00:27,800',
     duration: 4400,
@@ -66,14 +62,12 @@ parse(mySrtContent)
 parse(mySrtContent, { timeFormat: 'ms' })
 [
   {
-    index: 1,
     start: 20000,
     end: 24400,
     duration: 4400,
     text: 'Bla Bla Bla Bla'
   },
   {
-    index: 2,
     start: 24600,
     end: 27800,
     duration: 3200,
@@ -96,7 +90,6 @@ The reverse of `parse`. It gets an array with subtitles and converts it to a val
 const subtitles = [
   {
     {
-      index: 1,
       start: '00:00:20,000',
       end: '00:00:24,400',
       duration: 4400, // OPTIONAL
@@ -104,7 +97,6 @@ const subtitles = [
     },
     {
       {
-        index: 2,
         start: 24600, // timestamp in millseconds is supported as well
         end: 27800,
         text: 'Bla Bla Bla Bla'
@@ -115,7 +107,7 @@ const subtitles = [
 
 const srt = stringify(subtitles)
 // returns the following string:
-`
+/*
 1
 00:00:20,000 --> 00:00:24,400
 Bla Bla Bla Bla
@@ -123,7 +115,7 @@ Bla Bla Bla Bla
 2
 00:00:24,600 --> 00:00:27,800
 Bla Bla Bla Bla
-``
+*/
 ```
 
 ### `resync(subtitles: Array, time: Number) -> Object`
@@ -134,7 +126,6 @@ Resync all captions at once.
 const subtitles = [
   {
     {
-      index: 1,
       start: '00:00:20,000',
       end: '00:00:24,400',
       duration: 4400, // OPTIONAL
@@ -142,7 +133,6 @@ const subtitles = [
     },
     {
       {
-        index: 2,
         start: 24600, // timestamp in millseconds is supported as well
         end: 27800,
         text: 'Bla Bla Bla Bla'
@@ -160,10 +150,6 @@ const newSubtitles = resync(subtitles, 250) //
 // Then, you can stringify your new subtitles:
 stringify(newSubtitles)
 ```
-
-### `createSubtitles(initialSubtitles: Array|String) -> Object`
-
-TODO
 
 ## Tests
 

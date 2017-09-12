@@ -17,22 +17,26 @@ from the `browser` folder.
 
 ## API
 
-This lib provides four functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object):
+The API is minimal and provide only five functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object):
 
 ```js
 // ES6
-const { parse, stringify, resync } = require('subtitle')
+const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
 
 // ES5
 var subtitle = require('subtitle')
 subtitle.parse
 subtitle.stringify
 subtitle.resync
+subtitle.toMS
+subtitle.toSrtTime
 
 // Global
 window.subtitle.parse
 window.subtitle.stringify
 window.subtitle.resync
+window.subtitle.toMS
+window.subtitle.toSrtTime
 ```
 
 ### `parse(srt: String, [options: Object]) -> Array`
@@ -47,13 +51,11 @@ parse(mySrtContent)
   {
     start: '00:00:20,000',
     end: '00:00:24,400',
-    duration: 4400,
     text: 'Bla Bla Bla Bla'
   },
   {
     start: '00:00:24,600',
     end: '00:00:27,800',
-    duration: 4400,
     text: 'Bla Bla Bla Bla'
   }
 ]
@@ -64,13 +66,11 @@ parse(mySrtContent, { timeFormat: 'ms' })
   {
     start: 20000,
     end: 24400,
-    duration: 4400,
     text: 'Bla Bla Bla Bla'
   },
   {
     start: 24600,
     end: 27800,
-    duration: 3200,
     text: 'Bla Bla Bla Bla'
   }
 ]
@@ -92,7 +92,6 @@ const subtitles = [
     {
       start: '00:00:20,000',
       end: '00:00:24,400',
-      duration: 4400, // OPTIONAL
       text: 'Bla Bla Bla Bla'
     },
     {
@@ -128,7 +127,6 @@ const subtitles = [
     {
       start: '00:00:20,000',
       end: '00:00:24,400',
-      duration: 4400, // OPTIONAL
       text: 'Bla Bla Bla Bla'
     },
     {
@@ -150,6 +148,10 @@ const newSubtitles = resync(subtitles, 250) //
 // Then, you can stringify your new subtitles:
 stringify(newSubtitles)
 ```
+
+### `toMS(timestamp: String) -> Number`
+
+### `toSrtTime(timestamp: Number) -> String`
 
 ## Tests
 

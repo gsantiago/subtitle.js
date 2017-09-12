@@ -11,7 +11,7 @@ const { readFile } = require('./helpers')
  */
 
 test('should parse a small SRT file', t => {
-  t.plan(2)
+  t.plan(1)
 
   const promise = readFile('fixtures/sample.srt')
 
@@ -19,13 +19,11 @@ test('should parse a small SRT file', t => {
     {
       start: '00:00:20,000',
       end: '00:00:24,400',
-      duration: 4400,
       text: 'This is the first line\nand this is the second one'
     },
     {
       start: '00:00:24,600',
       end: '00:00:27,800',
-      duration: 3200,
       text: 'Hello, World!'
     }
   ]
@@ -39,10 +37,7 @@ test('should parse a small SRT file', t => {
 
   promise
   .then(content => {
-    const result = parse(content)
-    const resultWithTimeMS = parse(content, { timeFormat: 'ms' })
-
-    t.deepEqual(result, expected)
+    const resultWithTimeMS = parse(content)
     t.deepEqual(resultWithTimeMS, expectedWithTimeInMS)
   })
 

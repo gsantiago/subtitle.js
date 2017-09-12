@@ -75,18 +75,14 @@ The reverse of `parse`. It gets an array with subtitles and converts it to a val
 ```js
 const subtitles = [
   {
-    {
-      start: '00:00:20,000',
-      end: '00:00:24,400',
-      text: 'Bla Bla Bla Bla'
-    },
-    {
-      {
-        start: 24600, // timestamp in millseconds is supported as well
-        end: 27800,
-        text: 'Bla Bla Bla Bla'
-      }
-    }
+    start: '00:00:20,000',
+    end: '00:00:24,400',
+    text: 'Bla Bla Bla Bla'
+  },
+  {
+    start: 24600, // timestamp in millseconds is supported as well
+    end: 27800,
+    text: 'Bla Bla Bla Bla'
   }
 ]
 
@@ -110,18 +106,14 @@ Resync all captions at once.
 ```js
 const subtitles = [
   {
-    {
-      start: '00:00:20,000',
-      end: '00:00:24,400',
-      text: 'Bla Bla Bla Bla'
-    },
-    {
-      {
-        start: 24600, // timestamp in millseconds is supported as well
-        end: 27800,
-        text: 'Bla Bla Bla Bla'
-      }
-    }
+    start: '00:00:20,000',
+    end: '00:00:24,400',
+    text: 'Bla Bla Bla Bla'
+  },
+  {
+    start: 24600, // timestamp in millseconds is supported as well
+    end: 27800,
+    text: 'Bla Bla Bla Bla'
   }
 ]
 

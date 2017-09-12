@@ -129,7 +129,21 @@ stringify(newSubtitles)
 
 ### `toMS(timestamp: String) -> Number`
 
+Convert a SRT timestamp to milliseconds:
+
+```js
+toMS('00:00:24,400')
+// 24400
+```
+
 ### `toSrtTime(timestamp: Number) -> String`
+
+Convert a time from milliseconds to a SRT timestamp:
+
+```js
+toSrtTime(24400)
+// '00:00:24,400'
+```
 
 ## Tests
 

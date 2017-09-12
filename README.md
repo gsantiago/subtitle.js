@@ -17,7 +17,13 @@ from the `browser` folder.
 
 ## API
 
-The API is minimal and provide only five functions: [`parse`](#parsesrt-string-options-object---array), [`stringify`](#stringifysubtitles-array---string), [`resync`](#resyncsubtitles-array-time-number---object):
+The API is minimal and provide only five functions:
+
+* [`parse`](#parsesrt-string-options-object---array)
+* [`stringify`](#stringifysubtitles-array---string)
+* [`resync`](#resyncsubtitles-array-time-number---object)
+* [`toMS`](#resyncsubtitles-array-time-number---object)
+* [`toSrtTime`](#resyncsubtitles-array-time-number---object)
 
 ```js
 // ES6
@@ -39,32 +45,15 @@ window.subtitle.toMS
 window.subtitle.toSrtTime
 ```
 
-### `parse(srt: String, [options: Object]) -> Array`
+### `parse(srt: String) -> Array`
 
 Parses a SRT string and returns an array:
 
 ```js
 parse(mySrtContent)
-
-// returns an array like this:
 [
   {
-    start: '00:00:20,000',
-    end: '00:00:24,400',
-    text: 'Bla Bla Bla Bla'
-  },
-  {
-    start: '00:00:24,600',
-    end: '00:00:27,800',
-    text: 'Bla Bla Bla Bla'
-  }
-]
-
-// with timestamp in millseconds:
-parse(mySrtContent, { timeFormat: 'ms' })
-[
-  {
-    start: 20000,
+    start: 20000, // time in ms
     end: 24400,
     text: 'Bla Bla Bla Bla'
   },
@@ -75,12 +64,6 @@ parse(mySrtContent, { timeFormat: 'ms' })
   }
 ]
 ```
-
-#### Options
-
-| Option | Description | Default |
-| ------ | ----------- | ------- |
-| `timeFormat` | The timestamp format. It supports `"srt"` ('00:00:24,600') and `"ms"` for milleseconds. | `"srt"`
 
 ### `stringify(subtitles: Array) -> String`
 

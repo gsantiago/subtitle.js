@@ -8,7 +8,7 @@
 
 Parse and manipulate SRT (SubRip) format.
 
->["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
+>["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)  
 >John-David Dalton, creator of Lodash
 
 ## Installation

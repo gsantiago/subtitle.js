@@ -19,11 +19,11 @@ from the `browser` folder.
 
 The API is minimal and provide only five functions:
 
-* [`parse`](#parsesrt-string-options-object---array)
+* [`parse`](#parsesrt-string---array)
 * [`stringify`](#stringifysubtitles-array---string)
 * [`resync`](#resyncsubtitles-array-time-number---object)
-* [`toMS`](#resyncsubtitles-array-time-number---object)
-* [`toSrtTime`](#resyncsubtitles-array-time-number---object)
+* [`toMS`](#tomstimestamp-string---number)
+* [`toSrtTime`](#tosrttimetimestamp-number---string)
 
 ```js
 // ES6

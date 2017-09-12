@@ -160,13 +160,6 @@ If you want a pretty HTML report, run the following:
 
 Your report will be available in the `coverage` folder.
 
-## Roadmap
-* [x] Basic SRT parser
-* [x] Basic manipulation
-* [x] Stringify
-* [x] Time conversion
-* [x] Duration property
-* [x] Browser support
-* [ ] Stream interface
-* [ ] WebVTT support
-* [ ] Better docs
+## License
+
+MIT

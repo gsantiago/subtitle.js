@@ -1,14 +1,6 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { parse, toMS } = require('..')
 const { readFile } = require('./helpers')
-
-/**
- * Tests for `parse` method.
- */
 
 test('should parse a small SRT file', t => {
   t.plan(1)

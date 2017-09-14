@@ -1,13 +1,5 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { toSrtTime } = require('..')
-
-/**
- * Tests for `toSrtTime` static method.
- */
 
 test('should convert time from milliseconds to SRT format', t => {
   const time1 = {

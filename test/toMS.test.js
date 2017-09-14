@@ -1,13 +1,5 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { toMS } = require('..')
-
-/**
- * Tests for `toMS` static method.
- */
 
 test('should convert time to milliseconds', t => {
   const time1 = {

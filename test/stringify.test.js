@@ -1,14 +1,6 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { stringify } = require('..')
 const { readFile } = require('./helpers')
-
-/**
- * Tests for `stringify` method.
- */
 
 test('should return the stringified version of the subtitles', t => {
   const promise = readFile('fixtures/sample.srt')

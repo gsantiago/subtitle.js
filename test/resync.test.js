@@ -1,13 +1,5 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { resync } = require('..')
-
-/**
- * Helper function that creates some subs.
- */
 
 const subs = [
   {
@@ -26,10 +18,6 @@ const subs = [
     text: 'Text'
   }
 ]
-
-/**
- * Tests for `resync` method.
- */
 
 test('delay 100ms', t => {
   const result = resync(subs, -100)[0]

@@ -12,7 +12,7 @@ test('stringify all examples', async t => {
 
   Object.keys(subtitles).forEach(async filepath => {
     const basename = path.basename(filepath, '.json')
-    const value = await readFile(path.join(__dirname,  `/examples/${basename}.srt`), 'utf8')
+    const value = await readFile(path.join(__dirname, `/examples/${basename}.srt`), 'utf8')
     const expected = JSON.parse(subtitles[filepath])
     t.deepEqual(expected, stringify(value))
   })

@@ -1,54 +1,20 @@
 const test = require('ava')
-const { parse, toMS } = require('..')
-const { readFile } = require('./helpers')
+const fs = require('fs')
+const path = require('path')
+const promisify = require('pify')
+const glob = require('glob-contents')
+const { parse } = require('..')
 
-test('should parse a small SRT file', t => {
-  t.plan(1)
+const readFile = promisify(fs.readFile)
 
-  const promise = readFile('fixtures/sample.srt')
+test('parse all examples', async t => {
+  const subtitles = await glob(path.join(__dirname, '/examples/*.srt'))
 
-  const expected = [
-    {
-      start: '00:00:20,000',
-      end: '00:00:24,400',
-      text: 'This is the first line\nand this is the second one'
-    },
-    {
-      start: '00:00:24,600',
-      end: '00:00:27,800',
-      text: 'Hello, World!'
-    }
-  ]
-
-  const expectedWithTimeInMS = expected.map(caption => {
-    return Object.assign({}, caption, {
-      start: toMS(caption.start),
-      end: toMS(caption.end)
-    })
+  Object.keys(subtitles).forEach(async filepath => {
+    const basename = path.basename(filepath, '.srt')
+    const value = await readFile(path.join(__dirname,  `/examples/${basename}.json`), 'utf8')
+    t.deepEqual(subtitles[filepath], parse(value))
   })
-
-  promise
-  .then(content => {
-    const resultWithTimeMS = parse(content)
-    t.deepEqual(resultWithTimeMS, expectedWithTimeInMS)
-  })
-
-  return promise
-})
-
-test('should parse a big SRT file without any errors', t => {
-  t.plan(1)
-
-  const promise = readFile('fixtures/big.srt')
-
-  promise
-  .then(content => {
-    const subs = parse(content)
-    t.is(subs.length, 1298)
-  })
-  .catch(t.fail)
-
-  return promise
 })
 
 test('it should an empty array', t => {

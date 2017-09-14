@@ -1,30 +1,19 @@
 const test = require('ava')
+const fs = require('fs')
+const path = require('path')
+const promisify = require('pify')
+const glob = require('glob-contents')
 const { stringify } = require('..')
-const { readFile } = require('./helpers')
 
-test('should return the stringified version of the subtitles', t => {
-  const promise = readFile('fixtures/sample.srt')
+const readFile = promisify(fs.readFile)
 
-  promise
-  .then(content => {
-    const subs = [
-      {
-        start: '00:00:20,000',
-        end: '00:00:24,400',
-        text: 'This is the first line\nand this is the second one'
-      },
-      {
-        start: '00:00:24,600',
-        end: '00:00:27,800',
-        text: 'Hello, World!'
-      }
-    ]
+test('stringify all examples', async t => {
+  const subtitles = await glob(path.join(__dirname, '/examples/*.json'))
 
-    const result = stringify(subs)
-    const expected = content
-
-    t.is(result, expected)
+  Object.keys(subtitles).forEach(async filepath => {
+    const basename = path.basename(filepath, '.json')
+    const value = await readFile(path.join(__dirname,  `/examples/${basename}.srt`), 'utf8')
+    const expected = JSON.parse(subtitles[filepath])
+    t.deepEqual(expected, stringify(value))
   })
-
-  return promise
 })

@@ -121,7 +121,7 @@ const subtitles = [
 const newSubtitles = resync(subtitles, 1000)
 
 // Delay 250ms
-const newSubtitles = resync(subtitles, 250) //
+const newSubtitles = resync(subtitles, -250) //
 
 // Then, you can stringify your new subtitles:
 stringify(newSubtitles)

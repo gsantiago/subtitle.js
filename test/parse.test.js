@@ -17,6 +17,44 @@ test('parse all examples', async t => {
   })
 })
 
+test('parse captions', t => {
+  const srt = `
+1
+02:12:34,647 --> 02:12:35,489
+Hi.
+
+2
+02:12:36,415 --> 02:12:37,758
+Lois Lane.
+
+3
+02:12:38,584 --> 02:12:40,120
+Welcome to the Planet.
+  `.trim().concat('\n')
+
+  const value = parse(srt)
+
+  const expected = [
+    {
+      start: 7954647,
+      end: 7955489,
+      text: 'Hi.'
+    },
+    {
+      start: 7956415,
+      end: 7957758,
+      text: 'Lois Lane.'
+    },
+    {
+      start: 7958584,
+      end: 7960120,
+      text: 'Welcome to the Planet.'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})
+
 test('it should an empty array', t => {
   t.deepEqual(parse(), [])
 })

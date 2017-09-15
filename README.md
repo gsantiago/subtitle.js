@@ -68,7 +68,7 @@ parse(mySrtContent)
 ]
 ```
 
-### `stringify(subtitles: Array) -> String`
+### `stringify(captions: Array) -> String`
 
 The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
 
@@ -80,7 +80,7 @@ const subtitles = [
     text: 'Bla Bla Bla Bla'
   },
   {
-    start: 24600, // timestamp in millseconds is supported as well
+    start: 24600, // timestamp in milliseconds is supported as well
     end: 27800,
     text: 'Bla Bla Bla Bla'
   }
@@ -99,7 +99,7 @@ Bla Bla Bla Bla
 */
 ```
 
-### `resync(subtitles: Array, time: Number) -> Object`
+### `resync(captions: Array, time: Number) -> Object`
 
 Resync all captions at once.
 

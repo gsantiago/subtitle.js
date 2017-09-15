@@ -21,3 +21,8 @@ test('should convert time from milliseconds to SRT format', t => {
   t.is(toSrtTime(time2.ms), time2.srt)
   t.is(toSrtTime(time3.ms), time3.srt)
 })
+
+test('should return the given values that are not numbers', t => {
+  t.is(toSrtTime('01:51:58,219'), '01:51:58,219')
+  t.is(toSrtTime('string'), 'string')
+})

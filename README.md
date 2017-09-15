@@ -41,11 +41,11 @@ subtitle.toMS
 subtitle.toSrtTime
 
 // Global
-window.subtitle.parse
-window.subtitle.stringify
-window.subtitle.resync
-window.subtitle.toMS
-window.subtitle.toSrtTime
+window.Subtitle.parse
+window.Subtitle.stringify
+window.Subtitle.resync
+window.Subtitle.toMS
+window.Subtitle.toSrtTime
 ```
 
 ### `parse(srt: String) -> Array`

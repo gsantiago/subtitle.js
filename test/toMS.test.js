@@ -27,3 +27,9 @@ test('invalid format should throw an error', t => {
     toMS('12,34:56,78')
   })
 })
+
+test('should return the given numbers', t => {
+  t.is(toMS(1000), 1000)
+  t.is(toMS(600), 600)
+  t.is(toMS(-150), -150)
+})

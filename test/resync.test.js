@@ -1,7 +1,7 @@
 const test = require('ava')
 const { resync } = require('..')
 
-const subs = [
+const captions = [
   {
     start: '00:00:10,100',
     end: '00:00:10,500',
@@ -19,35 +19,62 @@ const subs = [
   }
 ]
 
+const captionsMS = [
+  {
+    start: 10100,
+    end: 10500,
+    text: 'Text'
+  },
+  {
+    start: 20650,
+    end: 23300,
+    text: 'Text'
+  },
+  {
+    start: 300000,
+    end: 310150,
+    text: 'Text'
+  }
+]
+
 test('delay 100ms', t => {
-  const result = resync(subs, -100)[0]
   const expected = {
-    start: '00:00:10,000',
-    end: '00:00:10,400',
+    start: 10000,
+    end: 10400,
     text: 'Text'
   }
 
+  const result = resync(captions, -100)[0]
+  const result2 = resync(captionsMS, -100)[0]
+
   t.deepEqual(result, expected)
+  t.deepEqual(result2, expected)
 })
 
 test('advance 1s', t => {
-  const result = resync(subs, 1000)[1]
   const expected = {
-    start: '00:00:21,650',
-    end: '00:00:24,300',
+    start: 21650,
+    end: 24300,
     text: 'Text'
   }
 
+  const result = resync(captions, 1000)[1]
+  const result2 = resync(captionsMS, 1000)[1]
+
   t.deepEqual(result, expected)
+  t.deepEqual(result2, expected)
 })
 
 test('delay 2 hours', t => {
-  const result = resync(subs, 2 * 60 * 1000 * -1)[2]
   const expected = {
-    start: '00:03:00,000',
-    end: '00:03:10,150',
+    start: 180000,
+    end: 190150,
     text: 'Text'
   }
 
+  const result = resync(captions, 2 * 60 * 1000 * -1)[2]
+  const result2 = resync(captionsMS, 2 * 60 * 1000 * -1)[2]
+
   t.deepEqual(result, expected)
+  t.deepEqual(result2, expected)
 })

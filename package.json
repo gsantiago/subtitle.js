@@ -6,7 +6,6 @@
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"
   },
-  "main": "subtitle.js",
   "browser": "./browser/subtitle.browser.js",
   "scripts": {
     "test": "npm run lint && npm run ava",
@@ -15,9 +14,9 @@
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "browserify": "browserify subtitle.js -s Subtitle -o browser/subtitle.browser.js",
-    "uglify": "uglifyjs browser/subtitle.browser.js -c -o browser/subtitle.browser.min.js",
-    "build": "npm run browserify && npm run uglify"
+    "js": "simplifyify index.js -o ./browser/subtitle.browser.js -s Subtitle",
+    "js:min": "simplifyify index.js -o ./browser/subtitle.browser.min.js -s Subtitle -m",
+    "build": "npm run js & npm run js:min"
   },
   "keywords": [
     "subtitle",
@@ -36,17 +35,30 @@
   "standard": {
     "parser": "babel-eslint"
   },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  },
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-eslint": "^7.2.3",
-    "browserify": "^13.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
     "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
     "glob-contents": "0.0.3",
     "nyc": "^10.0.0",
     "pify": "^3.0.0",
-    "standard": "^8.0.0",
-    "uglify-js": "^2.7.3"
+    "simplifyify": "^3.2.4",
+    "standard": "^8.0.0"
   },
   "dependencies": {
     "zero-fill": "^2.2.3"

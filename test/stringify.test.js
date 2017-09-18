@@ -1,39 +1,55 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
-const subtitle = require('..')
-const { readFile } = require('./helpers')
+const fs = require('fs')
+const path = require('path')
+const promisify = require('pify')
+const glob = require('glob-contents')
+const { stringify } = require('..')
 
-/**
- * Tests for `stringify` method.
- */
+const readFile = promisify(fs.readFile)
 
-test('should return the stringified version of the subtitles', t => {
-  const promise = readFile('fixtures/sample.srt')
+test('stringify all examples', async t => {
+  const subtitles = await glob(path.join(__dirname, '/examples/*.json'))
 
-  promise
-  .then(content => {
-    const subs = subtitle()
-
-    subs
-    .add({
-      start: '00:00:20,000',
-      end: '00:00:24,400',
-      text: 'This is the first line\nand this is the second one'
-    })
-    .add({
-      start: '00:00:24,600',
-      end: '00:00:27,800',
-      text: 'Hello, World!'
-    })
-
-    const result = subs.stringify()
-    const expected = content
-
-    t.is(result, expected)
+  Object.keys(subtitles).forEach(async filepath => {
+    const basename = path.basename(filepath, '.json')
+    const value = await readFile(path.join(__dirname, `/examples/${basename}.srt`), 'utf8')
+    const expected = JSON.parse(subtitles[filepath])
+    t.deepEqual(expected, stringify(value))
   })
+})
 
-  return promise
+test('stringify captions with timestamp in SRT format', t => {
+  const captions = [
+    {
+      start: 7954647,
+      end: 7955489,
+      text: 'Hi.'
+    },
+    {
+      start: 7956415,
+      end: 7957758,
+      text: 'Lois Lane.'
+    },
+    {
+      start: 7958584,
+      end: 7960120,
+      text: 'Welcome to the Planet.'
+    }
+  ]
+
+  const expected = `
+1
+02:12:34,647 --> 02:12:35,489
+Hi.
+
+2
+02:12:36,415 --> 02:12:37,758
+Lois Lane.
+
+3
+02:12:38,584 --> 02:12:40,120
+Welcome to the Planet.
+  `.trim().concat('\n')
+
+  t.is(stringify(captions), expected)
 })

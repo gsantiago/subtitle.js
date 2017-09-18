@@ -8,6 +8,9 @@
 
 Parse and manipulate SRT (SubRip) format.
 
+>["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)  
+>John-David Dalton, creator of Lodash
+
 ## Installation
 
 `npm install subtitle --save`
@@ -15,101 +18,131 @@ Parse and manipulate SRT (SubRip) format.
 For browser usage, you can copy the script `subtitle.browser.js`
 from the `browser` folder.
 
-## Usage
+## API
 
-```javascript
-var Subtitle = require('subtitle');
+The API is minimal and provide only five functions:
 
-var captions = new Subtitle();
+* [`parse`](#parsesrt-string---array)
+* [`stringify`](#stringifysubtitles-array---string)
+* [`resync`](#resyncsubtitles-array-time-number---object)
+* [`toMS`](#tomstimestamp-string---number)
+* [`toSrtTime`](#tosrttimetimestamp-number---string)
 
-captions.parse('your srt here');
+```js
+// ES6
+const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
 
-console.log(captions.getSubtitles());
+// ES5
+var subtitle = require('subtitle')
+subtitle.parse
+subtitle.stringify
+subtitle.resync
+subtitle.toMS
+subtitle.toSrtTime
 
+// Global
+window.Subtitle.parse
+window.Subtitle.stringify
+window.Subtitle.resync
+window.Subtitle.toMS
+window.Subtitle.toSrtTime
 ```
 
-It's gonna return an array like this:
+### `parse(srt: String) -> Array`
 
-```javascript
+Parses a SRT string and returns an array:
+
+```js
+parse(mySrtContent)
 [
   {
-    index: 1,
+    start: 20000, // time in ms
+    end: 24400,
+    text: 'Bla Bla Bla Bla'
+  },
+  {
+    start: 24600,
+    end: 27800,
+    text: 'Bla Bla Bla Bla'
+  }
+]
+```
+
+### `stringify(captions: Array) -> String`
+
+The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
+
+```js
+const subtitles = [
+  {
     start: '00:00:20,000',
     end: '00:00:24,400',
     text: 'Bla Bla Bla Bla'
   },
   {
-    index: 2,
-    start: '00:00:24,600',
-    end: '00:00:27,800',
+    start: 24600, // timestamp in milliseconds is supported as well
+    end: 27800,
     text: 'Bla Bla Bla Bla'
   }
 ]
+
+const srt = stringify(subtitles)
+// returns the following string:
+/*
+1
+00:00:20,000 --> 00:00:24,400
+Bla Bla Bla Bla
+
+2
+00:00:24,600 --> 00:00:27,800
+Bla Bla Bla Bla
+*/
 ```
 
-You can also pass options to the `getSubtitles()` method.
+### `resync(captions: Array, time: Number) -> Object`
 
-```javascript
-captions.getSubtitles({
-  duration: true, // Include the `duration` property
-  timeFormat: 'ms' // Set time format to milliseconds
-});
-```
+Resync all captions at once.
 
-Here's the result:
-
-```javascript
-[
+```js
+const subtitles = [
   {
-    index: 1,
-    start: 20000,
-    end: 24400,
-    duration: 4400,
+    start: '00:00:20,000',
+    end: '00:00:24,400',
     text: 'Bla Bla Bla Bla'
   },
   {
-    index: 2,
-    start: 24600,
+    start: 24600, // timestamp in millseconds is supported as well
     end: 27800,
-    duration: 3200,
     text: 'Bla Bla Bla Bla'
   }
 ]
-```
 
-You can also add new captions.
-
-```javascript
-var captions = new Subtitle();
-
-captions.add({
-  start: '00:00:20,000',
-  end: '00:00:21,900',
-  text: 'Text here'
-});
-
-// You can use time in MS if you prefer
-captions.add({
-  start: 22000,
-  end: 22580,
-  text: 'Another text here...'
-});
-```
-
-And what about resync your captions?
-
-```javascript
 // Advance 1s
-captions.resync(1000);
+const newSubtitles = resync(subtitles, 1000)
 
-// Delay 500ms
-captions.resync(-500);
+// Delay 250ms
+const newSubtitles = resync(subtitles, -250) //
+
+// Then, you can stringify your new subtitles:
+stringify(newSubtitles)
 ```
 
-Then, you can stringify your changes:
+### `toMS(timestamp: String) -> Number`
 
-```javascript
-captions.stringify(); // Returns a valid SRT
+Convert a SRT timestamp to milliseconds:
+
+```js
+toMS('00:00:24,400')
+// 24400
+```
+
+### `toSrtTime(timestamp: Number) -> String`
+
+Convert a time from milliseconds to a SRT timestamp:
+
+```js
+toSrtTime(24400)
+// '00:00:24,400'
 ```
 
 ## Tests
@@ -136,13 +169,6 @@ If you want a pretty HTML report, run the following:
 
 Your report will be available in the `coverage` folder.
 
-## Roadmap
-* [x] Basic SRT parser
-* [x] Basic manipulation
-* [x] Stringify
-* [x] Time conversion
-* [x] Duration property
-* [x] Browser support
-* [ ] Stream interface
-* [ ] WebVTT support
-* [ ] Better docs
+## License
+
+MIT

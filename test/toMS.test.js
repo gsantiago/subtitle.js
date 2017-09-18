@@ -1,13 +1,5 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
 const { toMS } = require('..')
-
-/**
- * Tests for `toMS` static method.
- */
 
 test('should convert time to milliseconds', t => {
   const time1 = {
@@ -34,4 +26,10 @@ test('invalid format should throw an error', t => {
   t.throws(function () {
     toMS('12,34:56,78')
   })
+})
+
+test('should return the given numbers', t => {
+  t.is(toMS(1000), 1000)
+  t.is(toMS(600), 600)
+  t.is(toMS(-150), -150)
 })

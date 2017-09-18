@@ -1,82 +1,60 @@
-/**
- * Dependencies.
- */
-
 const test = require('ava')
-const subtitle = require('..')
-const { readFile } = require('./helpers')
+const fs = require('fs')
+const path = require('path')
+const promisify = require('pify')
+const glob = require('glob-contents')
+const { parse } = require('..')
 
-/**
- * Tests for `parse` method.
- */
+const readFile = promisify(fs.readFile)
 
-test('should parse a small SRT file', t => {
-  t.plan(2)
+test('parse all examples', async t => {
+  const subtitles = await glob(path.join(__dirname, '/examples/*.srt'))
 
-  const promise = readFile('fixtures/sample.srt')
+  Object.keys(subtitles).forEach(async filepath => {
+    const basename = path.basename(filepath, '.srt')
+    const value = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+    t.deepEqual(subtitles[filepath], parse(value))
+  })
+})
+
+test('parse captions', t => {
+  const srt = `
+1
+02:12:34,647 --> 02:12:35,489
+Hi.
+
+2
+02:12:36,415 --> 02:12:37,758
+Lois Lane.
+
+3
+02:12:38,584 --> 02:12:40,120
+Welcome to the Planet.
+  `.trim().concat('\n')
+
+  const value = parse(srt)
 
   const expected = [
     {
-      index: 1,
-      start: '00:00:20,000',
-      end: '00:00:24,400',
-      duration: 4400,
-      text: 'This is the first line\nand this is the second one'
+      start: 7954647,
+      end: 7955489,
+      text: 'Hi.'
     },
     {
-      index: 2,
-      start: '00:00:24,600',
-      end: '00:00:27,800',
-      duration: 3200,
-      text: 'Hello, World!'
+      start: 7956415,
+      end: 7957758,
+      text: 'Lois Lane.'
+    },
+    {
+      start: 7958584,
+      end: 7960120,
+      text: 'Welcome to the Planet.'
     }
   ]
 
-  const expectedWithTimeInmilliseconds = expected.map(caption => {
-    return Object.assign(caption, {
-      start: subtitle.toMS(caption.start),
-      end: subtitle.toMS(caption.end)
-    })
-  })
-
-  promise
-  .then(content => {
-    const subs = subtitle(content)
-
-    const result = subs.getSubtitles({duration: true})
-
-    const resultWithTimeInmilliseconds = subs.getSubtitles({
-      timeFormat: 'ms',
-      duration: true
-    })
-
-    t.deepEqual(result, expected)
-    t.deepEqual(resultWithTimeInmilliseconds, expectedWithTimeInmilliseconds)
-  })
-
-  return promise
+  t.deepEqual(value, expected)
 })
 
-test('should parse a big SRT file without any errors', t => {
-  t.plan(1)
-
-  const promise = readFile('fixtures/big.srt')
-
-  promise
-  .then(content => {
-    const subs = subtitle()
-    subs.parse(content)
-    t.is(subs.getSubtitles().length, 1298)
-  })
-  .catch(t.fail)
-
-  return promise
-})
-
-test('it should throw an exception if no argument is passed', t => {
-  const subs = subtitle()
-
-  t.throws(() => {
-    subs.parse()
-  })
+test('it should an empty array', t => {
+  t.deepEqual(parse(), [])
 })

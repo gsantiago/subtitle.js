@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.1] - 2017-13-10
+### Changed
+- Fix parsing of 00:00:00,000 timestamp #17
+
 ## [1.0.0] - 2017-18-09
 ### Changed
 - Almost everything. Subtitle.js has a new API now.

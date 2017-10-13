@@ -58,3 +58,21 @@ Welcome to the Planet.
 test('it should an empty array', t => {
   t.deepEqual(parse(), [])
 })
+
+test('parse 00:00:00,000 caption', t => {
+  const srt = `
+1
+00:00:00,000 --> 00:00:00,100
+Hi.
+`
+  const value = parse(srt)
+  const expected = [
+    {
+      start: 0,
+      end: 100,
+      text: 'Hi.'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})

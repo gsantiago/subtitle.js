@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const promisify = require('pify')
 const glob = require('glob-contents')
-const { parse } = require('..')
+const {parse} = require('..')
 
 const readFile = promisify(fs.readFile)
 
@@ -17,7 +17,7 @@ test('parse all examples', async t => {
   })
 })
 
-test('parse captions', t => {
+test('parse SRT captions', t => {
   const srt = `
 1
 02:12:34,647 --> 02:12:35,489
@@ -55,7 +55,48 @@ Welcome to the Planet.
   t.deepEqual(value, expected)
 })
 
-test('it should an empty array', t => {
+test('parse VTT captions', t => {
+  const vtt = `
+WEBVTT - Test VTT cues
+
+1
+12:34.647 --> 12:35.489 align:middle line:90%
+Hi.
+
+2
+12:36.415 --> 02:12:37.758 align:start line:90%
+Lois Lane.
+
+02:12:38.584 --> 02:12:40.120
+Welcome to the Planet.
+  `.trim().concat('\n')
+
+  const value = parse(vtt)
+
+  const expected = [
+    {
+      start: 754647,
+      end: 755489,
+      settings: 'align:middle line:90%',
+      text: 'Hi.'
+    },
+    {
+      start: 756415,
+      end: 7957758,
+      settings: 'align:start line:90%',
+      text: 'Lois Lane.'
+    },
+    {
+      start: 7958584,
+      end: 7960120,
+      text: 'Welcome to the Planet.'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})
+
+test('it should return an empty array', t => {
   t.deepEqual(parse(), [])
 })
 

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2018-02-14
+### Added
+- Support for both SRT and WebVTT input strings
+
 ## [1.0.1] - 2017-13-10
 ### Changed
 - Fix parsing of 00:00:00,000 timestamp #17

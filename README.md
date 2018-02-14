@@ -6,7 +6,8 @@
 [![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Parse and manipulate SRT (SubRip) format.
+Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is 
+also supported.
 
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)  
 >John-David Dalton, creator of Lodash
@@ -50,10 +51,10 @@ window.Subtitle.toSrtTime
 
 ### `parse(srt: String) -> Array`
 
-Parses a SRT string and returns an array:
+Parses a SRT or WebVTT string and returns an array:
 
 ```js
-parse(mySrtContent)
+parse(mySrtOrVttContent)
 [
   {
     start: 20000, // time in ms
@@ -63,7 +64,8 @@ parse(mySrtContent)
   {
     start: 24600,
     end: 27800,
-    text: 'Bla Bla Bla Bla'
+    text: 'Bla Bla Bla Bla',
+    settings: 'align:middle line:90%' // WebVTT only
   }
 ]
 ```
@@ -129,10 +131,13 @@ stringify(newSubtitles)
 
 ### `toMS(timestamp: String) -> Number`
 
-Convert a SRT timestamp to milliseconds:
+Convert a SRT or WebVTT timestamp to milliseconds:
 
 ```js
 toMS('00:00:24,400')
+// 24400
+
+toMS('00:24.400')
 // 24400
 ```
 

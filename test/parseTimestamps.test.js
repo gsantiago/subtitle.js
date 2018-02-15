@@ -1,5 +1,5 @@
 import test from 'ava'
-import parseTimestamps from '../lib/parseTimestamps'
+import { parseTimestamps } from '..'
 
 const checkWith = (t) => (val, expected) => {
   t.deepEqual(parseTimestamps(val), expected)

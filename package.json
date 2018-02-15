@@ -9,12 +9,12 @@
   "main": "./dist/subtitle.bundle.js",
   "scripts": {
     "test": "npm run lint && npm run ava",
-    "ava": "ava test/*.test.js",
+    "ava": "npm run build && ava test/*.test.js",
     "lint": "standard subtitle.js lib/*.js test/*.test.js",
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "js": "webpack"
+    "build": "webpack"
   },
   "keywords": [
     "subtitle",

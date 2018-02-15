@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.1.0] - 2018-02-14
 ### Added
-- Support for both SRT and WebVTT input strings
+- Support for both SRT and WebVTT input strings #21
 
 ## [1.0.1] - 2017-13-10
 ### Changed

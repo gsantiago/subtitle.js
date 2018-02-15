@@ -1,5 +1,5 @@
-const test = require('ava')
-const { resync } = require('..')
+import test from 'ava'
+import { resync } from '..'
 
 const captions = [
   {

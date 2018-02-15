@@ -4,7 +4,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'subtitle.browser.js',
+    filename: 'subtitle.bundle.js',
     library: 'Subtitle',
     libraryTarget: 'umd'
   },

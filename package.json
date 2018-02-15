@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"
   },
-  "browser": "./browser/subtitle.browser.js",
+  "main": "./dist/subtitle.bundle.js",
   "scripts": {
     "test": "npm run lint && npm run ava",
     "ava": "ava test/*.test.js",

@@ -1,4 +1,4 @@
 exclude_paths:
-- "browser/*.js"
+- "dist/*.js"
 - "examples/**/*"
 - "test/**/*"

@@ -20,23 +20,24 @@ also supported.
 
 ```js
 // ES2015 modules
-import Subtitle from 'subtitle'
+import * as Subtitle from 'subtitle'
 import { parse, stringify, resync, toMS, toSrtTime } from 'subtitle'
 ```
 
 ```js
 // ES6 CommonJS
+const Subtitle = require('subtitle')
 const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
 ```
 
 ```js
 // ES5 CommonJS
-var subtitle = require('subtitle')
-subtitle.parse
-subtitle.stringify
-subtitle.resync
-subtitle.toMS
-subtitle.toSrtTime
+var Subtitle = require('subtitle')
+Subtitle.parse
+Subtitle.stringify
+Subtitle.resync
+Subtitle.toMS
+Subtitle.toSrtTime
 ```
 
 ### Browser

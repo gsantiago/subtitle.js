@@ -1,22 +1,20 @@
 {
   "name": "subtitle",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Parse and manipulate SRT (SubRip)",
   "repository": {
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"
   },
-  "browser": "./browser/subtitle.browser.js",
+  "main": "./dist/subtitle.bundle.js",
   "scripts": {
     "test": "npm run lint && npm run ava",
-    "ava": "ava test/*.test.js",
+    "ava": "npm run build && ava test/*.test.js",
     "lint": "standard subtitle.js lib/*.js test/*.test.js",
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "js": "simplifyify index.js -o ./browser/subtitle.browser.js -s Subtitle",
-    "js:min": "simplifyify index.js -o ./browser/subtitle.browser.min.js -s Subtitle -m",
-    "build": "npm run js & npm run js:min"
+    "build": "webpack"
   },
   "keywords": [
     "subtitle",
@@ -35,30 +33,20 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "es2015"
-          ]
-        }
-      ]
-    ]
-  },
   "devDependencies": {
     "ava": "^0.17.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
-    "babelify": "^7.3.0",
     "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
     "glob-contents": "0.0.3",
     "nyc": "^10.0.0",
     "pify": "^3.0.0",
-    "simplifyify": "^3.2.4",
-    "standard": "^8.0.0"
+    "standard": "^8.0.0",
+    "webpack": "^3.11.0"
   },
   "dependencies": {
     "zero-fill": "^2.2.3"

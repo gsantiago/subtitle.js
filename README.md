@@ -16,8 +16,49 @@ also supported.
 
 `npm install subtitle --save`
 
-For browser usage, you can copy the script `subtitle.browser.js`
-from the `browser` folder.
+## Usage
+
+```js
+// ES2015 modules
+import Subtitle from 'subtitle'
+import { parse, stringify, resync, toMS, toSrtTime } from 'subtitle'
+```
+
+```js
+// ES6 CommonJS
+const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
+```
+
+```js
+// ES5 CommonJS
+var subtitle = require('subtitle')
+subtitle.parse
+subtitle.stringify
+subtitle.resync
+subtitle.toMS
+subtitle.toSrtTime
+```
+
+### Browser
+
+If you don't use a bundler like Webpack or Browserify, you can just copy the
+script `subtitle.bundle.js` from the `dist` folder and link it to your page.
+
+```html
+<script src="path/to/subtitle.bundle.js"></script>
+<script>
+  // `Subtitle` will be globally available
+  console.log(window.Subtitle)
+  /*
+    {
+      parse: function parse()
+      resync: function resync()
+      stringify: function stringify()
+      toMS: function toMS()
+      toSrtTime: function toSrtTime()
+  */
+</script>
+```
 
 ## API
 
@@ -28,26 +69,6 @@ The API is minimal and provide only five functions:
 * [`resync`](#resyncsubtitles-array-time-number---object)
 * [`toMS`](#tomstimestamp-string---number)
 * [`toSrtTime`](#tosrttimetimestamp-number---string)
-
-```js
-// ES6
-const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
-
-// ES5
-var subtitle = require('subtitle')
-subtitle.parse
-subtitle.stringify
-subtitle.resync
-subtitle.toMS
-subtitle.toSrtTime
-
-// Global
-window.Subtitle.parse
-window.Subtitle.stringify
-window.Subtitle.resync
-window.Subtitle.toMS
-window.Subtitle.toSrtTime
-```
 
 ### `parse(srt: String) -> Array`
 

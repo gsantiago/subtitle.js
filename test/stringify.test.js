@@ -1,9 +1,9 @@
-const test = require('ava')
-const fs = require('fs')
-const path = require('path')
-const promisify = require('pify')
-const glob = require('glob-contents')
-const { stringify } = require('..')
+import test from 'ava'
+import fs from 'fs'
+import path from 'path'
+import promisify from 'pify'
+import glob from 'glob-contents'
+import { stringify } from '..'
 
 const readFile = promisify(fs.readFile)
 

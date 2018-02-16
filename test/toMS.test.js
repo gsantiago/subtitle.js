@@ -1,5 +1,5 @@
-const test = require('ava')
-const {toMS} = require('..')
+import test from 'ava'
+import { toMS } from '..'
 
 test('should convert SRT time to milliseconds', t => {
   const time1 = {

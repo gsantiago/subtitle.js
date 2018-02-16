@@ -1,5 +1,5 @@
-const test = require('ava')
-const parseTimestamps = require('../lib/parseTimestamps')
+import test from 'ava'
+import { parseTimestamps } from '..'
 
 const checkWith = (t) => (val, expected) => {
   t.deepEqual(parseTimestamps(val), expected)

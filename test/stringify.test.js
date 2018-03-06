@@ -8,14 +8,22 @@ import { stringify } from '..'
 const readFile = promisify(fs.readFile)
 
 test('stringify all examples', async t => {
-  const subtitles = await glob(path.join(__dirname, '/examples/*.json'))
+  const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
-  Object.keys(subtitles).forEach(async filepath => {
-    const basename = path.basename(filepath, '.json')
-    const value = await readFile(path.join(__dirname, `/examples/${basename}.srt`), 'utf8')
-    const expected = JSON.parse(subtitles[filepath])
-    t.deepEqual(expected, stringify(value))
-  })
+  await Promise.all(
+    Object.keys(srt).map(async filepath => {
+      const basename = path.basename(filepath, '.srt')
+      const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+      const subtitles = JSON.parse(json)
+      const normalizedSrt = srt[filepath]
+        .trim()
+        .concat('\n')
+        .replace(/\r\n/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+
+      t.deepEqual(stringify(subtitles), normalizedSrt)
+    })
+  )
 })
 
 test('stringify captions with timestamp in SRT format', t => {

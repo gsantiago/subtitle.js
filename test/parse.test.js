@@ -8,13 +8,16 @@ import { parse } from '..'
 const readFile = promisify(fs.readFile)
 
 test('parse all examples', async t => {
-  const subtitles = await glob(path.join(__dirname, '/examples/*.srt'))
+  const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
-  Object.keys(subtitles).forEach(async filepath => {
-    const basename = path.basename(filepath, '.srt')
-    const value = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
-    t.deepEqual(subtitles[filepath], parse(value))
-  })
+  await Promise.all(
+    Object.keys(srt).map(async filepath => {
+      const basename = path.basename(filepath, '.srt')
+      const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+      const subtitles = JSON.parse(json)
+      t.deepEqual(parse(srt[filepath]), subtitles)
+    })
+  )
 })
 
 test('parse SRT captions', t => {

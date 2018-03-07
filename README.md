@@ -21,13 +21,13 @@ also supported.
 ```js
 // ES2015 modules
 import * as Subtitle from 'subtitle'
-import { parse, stringify, resync, toMS, toSrtTime } from 'subtitle'
+import { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } from 'subtitle'
 ```
 
 ```js
 // ES6 CommonJS
 const Subtitle = require('subtitle')
-const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
+const { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } = require('subtitle')
 ```
 
 ```js
@@ -35,9 +35,11 @@ const { parse, stringify, resync, toMS, toSrtTime } = require('subtitle')
 var Subtitle = require('subtitle')
 Subtitle.parse
 Subtitle.stringify
+Subtitle.stringifyVtt
 Subtitle.resync
 Subtitle.toMS
 Subtitle.toSrtTime
+Subtitle.toVttTime
 ```
 
 ### Browser
@@ -55,21 +57,25 @@ script `subtitle.bundle.js` from the `dist` folder and link it to your page.
       parse: function parse()
       resync: function resync()
       stringify: function stringify()
+      stringifyVtt: function stringifyVtt()
       toMS: function toMS()
       toSrtTime: function toSrtTime()
+      toVttTime: function toVttTime()
   */
 </script>
 ```
 
 ## API
 
-The API is minimal and provide only five functions:
+The API is minimal and provide only five functions, two of which have SRT and WebVTT variants:
 
 * [`parse`](#parsesrt-string---array)
-* [`stringify`](#stringifysubtitles-array---string)
-* [`resync`](#resyncsubtitles-array-time-number---object)
+* [`stringify`](#stringifycaptions-array---string)
+* [`stringifyVtt`](#stringifycaptions-array---string)
+* [`resync`](#resynccaptions-array-time-number---object)
 * [`toMS`](#tomstimestamp-string---number)
 * [`toSrtTime`](#tosrttimetimestamp-number---string)
+* [`toVttTime`](#tovtttimetimestamp-number---string)
 
 ### `parse(srt: String) -> Array`
 
@@ -96,6 +102,9 @@ parse(mySrtOrVttContent)
 
 The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
 
+The `stringifyVtt(captions: Array) -> String` function is also available for converting to a 
+valid WebVTT string.
+
 ```js
 const subtitles = [
   {
@@ -106,7 +115,8 @@ const subtitles = [
   {
     start: 24600, // timestamp in milliseconds is supported as well
     end: 27800,
-    text: 'Bla Bla Bla Bla'
+    text: 'Bla Bla Bla Bla',
+    settings: 'align:middle line:90%' // Ignored in SRT format
   }
 ]
 
@@ -119,6 +129,20 @@ Bla Bla Bla Bla
 
 2
 00:00:24,600 --> 00:00:27,800
+Bla Bla Bla Bla
+*/
+
+const vtt = stringifyVtt(subtitles)
+// returns the following string:
+/*
+WEBVTT
+
+1
+00:00:20.000 --> 00:00:24.400
+Bla Bla Bla Bla
+
+2
+00:00:24.600 --> 00:00:27.800 align:middle line:90%
 Bla Bla Bla Bla
 */
 ```
@@ -170,6 +194,16 @@ Convert a time from milliseconds to a SRT timestamp:
 ```js
 toSrtTime(24400)
 // '00:00:24,400'
+```
+
+
+### `toVttTime(timestamp: Number) -> String`
+
+Convert a time from milliseconds to a WebVTT timestamp:
+
+```js
+toVttTime(24400)
+// '00:00:24.400'
 ```
 
 ## Tests

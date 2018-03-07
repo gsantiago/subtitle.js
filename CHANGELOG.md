@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [1.2.0] - 2018-03-07
+### Added
+- `toVttTime` and `stringifyVtt` functions #24
+### Changed
+- Fix broken tests #21
+
 # [1.1.1] - 2018-02-16
 ### Added
 - Webpack instead of Browserify.
@@ -15,21 +21,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support for both SRT and WebVTT input strings #21
 
-## [1.0.1] - 2017-13-10
+## [1.0.1] - 2017-10-13
 ### Changed
 - Fix parsing of 00:00:00,000 timestamp #17
 
-## [1.0.0] - 2017-18-09
+## [1.0.0] - 2017-09-18
 ### Changed
 - Almost everything. Subtitle.js has a new API now.
 - Code rewritten to ES6.
 - Tests improved.
 
-## [0.1.5] - 2017-27-02
+## [0.1.5] - 2017-02-27
 ### Changed
 - Ensure `text` is an empty string instead of `null` or `undefined`, #15
 
-## [0.1.4] - 2017-27-02
+## [0.1.4] - 2017-02-27
 ### Changed
 - Normalize extra newlines, #44
 

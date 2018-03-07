@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -121,7 +121,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = toSrtTime;
 
-var _zeroFill = __webpack_require__(4);
+var _zeroFill = __webpack_require__(2);
 
 var _zeroFill2 = _interopRequireDefault(_zeroFill);
 
@@ -152,6 +152,71 @@ function toSrtTime(timestamp) {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/**
+ * Given a number, return a zero-filled string.
+ * From http://stackoverflow.com/questions/1267283/
+ * @param  {number} width
+ * @param  {number} number
+ * @return {string}
+ */
+module.exports = function zeroFill (width, number, pad) {
+  if (number === undefined) {
+    return function (number, pad) {
+      return zeroFill(width, number, pad)
+    }
+  }
+  if (pad === undefined) pad = '0'
+  width -= number.toString().length
+  if (width > 0) return new Array(width + (/\./.test(number) ? 2 : 1)).join(pad) + number
+  return number + ''
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toVttTime;
+
+var _zeroFill = __webpack_require__(2);
+
+var _zeroFill2 = _interopRequireDefault(_zeroFill);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Return the given milliseconds as WebVTT timestamp.
+ * @param timestamp
+ * @returns {string}
+ */
+
+function toVttTime(timestamp) {
+  if (isNaN(timestamp)) {
+    return timestamp;
+  }
+
+  var date = new Date(0, 0, 0, 0, 0, 0, timestamp);
+
+  var hours = (0, _zeroFill2.default)(2, date.getHours());
+  var minutes = (0, _zeroFill2.default)(2, date.getMinutes());
+  var seconds = (0, _zeroFill2.default)(2, date.getSeconds());
+  var ms = timestamp - (hours * 3600000 + minutes * 60000 + seconds * 1000);
+
+  return hours + ':' + minutes + ':' + seconds + '.' + (0, _zeroFill2.default)(3, ms);
+} /**
+   * Module dependencies.
+   */
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -198,7 +263,7 @@ function parseTimestamps(value) {
 }
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -226,7 +291,16 @@ Object.defineProperty(exports, 'toSrtTime', {
   }
 });
 
-var _parse = __webpack_require__(5);
+var _toVttTime = __webpack_require__(3);
+
+Object.defineProperty(exports, 'toVttTime', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_toVttTime).default;
+  }
+});
+
+var _parse = __webpack_require__(6);
 
 Object.defineProperty(exports, 'parse', {
   enumerable: true,
@@ -235,7 +309,7 @@ Object.defineProperty(exports, 'parse', {
   }
 });
 
-var _stringify = __webpack_require__(6);
+var _stringify = __webpack_require__(7);
 
 Object.defineProperty(exports, 'stringify', {
   enumerable: true,
@@ -244,7 +318,16 @@ Object.defineProperty(exports, 'stringify', {
   }
 });
 
-var _resync = __webpack_require__(7);
+var _stringifyVtt = __webpack_require__(8);
+
+Object.defineProperty(exports, 'stringifyVtt', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_stringifyVtt).default;
+  }
+});
+
+var _resync = __webpack_require__(9);
 
 Object.defineProperty(exports, 'resync', {
   enumerable: true,
@@ -253,7 +336,7 @@ Object.defineProperty(exports, 'resync', {
   }
 });
 
-var _parseTimestamps = __webpack_require__(2);
+var _parseTimestamps = __webpack_require__(4);
 
 Object.defineProperty(exports, 'parseTimestamps', {
   enumerable: true,
@@ -265,31 +348,7 @@ Object.defineProperty(exports, 'parseTimestamps', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-/**
- * Given a number, return a zero-filled string.
- * From http://stackoverflow.com/questions/1267283/
- * @param  {number} width
- * @param  {number} number
- * @return {string}
- */
-module.exports = function zeroFill (width, number, pad) {
-  if (number === undefined) {
-    return function (number, pad) {
-      return zeroFill(width, number, pad)
-    }
-  }
-  if (pad === undefined) pad = '0'
-  width -= number.toString().length
-  if (width > 0) return new Array(width + (/\./.test(number) ? 2 : 1)).join(pad) + number
-  return number + ''
-}
-
-
-/***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -300,7 +359,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = parse;
 
-var _parseTimestamps = __webpack_require__(2);
+var _parseTimestamps = __webpack_require__(4);
 
 var _parseTimestamps2 = _interopRequireDefault(_parseTimestamps);
 
@@ -348,7 +407,7 @@ function parse(srtOrVtt) {
    */
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -380,7 +439,39 @@ function stringify(captions) {
    */
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = stringifyVtt;
+
+var _toVttTime = __webpack_require__(3);
+
+var _toVttTime2 = _interopRequireDefault(_toVttTime);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Stringify the given array of captions to WebVTT format.
+ * @param {Array} captions
+ * @return {String} webVtt
+ */
+
+function stringifyVtt(captions) {
+  return 'WEBVTT\n\n' + captions.map(function (caption, index) {
+    return (index > 0 ? '\n' : '') + [index + 1, (0, _toVttTime2.default)(caption.start) + ' --> ' + (0, _toVttTime2.default)(caption.end) + (caption.settings ? ' ' + caption.settings : ''), caption.text].join('\n');
+  }).join('\n') + '\n';
+} /**
+   * Module dependencies.
+   */
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

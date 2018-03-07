@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-# [1.2.0] - 2018-03-07
+## [1.2.0] - 2018-03-07
 ### Added
 - `toVttTime` and `stringifyVtt` functions #24
 ### Changed
 - Fix broken tests #21
 
-# [1.1.1] - 2018-02-16
+## [1.1.1] - 2018-02-16
 ### Added
 - Webpack instead of Browserify.
 - Fix #18 and #19.

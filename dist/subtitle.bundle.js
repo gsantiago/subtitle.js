@@ -391,7 +391,7 @@ function parse(srtOrVtt) {
       return captions;
     }
 
-    if (row.trim() === '') {
+    if (row === '') {
       delete caption.index;
       if (index !== source.length - 1) {
         captions.push({});

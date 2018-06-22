@@ -120,3 +120,30 @@ Hi.
 
   t.deepEqual(value, expected)
 })
+
+test('parse text that contains only empty space', t => {
+  const srt = `
+1
+00:00:00,000 --> 00:00:00,100
+Something something something... dark side
+ 
+
+2
+00:00:00,100 --> 00:00:00,200
+Hi.`
+  const value = parse(srt)
+  const expected = [
+    {
+      start: 0,
+      end: 100,
+      text: 'Something something something... dark side\n '
+    }, {
+      start: 100,
+      end: 200,
+      text: 'Hi.'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})
+

@@ -147,3 +147,31 @@ Hi.`
   t.deepEqual(value, expected)
 })
 
+test('parse text that is partially malformed', t => {
+  const srt = `
+1
+00:00:00,000 --> 00:00:00,100Something something something... dark side
+ 
+3
+
+2
+00:00:00,100 --> 00:00:00,200
+Hi.`
+  const value = parse(srt, {
+    skipInvalidCaptions: true,
+    errorHandler: function (error) {
+      console.log(error)
+    },
+    skipContiguousErrors: true
+  })
+
+  const expected = [
+    {
+      start: 100,
+      end: 200,
+      text: 'Hi.'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})

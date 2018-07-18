@@ -371,33 +371,58 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {Array} subtitles
  */
 
-function parse(srtOrVtt) {
+function parse(srtOrVtt, options) {
   if (!srtOrVtt) return [];
+  options = options || {
+    skipInvalidCaptions: false,
+    errorHandler: null,
+    skipContiguousErrors: true
+  };
 
   var source = srtOrVtt.trim().concat('\n').replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/^WEBVTT.*\n{2}/, '').split('\n');
+
+  var lastWasSuccessful = true;
 
   return source.reduce(function (captions, row, index) {
     var caption = captions[captions.length - 1];
 
-    if (!caption.index) {
-      if (/^\d+$/.test(row)) {
-        caption.index = parseInt(row, 10);
+    try {
+      if (!caption.index) {
+        if (/^\d+$/.test(row)) {
+          caption.index = parseInt(row, 10);
+          return captions;
+        }
+      }
+
+      if (!caption.hasOwnProperty('start')) {
+        Object.assign(caption, (0, _parseTimestamps2.default)(row));
         return captions;
       }
-    }
 
-    if (!caption.hasOwnProperty('start')) {
-      Object.assign(caption, (0, _parseTimestamps2.default)(row));
-      return captions;
-    }
-
-    if (row === '') {
-      delete caption.index;
-      if (index !== source.length - 1) {
-        captions.push({});
+      if (row === '') {
+        delete caption.index;
+        if (index !== source.length - 1) {
+          captions.push({});
+        }
+      } else {
+        caption.text = caption.text ? caption.text + '\n' + row : row;
       }
-    } else {
-      caption.text = caption.text ? caption.text + '\n' + row : row;
+
+      lastWasSuccessful = true;
+    } catch (error) {
+      if (!options.skipInvalidCaptions) {
+        throw error;
+      }
+
+      if (lastWasSuccessful || !options.skipContiguousErrors) {
+        if (typeof options.errorHandler === 'function') {
+          options.errorHandler({ index: index, row: row, error: error });
+        }
+      }
+
+      lastWasSuccessful = false;
+
+      captions[captions.length - 1] = {};
     }
 
     return captions;

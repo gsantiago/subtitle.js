@@ -374,7 +374,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function parse(srtOrVtt) {
   if (!srtOrVtt) return [];
 
-  var source = srtOrVtt.trim().concat('\n').replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/^WEBVTT.*\n{2}/, '').split('\n');
+  var source = srtOrVtt.trim().concat('\n').replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/^WEBVTT.*\n(?:.*: .*\n)*\n/, '').split('\n');
 
   return source.reduce(function (captions, row, index) {
     var caption = captions[captions.length - 1];

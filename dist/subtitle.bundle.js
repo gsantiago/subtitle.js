@@ -392,7 +392,7 @@ function parse(srtOrVtt) {
       var timestamp = (0, _parseTimestamps2.default)(row);
       if (timestamp) {
         Object.assign(caption, timestamp);
-      } else if (captions.length > 2) {
+      } else if (captions.length > 1) {
         captions[captions.length - 2].text += '\n' + row;
       }
       return captions;

@@ -190,3 +190,29 @@ Hi.`
   t.deepEqual(value, expected)
 })
 
+test('parse separated texts', t => {
+  const srt = `
+1
+00:00:00,000 --> 00:00:00,100
+Dear Michael. Of course it's you.
+
+Who else could they send?
+
+2
+00:00:00,100 --> 00:00:00,200
+Who else could be trusted?`
+  const value = parse(srt)
+  const expected = [
+    {
+      start: 0,
+      end: 100,
+      text: 'Dear Michael. Of course it\'s you.\nWho else could they send?\n'
+    }, {
+      start: 100,
+      end: 200,
+      text: 'Who else could be trusted?'
+    }
+  ]
+
+  t.deepEqual(value, expected)
+})

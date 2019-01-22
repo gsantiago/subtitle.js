@@ -252,14 +252,16 @@ var RE = /^((?:\d{2,}:)?\d{2}:\d{2}[,.]\d{3}) --> ((?:\d{2,}:)?\d{2}:\d{2}[,.]\d
 
 function parseTimestamps(value) {
   var match = RE.exec(value);
-  var cue = {
-    start: (0, _toMS2.default)(match[1]),
-    end: (0, _toMS2.default)(match[2])
-  };
-  if (match[3]) {
-    cue.settings = match[3];
+  if (match) {
+    var cue = {
+      start: (0, _toMS2.default)(match[1]),
+      end: (0, _toMS2.default)(match[2])
+    };
+    if (match[3]) {
+      cue.settings = match[3];
+    }
+    return cue;
   }
-  return cue;
 }
 
 /***/ }),
@@ -387,7 +389,12 @@ function parse(srtOrVtt) {
     }
 
     if (!caption.hasOwnProperty('start')) {
-      Object.assign(caption, (0, _parseTimestamps2.default)(row));
+      var timestamp = (0, _parseTimestamps2.default)(row);
+      if (timestamp) {
+        Object.assign(caption, timestamp);
+      } else if (captions.length > 1) {
+        captions[captions.length - 2].text += '\n' + row;
+      }
       return captions;
     }
 

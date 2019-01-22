@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.2] - 2019-01-22
+### Added
+- Support separated texts in subtitles #36
+
 ## [2.0.1] - 2018-10-24
 ### Added
 - Support for WebVTT headers support #32

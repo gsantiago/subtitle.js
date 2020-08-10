@@ -28,6 +28,16 @@ test('parseTimestamps with SRT input', t => {
     start: 45296789,
     end: 357414321
   })
+
+  check('0:59:50,050 --> 1:00:20,070', {
+    start: 3590050,
+    end: 3620070
+  })
+
+  check('0:00:20,000 --> 0:00:24,400', {
+    start: 20000,
+    end: 24400
+  })
 })
 
 test('parseTimestamps with VTT input and short formats', t => {
@@ -47,6 +57,11 @@ test('parseTimestamps with VTT input and short formats', t => {
     start: 3590050,
     end: 3620070
   })
+
+  check('0:59:50.050 --> 1:00:20.070', {
+    start: 3590050,
+    end: 3620070
+  })
 })
 
 test('parseTimestamps with VTT settings', t => {
@@ -59,6 +74,12 @@ test('parseTimestamps with VTT settings', t => {
   })
 
   check('00:20.000 --> 00:24.400 position:45%,line-right align:center size:35%', {
+    start: 20000,
+    end: 24400,
+    settings: 'position:45%,line-right align:center size:35%'
+  })
+
+  check('0:00:20.000 --> 0:00:24.400 position:45%,line-right align:center size:35%', {
     start: 20000,
     end: 24400,
     settings: 'position:45%,line-right align:center size:35%'

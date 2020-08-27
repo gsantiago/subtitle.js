@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.4] - 2020-08-27
+### Added
+- Add one-digit hour support #45 which fixes #31
+
 ## [2.0.3] - 2019-04-04
 ### Added
 - Add ESM module field to package.json

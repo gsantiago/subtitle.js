@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = toMS;
+exports.toMS = toMS;
 /**
  * Return the given SRT timestamp as milleseconds.
  * @param {string|number} timestamp
@@ -119,13 +119,9 @@ function toMS(timestamp) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = toSrtTime;
+exports.toSrtTime = toSrtTime;
 
-var _zeroFill = __webpack_require__(2);
-
-var _zeroFill2 = _interopRequireDefault(_zeroFill);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _padLeft = __webpack_require__(2);
 
 /**
  * Return the given milliseconds as SRT timestamp.
@@ -140,39 +136,28 @@ function toSrtTime(timestamp) {
 
   var date = new Date(0, 0, 0, 0, 0, 0, timestamp);
 
-  var hours = (0, _zeroFill2.default)(2, date.getHours());
-  var minutes = (0, _zeroFill2.default)(2, date.getMinutes());
-  var seconds = (0, _zeroFill2.default)(2, date.getSeconds());
+  var hours = (0, _padLeft.padLeft)(date.getHours());
+  var minutes = (0, _padLeft.padLeft)(date.getMinutes());
+  var seconds = (0, _padLeft.padLeft)(date.getSeconds());
   var ms = timestamp - (hours * 3600000 + minutes * 60000 + seconds * 1000);
 
-  return hours + ':' + minutes + ':' + seconds + ',' + (0, _zeroFill2.default)(3, ms);
-} /**
-   * Module dependencies.
-   */
+  return hours + ':' + minutes + ':' + seconds + ',' + (0, _padLeft.padLeft)(ms, 3);
+}
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Given a number, return a zero-filled string.
- * From http://stackoverflow.com/questions/1267283/
- * @param  {number} width
- * @param  {number} number
- * @return {string}
- */
-module.exports = function zeroFill (width, number, pad) {
-  if (number === undefined) {
-    return function (number, pad) {
-      return zeroFill(width, number, pad)
-    }
-  }
-  if (pad === undefined) pad = '0'
-  width -= number.toString().length
-  if (width > 0) return new Array(width + (/\./.test(number) ? 2 : 1)).join(pad) + number
-  return number + ''
-}
+"use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var padLeft = exports.padLeft = function padLeft(value) {
+  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  return value.toString().padStart(length, 0);
+};
 
 /***/ }),
 /* 3 */
@@ -184,13 +169,9 @@ module.exports = function zeroFill (width, number, pad) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = toVttTime;
+exports.toVttTime = toVttTime;
 
-var _zeroFill = __webpack_require__(2);
-
-var _zeroFill2 = _interopRequireDefault(_zeroFill);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _padLeft = __webpack_require__(2);
 
 /**
  * Return the given milliseconds as WebVTT timestamp.
@@ -205,15 +186,13 @@ function toVttTime(timestamp) {
 
   var date = new Date(0, 0, 0, 0, 0, 0, timestamp);
 
-  var hours = (0, _zeroFill2.default)(2, date.getHours());
-  var minutes = (0, _zeroFill2.default)(2, date.getMinutes());
-  var seconds = (0, _zeroFill2.default)(2, date.getSeconds());
+  var hours = (0, _padLeft.padLeft)(date.getHours());
+  var minutes = (0, _padLeft.padLeft)(date.getMinutes());
+  var seconds = (0, _padLeft.padLeft)(date.getSeconds());
   var ms = timestamp - (hours * 3600000 + minutes * 60000 + seconds * 1000);
 
-  return hours + ':' + minutes + ':' + seconds + '.' + (0, _zeroFill2.default)(3, ms);
-} /**
-   * Module dependencies.
-   */
+  return hours + ':' + minutes + ':' + seconds + '.' + (0, _padLeft.padLeft)(ms, 3);
+}
 
 /***/ }),
 /* 4 */
@@ -225,13 +204,9 @@ function toVttTime(timestamp) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = parseTimestamps;
+exports.parseTimestamps = parseTimestamps;
 
 var _toMS = __webpack_require__(0);
-
-var _toMS2 = _interopRequireDefault(_toMS);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Timestamp regex
@@ -246,21 +221,15 @@ var RE = /^((?:\d{1,}:)?\d{2}:\d{2}[,.]\d{3}) --> ((?:\d{1,}:)?\d{2}:\d{2}[,.]\d
  * @returns {{start: Number, end: Number}}
  */
 
-/**
- * Module dependencies.
- */
-
 function parseTimestamps(value) {
   var match = RE.exec(value);
+
   if (match) {
-    var cue = {
-      start: (0, _toMS2.default)(match[1]),
-      end: (0, _toMS2.default)(match[2])
+    return {
+      start: (0, _toMS.toMS)(match[1]),
+      end: (0, _toMS.toMS)(match[2]),
+      settings: match[3]
     };
-    if (match[3]) {
-      cue.settings = match[3];
-    }
-    return cue;
   }
 }
 
@@ -280,7 +249,7 @@ var _toMS = __webpack_require__(0);
 Object.defineProperty(exports, 'toMS', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_toMS).default;
+    return _toMS.toMS;
   }
 });
 
@@ -289,7 +258,7 @@ var _toSrtTime = __webpack_require__(1);
 Object.defineProperty(exports, 'toSrtTime', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_toSrtTime).default;
+    return _toSrtTime.toSrtTime;
   }
 });
 
@@ -298,7 +267,7 @@ var _toVttTime = __webpack_require__(3);
 Object.defineProperty(exports, 'toVttTime', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_toVttTime).default;
+    return _toVttTime.toVttTime;
   }
 });
 
@@ -307,7 +276,7 @@ var _parse = __webpack_require__(6);
 Object.defineProperty(exports, 'parse', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_parse).default;
+    return _parse.parse;
   }
 });
 
@@ -316,7 +285,7 @@ var _stringify = __webpack_require__(7);
 Object.defineProperty(exports, 'stringify', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_stringify).default;
+    return _stringify.stringify;
   }
 });
 
@@ -325,7 +294,7 @@ var _stringifyVtt = __webpack_require__(8);
 Object.defineProperty(exports, 'stringifyVtt', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_stringifyVtt).default;
+    return _stringifyVtt.stringifyVtt;
   }
 });
 
@@ -334,7 +303,7 @@ var _resync = __webpack_require__(9);
 Object.defineProperty(exports, 'resync', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_resync).default;
+    return _resync.resync;
   }
 });
 
@@ -343,11 +312,9 @@ var _parseTimestamps = __webpack_require__(4);
 Object.defineProperty(exports, 'parseTimestamps', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_parseTimestamps).default;
+    return _parseTimestamps.parseTimestamps;
   }
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
 /* 6 */
@@ -359,13 +326,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = parse;
+exports.parse = parse;
 
 var _parseTimestamps = __webpack_require__(4);
-
-var _parseTimestamps2 = _interopRequireDefault(_parseTimestamps);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Parse a SRT or WebVTT string.
@@ -389,7 +352,7 @@ function parse(srtOrVtt) {
     }
 
     if (!caption.hasOwnProperty('start')) {
-      var timestamp = (0, _parseTimestamps2.default)(row);
+      var timestamp = (0, _parseTimestamps.parseTimestamps)(row);
       if (timestamp) {
         Object.assign(caption, timestamp);
       } else if (captions.length > 1) {
@@ -409,9 +372,7 @@ function parse(srtOrVtt) {
 
     return captions;
   }, [{}]);
-} /**
-   * Module dependencies.
-   */
+}
 
 /***/ }),
 /* 7 */
@@ -423,13 +384,9 @@ function parse(srtOrVtt) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = stringify;
+exports.stringify = stringify;
 
 var _toSrtTime = __webpack_require__(1);
-
-var _toSrtTime2 = _interopRequireDefault(_toSrtTime);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Stringify the given array of captions.
@@ -439,11 +396,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function stringify(captions) {
   return captions.map(function (caption, index) {
-    return (index > 0 ? '\n' : '') + [index + 1, (0, _toSrtTime2.default)(caption.start) + ' --> ' + (0, _toSrtTime2.default)(caption.end), caption.text].join('\n');
+    return (index > 0 ? '\n' : '') + [index + 1, (0, _toSrtTime.toSrtTime)(caption.start) + ' --> ' + (0, _toSrtTime.toSrtTime)(caption.end), caption.text].join('\n');
   }).join('\n') + '\n';
-} /**
-   * Module dependencies.
-   */
+}
 
 /***/ }),
 /* 8 */
@@ -455,13 +410,9 @@ function stringify(captions) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = stringifyVtt;
+exports.stringifyVtt = stringifyVtt;
 
 var _toVttTime = __webpack_require__(3);
-
-var _toVttTime2 = _interopRequireDefault(_toVttTime);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Stringify the given array of captions to WebVTT format.
@@ -471,11 +422,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function stringifyVtt(captions) {
   return 'WEBVTT\n\n' + captions.map(function (caption, index) {
-    return (index > 0 ? '\n' : '') + [index + 1, (0, _toVttTime2.default)(caption.start) + ' --> ' + (0, _toVttTime2.default)(caption.end) + (caption.settings ? ' ' + caption.settings : ''), caption.text].join('\n');
+    return (index > 0 ? '\n' : '') + [index + 1, (0, _toVttTime.toVttTime)(caption.start) + ' --> ' + (0, _toVttTime.toVttTime)(caption.end) + (caption.settings ? ' ' + caption.settings : ''), caption.text].join('\n');
   }).join('\n') + '\n';
-} /**
-   * Module dependencies.
-   */
+}
 
 /***/ }),
 /* 9 */
@@ -487,13 +436,9 @@ function stringifyVtt(captions) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = resync;
+exports.resync = resync;
 
 var _toMS = __webpack_require__(0);
-
-var _toMS2 = _interopRequireDefault(_toMS);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Resync the given subtitles.
@@ -504,17 +449,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function resync(captions, time) {
   return captions.map(function (caption) {
-    var start = (0, _toMS2.default)(caption.start) + time;
-    var end = (0, _toMS2.default)(caption.end) + time;
+    var start = (0, _toMS.toMS)(caption.start) + time;
+    var end = (0, _toMS.toMS)(caption.end) + time;
 
     return Object.assign({}, caption, {
       start: start,
       end: end
     });
   });
-} /**
-   * Module dependencies.
-   */
+}
 
 /***/ })
 /******/ ]);

@@ -47,7 +47,5 @@
     "standard": "^8.0.0",
     "webpack": "^3.11.0"
   },
-  "dependencies": {
-    "zero-fill": "^2.2.3"
-  }
+  "dependencies": {}
 }

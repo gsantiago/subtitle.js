@@ -39,7 +39,7 @@ test('should convert VTT time to milliseconds including short formats', () => {
 
   const time4 = {
     srt: '1201:51:58.219',
-    ms: (1201 * 3600000) + 3060000 + 58000 + 219
+    ms: 1201 * 3600000 + 3060000 + 58000 + 219
   }
 
   expect(toMS(time1.srt)).toBe(time1.ms)

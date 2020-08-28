@@ -10,9 +10,12 @@ test('parse all examples', async () => {
   const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
   await Promise.all(
-    Object.keys(srt).map(async filepath => {
+    Object.keys(srt).map(async (filepath) => {
       const basename = path.basename(filepath, '.srt')
-      const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+      const json = await readFile(
+        path.join(__dirname, `/examples/${basename}.json`),
+        'utf8'
+      )
       const subtitles = JSON.parse(json)
       expect(parse(srt[filepath])).toEqual(subtitles)
     })
@@ -32,7 +35,9 @@ Lois Lane.
 3
 02:12:38,584 --> 02:12:40,120
 Welcome to the Planet.
-  `.trim().concat('\n')
+  `
+    .trim()
+    .concat('\n')
 
   const value = parse(srt)
 
@@ -71,7 +76,9 @@ Lois Lane.
 
 02:12:38.584 --> 02:12:40.120
 Welcome to the Planet.
-  `.trim().concat('\n')
+  `
+    .trim()
+    .concat('\n')
 
   const value = parse(vtt)
 
@@ -114,7 +121,9 @@ Lois Lane.
 
 02:12:38.584 --> 02:12:40.120
 Welcome to the Planet.
-  `.trim().concat('\n')
+  `
+    .trim()
+    .concat('\n')
 
   const value = parse(vtt)
 
@@ -179,7 +188,8 @@ Hi.`
       start: 0,
       end: 100,
       text: 'Something something something... dark side\n '
-    }, {
+    },
+    {
       start: 100,
       end: 200,
       text: 'Hi.'
@@ -205,8 +215,9 @@ Who else could be trusted?`
     {
       start: 0,
       end: 100,
-      text: 'Dear Michael. Of course it\'s you.\nWho else could they send?\n'
-    }, {
+      text: "Dear Michael. Of course it's you.\nWho else could they send?\n"
+    },
+    {
       start: 100,
       end: 200,
       text: 'Who else could be trusted?'

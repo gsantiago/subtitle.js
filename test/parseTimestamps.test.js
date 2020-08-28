@@ -63,15 +63,21 @@ test('parseTimestamps with VTT settings', () => {
     settings: 'align:middle line:90%'
   })
 
-  check('00:20.000 --> 00:24.400 position:45%,line-right align:center size:35%', {
-    start: 20000,
-    end: 24400,
-    settings: 'position:45%,line-right align:center size:35%'
-  })
+  check(
+    '00:20.000 --> 00:24.400 position:45%,line-right align:center size:35%',
+    {
+      start: 20000,
+      end: 24400,
+      settings: 'position:45%,line-right align:center size:35%'
+    }
+  )
 
-  check('0:00:20.000 --> 0:00:24.400 position:45%,line-right align:center size:35%', {
-    start: 20000,
-    end: 24400,
-    settings: 'position:45%,line-right align:center size:35%'
-  })
+  check(
+    '0:00:20.000 --> 0:00:24.400 position:45%,line-right align:center size:35%',
+    {
+      start: 20000,
+      end: 24400,
+      settings: 'position:45%,line-right align:center size:35%'
+    }
+  )
 })

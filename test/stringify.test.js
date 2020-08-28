@@ -10,9 +10,12 @@ test('stringify all examples', async () => {
   const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
   await Promise.all(
-    Object.keys(srt).map(async filepath => {
+    Object.keys(srt).map(async (filepath) => {
       const basename = path.basename(filepath, '.srt')
-      const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+      const json = await readFile(
+        path.join(__dirname, `/examples/${basename}.json`),
+        'utf8'
+      )
       const subtitles = JSON.parse(json)
       const normalizedSrt = srt[filepath]
         .trim()
@@ -56,7 +59,9 @@ Lois Lane.
 3
 02:12:38,584 --> 02:12:40,120
 Welcome to the Planet.
-  `.trim().concat('\n')
+  `
+    .trim()
+    .concat('\n')
 
   expect(stringify(captions)).toBe(expected)
 })

@@ -10,9 +10,12 @@ test('stringify all examples', async () => {
   const vtt = await glob(path.join(__dirname, '/examples/*.vtt'))
 
   await Promise.all(
-    Object.keys(vtt).map(async filepath => {
+    Object.keys(vtt).map(async (filepath) => {
       const basename = path.basename(filepath, '.vtt')
-      const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
+      const json = await readFile(
+        path.join(__dirname, `/examples/${basename}.json`),
+        'utf8'
+      )
       const subtitles = JSON.parse(json)
       const normalizedVtt = vtt[filepath]
         .trim()
@@ -58,7 +61,9 @@ Lois Lane.
 3
 02:12:38.584 --> 02:12:40.120
 Welcome to the Planet.
-  `.trim().concat('\n')
+  `
+    .trim()
+    .concat('\n')
 
   expect(stringifyVtt(captions)).toBe(expected)
 })

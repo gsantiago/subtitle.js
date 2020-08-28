@@ -11,7 +11,6 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "lint": "standard subtitle.js lib/*.js test/*.test.js",
     "coveralls": "jest --coverage && coveralls < coverage/lcov.info",
     "build": "webpack"
   },
@@ -29,9 +28,6 @@
   },
   "author": "Guilherme Santiago",
   "license": "MIT",
-  "standard": {
-    "parser": "babel-eslint"
-  },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "babel-core": "^6.26.0",
@@ -44,8 +40,13 @@
     "glob-contents": "0.0.3",
     "jest": "^26.4.2",
     "pify": "^3.0.0",
-    "standard": "^8.0.0",
+    "prettier": "^2.1.1",
     "webpack": "^3.11.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "dependencies": {}
 }

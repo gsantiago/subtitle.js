@@ -25,7 +25,7 @@
     "stringify"
   ],
   "engines": {
-    "node": ">= 6"
+    "node": ">= 10"
   },
   "author": "Guilherme Santiago",
   "license": "MIT",

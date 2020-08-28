@@ -6,10 +6,10 @@
 [![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is 
+Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is
 also supported.
 
->["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)  
+>["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
 
 ## Installation
@@ -102,7 +102,7 @@ parse(mySrtOrVttContent)
 
 The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
 
-The `stringifyVtt(captions: Array) -> String` function is also available for converting to a 
+The `stringifyVtt(captions: Array) -> String` function is also available for converting to a
 valid WebVTT string.
 
 ```js
@@ -208,7 +208,7 @@ toVttTime(24400)
 
 ## Tests
 
-Subtitle.js uses [AVA](https://github.com/avajs/ava) for running tests and [nyc](https://github.com/istanbuljs/nyc) for code coverage.
+Subtitle.js uses Jest for tests.
 
 If you want to run these tests, you need to install all devDependencies:
 
@@ -222,11 +222,7 @@ Now you can run the tests with the following command:
 
 You can check the code coverage by running the following command:
 
-`npm run coverage`
-
-If you want a pretty HTML report, run the following:
-
-`npm run report`
+`npm run test:coverage`
 
 Your report will be available in the `coverage` folder.
 

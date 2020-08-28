@@ -1,14 +1,8 @@
-import test from 'ava'
-import { parseTimestamps } from '..'
+import { parseTimestamps } from '../lib'
 
-const checkWith = (t) => (val, expected) => {
-  t.deepEqual(parseTimestamps(val), expected)
-}
+const check = (val, expected) => expect(parseTimestamps(val)).toEqual(expected)
 
-test('parseTimestamps with SRT input', t => {
-  const check = checkWith(t)
-
-  // SRT timestamps
+test('parseTimestamps with SRT input', () => {
   check('00:00:20,000 --> 00:00:24,400', {
     start: 20000,
     end: 24400
@@ -40,9 +34,7 @@ test('parseTimestamps with SRT input', t => {
   })
 })
 
-test('parseTimestamps with VTT input and short formats', t => {
-  const check = checkWith(t)
-
+test('parseTimestamps with VTT input and short formats', () => {
   check('00:20.000 --> 00:24.400', {
     start: 20000,
     end: 24400
@@ -64,9 +56,7 @@ test('parseTimestamps with VTT input and short formats', t => {
   })
 })
 
-test('parseTimestamps with VTT settings', t => {
-  const check = checkWith(t)
-
+test('parseTimestamps with VTT settings', () => {
   check('12:34:56,789 --> 98:76:54,321 align:middle line:90%', {
     start: 45296789,
     end: 357414321,

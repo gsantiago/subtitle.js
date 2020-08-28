@@ -9,12 +9,10 @@
   "main": "./dist/subtitle.bundle.js",
   "module": "./lib/index.js",
   "scripts": {
-    "test": "npm run lint && npm run ava",
-    "ava": "npm run build && ava test/*.test.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "lint": "standard subtitle.js lib/*.js test/*.test.js",
-    "coverage": "nyc npm test",
-    "report": "nyc report --reporter=html",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "jest --coverage && coveralls < coverage/lcov.info",
     "build": "webpack"
   },
   "keywords": [
@@ -35,7 +33,7 @@
     "parser": "babel-eslint"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
@@ -44,7 +42,7 @@
     "coveralls": "^2.11.15",
     "fs-promise": "^1.0.0",
     "glob-contents": "0.0.3",
-    "nyc": "^10.0.0",
+    "jest": "^26.4.2",
     "pify": "^3.0.0",
     "standard": "^8.0.0",
     "webpack": "^3.11.0"

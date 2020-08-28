@@ -1,13 +1,12 @@
-import test from 'ava'
 import fs from 'fs'
 import path from 'path'
 import promisify from 'pify'
 import glob from 'glob-contents'
-import { parse } from '..'
+import { parse } from '../lib'
 
 const readFile = promisify(fs.readFile)
 
-test('parse all examples', async t => {
+test('parse all examples', async () => {
   const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
   await Promise.all(
@@ -15,12 +14,12 @@ test('parse all examples', async t => {
       const basename = path.basename(filepath, '.srt')
       const json = await readFile(path.join(__dirname, `/examples/${basename}.json`), 'utf8')
       const subtitles = JSON.parse(json)
-      t.deepEqual(parse(srt[filepath]), subtitles)
+      expect(parse(srt[filepath])).toEqual(subtitles)
     })
   )
 })
 
-test('parse SRT captions', t => {
+test('parse SRT captions', () => {
   const srt = `
 1
 02:12:34,647 --> 02:12:35,489
@@ -55,10 +54,10 @@ Welcome to the Planet.
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })
 
-test('parse VTT captions', t => {
+test('parse VTT captions', () => {
   const vtt = `
 WEBVTT - Test VTT cues
 
@@ -96,10 +95,10 @@ Welcome to the Planet.
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })
 
-test('parse VTT caption with headers', t => {
+test('parse VTT caption with headers', () => {
   const vtt = `
 WEBVTT - Test VTT cues
 Kind: captions
@@ -139,14 +138,14 @@ Welcome to the Planet.
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })
 
-test('it should return an empty array', t => {
-  t.deepEqual(parse(), [])
+test('it should return an empty array', () => {
+  expect(parse()).toEqual([])
 })
 
-test('parse 00:00:00,000 caption', t => {
+test('parse 00:00:00,000 caption', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -161,10 +160,10 @@ Hi.
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })
 
-test('parse text that contains only empty space', t => {
+test('parse text that contains only empty space', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -187,10 +186,10 @@ Hi.`
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })
 
-test('parse separated texts', t => {
+test('parse separated texts', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -214,5 +213,5 @@ Who else could be trusted?`
     }
   ]
 
-  t.deepEqual(value, expected)
+  expect(value).toEqual(expected)
 })

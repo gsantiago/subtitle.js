@@ -1,13 +1,12 @@
-import test from 'ava'
 import fs from 'fs'
 import path from 'path'
 import promisify from 'pify'
 import glob from 'glob-contents'
-import { stringify } from '..'
+import { stringify } from '../lib'
 
 const readFile = promisify(fs.readFile)
 
-test('stringify all examples', async t => {
+test('stringify all examples', async () => {
   const srt = await glob(path.join(__dirname, '/examples/*.srt'))
 
   await Promise.all(
@@ -21,12 +20,12 @@ test('stringify all examples', async t => {
         .replace(/\r\n/g, '\n')
         .replace(/\n{3,}/g, '\n\n')
 
-      t.deepEqual(stringify(subtitles), normalizedSrt)
+      expect(stringify(subtitles)).toEqual(normalizedSrt)
     })
   )
 })
 
-test('stringify captions with timestamp in SRT format', t => {
+test('stringify captions with timestamp in SRT format', () => {
   const captions = [
     {
       start: 7954647,
@@ -59,5 +58,5 @@ Lois Lane.
 Welcome to the Planet.
   `.trim().concat('\n')
 
-  t.is(stringify(captions), expected)
+  expect(stringify(captions)).toBe(expected)
 })

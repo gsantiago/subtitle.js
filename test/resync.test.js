@@ -1,5 +1,4 @@
-import test from 'ava'
-import { resync } from '..'
+import { resync } from '../lib'
 
 const captions = [
   {
@@ -37,7 +36,7 @@ const captionsMS = [
   }
 ]
 
-test('delay 100ms', t => {
+test('delay 100ms', () => {
   const expected = {
     start: 10000,
     end: 10400,
@@ -47,11 +46,11 @@ test('delay 100ms', t => {
   const result = resync(captions, -100)[0]
   const result2 = resync(captionsMS, -100)[0]
 
-  t.deepEqual(result, expected)
-  t.deepEqual(result2, expected)
+  expect(result).toEqual(expected)
+  expect(result2).toEqual(expected)
 })
 
-test('advance 1s', t => {
+test('advance 1s', () => {
   const expected = {
     start: 21650,
     end: 24300,
@@ -61,11 +60,11 @@ test('advance 1s', t => {
   const result = resync(captions, 1000)[1]
   const result2 = resync(captionsMS, 1000)[1]
 
-  t.deepEqual(result, expected)
-  t.deepEqual(result2, expected)
+  expect(result).toEqual(expected)
+  expect(result2).toEqual(expected)
 })
 
-test('delay 2 hours', t => {
+test('delay 2 hours', () => {
   const expected = {
     start: 180000,
     end: 190150,
@@ -75,6 +74,6 @@ test('delay 2 hours', t => {
   const result = resync(captions, 2 * 60 * 1000 * -1)[2]
   const result2 = resync(captionsMS, 2 * 60 * 1000 * -1)[2]
 
-  t.deepEqual(result, expected)
-  t.deepEqual(result2, expected)
+  expect(result).toEqual(expected)
+  expect(result2).toEqual(expected)
 })

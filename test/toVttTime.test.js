@@ -1,7 +1,6 @@
-import test from 'ava'
-import { toVttTime } from '..'
+import { toVttTime } from '../lib'
 
-test('should convert time from milliseconds to WebVTT format', t => {
+test('should convert time from milliseconds to WebVTT format', () => {
   const time1 = {
     srt: '00:02:22.542',
     ms: 120000 + 22000 + 542
@@ -17,12 +16,12 @@ test('should convert time from milliseconds to WebVTT format', t => {
     ms: 0
   }
 
-  t.is(toVttTime(time1.ms), time1.srt)
-  t.is(toVttTime(time2.ms), time2.srt)
-  t.is(toVttTime(time3.ms), time3.srt)
+  expect(toVttTime(time1.ms)).toEqual(time1.srt)
+  expect(toVttTime(time2.ms)).toEqual(time2.srt)
+  expect(toVttTime(time3.ms)).toEqual(time3.srt)
 })
 
-test('should return the given values that are not numbers', t => {
-  t.is(toVttTime('01:51:58,219'), '01:51:58,219')
-  t.is(toVttTime('string'), 'string')
+test('should return the given values that are not numbers', () => {
+  expect(toVttTime('01:51:58,219')).toEqual('01:51:58,219')
+  expect(toVttTime('string')).toEqual('string')
 })

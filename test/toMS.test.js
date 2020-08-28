@@ -1,7 +1,6 @@
-import test from 'ava'
-import { toMS } from '..'
+import { toMS } from '../lib'
 
-test('should convert SRT time to milliseconds', t => {
+test('should convert SRT time to milliseconds', () => {
   const time1 = {
     srt: '00:02:22,542',
     ms: 120000 + 22000 + 542
@@ -17,12 +16,12 @@ test('should convert SRT time to milliseconds', t => {
     ms: 0
   }
 
-  t.is(toMS(time1.srt), time1.ms)
-  t.is(toMS(time2.srt), time2.ms)
-  t.is(toMS(time3.srt), time3.ms)
+  expect(toMS(time1.srt)).toBe(time1.ms)
+  expect(toMS(time2.srt)).toBe(time2.ms)
+  expect(toMS(time3.srt)).toBe(time3.ms)
 })
 
-test('should convert VTT time to milliseconds including short formats', t => {
+test('should convert VTT time to milliseconds including short formats', () => {
   const time1 = {
     srt: '02:22.542',
     ms: 120000 + 22000 + 542
@@ -43,20 +42,20 @@ test('should convert VTT time to milliseconds including short formats', t => {
     ms: (1201 * 3600000) + 3060000 + 58000 + 219
   }
 
-  t.is(toMS(time1.srt), time1.ms)
-  t.is(toMS(time2.srt), time2.ms)
-  t.is(toMS(time3.srt), time3.ms)
-  t.is(toMS(time4.srt), time4.ms)
+  expect(toMS(time1.srt)).toBe(time1.ms)
+  expect(toMS(time2.srt)).toBe(time2.ms)
+  expect(toMS(time3.srt)).toBe(time3.ms)
+  expect(toMS(time4.srt)).toBe(time4.ms)
 })
 
-test('invalid format should throw an error', t => {
-  t.throws(function () {
+test('invalid format should throw an error', () => {
+  expect(() => {
     toMS('12,34:56,78')
-  })
+  }).toThrow()
 })
 
-test('should return the given numbers', t => {
-  t.is(toMS(1000), 1000)
-  t.is(toMS(600), 600)
-  t.is(toMS(-150), -150)
+test('should return the given numbers', () => {
+  expect(toMS(1000)).toBe(1000)
+  expect(toMS(600)).toBe(600)
+  expect(toMS(-150)).toBe(-150)
 })

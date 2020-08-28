@@ -1,13 +1,12 @@
-import test from 'ava'
 import fs from 'fs'
 import path from 'path'
 import promisify from 'pify'
 import glob from 'glob-contents'
-import { stringifyVtt } from '..'
+import { stringifyVtt } from '../lib'
 
 const readFile = promisify(fs.readFile)
 
-test('stringify all examples', async t => {
+test('stringify all examples', async () => {
   const vtt = await glob(path.join(__dirname, '/examples/*.vtt'))
 
   await Promise.all(
@@ -21,12 +20,12 @@ test('stringify all examples', async t => {
         .replace(/\r\n/g, '\n')
         .replace(/\n{3,}/g, '\n\n')
 
-      t.deepEqual(stringifyVtt(subtitles), normalizedVtt)
+      expect(stringifyVtt(subtitles)).toEqual(normalizedVtt)
     })
   )
 })
 
-test('stringify captions with timestamp in WebVTT format', t => {
+test('stringify captions with timestamp in WebVTT format', () => {
   const captions = [
     {
       start: 940647,
@@ -61,5 +60,5 @@ Lois Lane.
 Welcome to the Planet.
   `.trim().concat('\n')
 
-  t.is(stringifyVtt(captions), expected)
+  expect(stringifyVtt(captions)).toBe(expected)
 })

@@ -76,9 +76,12 @@ test.each([
       end: 3620070
     }
   ]
-])('parseTimestamps with VTT input and short format: "%s" => %o', (input, expected) => {
-  expect(parseTimestamps(input)).toEqual(expected)
-})
+])(
+  'parseTimestamps with VTT input and short format: "%s" => %o',
+  (input, expected) => {
+    expect(parseTimestamps(input)).toEqual(expected)
+  }
+)
 
 test.each([
   [

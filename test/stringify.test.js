@@ -1,31 +1,16 @@
-import fs from 'fs'
-import path from 'path'
-import promisify from 'pify'
-import glob from 'glob-contents'
+import { fixtures, getFixture } from '../test-utils'
 import { stringify } from '../lib/stringify'
 
-const readFile = promisify(fs.readFile)
+test.each(fixtures)('stringify fixture: %s.json', async (filename) => {
+  const json = JSON.parse(await getFixture(filename, 'json'))
+  const str = await getFixture(filename, 'srt')
+  const normalizedSrt = str
+    .trim()
+    .concat('\n')
+    .replace(/\r\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
 
-test('stringify all examples', async () => {
-  const srt = await glob(path.join(__dirname, '/examples/*.srt'))
-
-  await Promise.all(
-    Object.keys(srt).map(async (filepath) => {
-      const basename = path.basename(filepath, '.srt')
-      const json = await readFile(
-        path.join(__dirname, `/examples/${basename}.json`),
-        'utf8'
-      )
-      const subtitles = JSON.parse(json)
-      const normalizedSrt = srt[filepath]
-        .trim()
-        .concat('\n')
-        .replace(/\r\n/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-
-      expect(stringify(subtitles)).toEqual(normalizedSrt)
-    })
-  )
+  expect(stringify(json)).toEqual(normalizedSrt)
 })
 
 test('stringify captions with timestamp in SRT format', () => {

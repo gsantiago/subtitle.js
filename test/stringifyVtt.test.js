@@ -1,31 +1,16 @@
-import fs from 'fs'
-import path from 'path'
-import promisify from 'pify'
-import glob from 'glob-contents'
+import { fixtures, getFixture } from '../test-utils'
 import { stringifyVtt } from '../lib/stringifyVtt'
 
-const readFile = promisify(fs.readFile)
+test.each(fixtures)('stringify fixture: %s.json', async (filename) => {
+  const json = JSON.parse(await getFixture(filename, 'json'))
+  const vtt = await getFixture(filename, 'vtt')
+  const normalizedVtt = vtt
+    .trim()
+    .concat('\n')
+    .replace(/\r\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
 
-test('stringify all examples', async () => {
-  const vtt = await glob(path.join(__dirname, '/examples/*.vtt'))
-
-  await Promise.all(
-    Object.keys(vtt).map(async (filepath) => {
-      const basename = path.basename(filepath, '.vtt')
-      const json = await readFile(
-        path.join(__dirname, `/examples/${basename}.json`),
-        'utf8'
-      )
-      const subtitles = JSON.parse(json)
-      const normalizedVtt = vtt[filepath]
-        .trim()
-        .concat('\n')
-        .replace(/\r\n/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-
-      expect(stringifyVtt(subtitles)).toEqual(normalizedVtt)
-    })
-  )
+  expect(stringifyVtt(json)).toEqual(normalizedVtt)
 })
 
 test('stringify captions with timestamp in WebVTT format', () => {

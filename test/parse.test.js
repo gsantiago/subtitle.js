@@ -1,24 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import promisify from 'pify'
-import glob from 'glob-contents'
+import { fixtures, getFixture } from '../test-utils'
 import { parse } from '../lib/parse'
 
-const readFile = promisify(fs.readFile)
-
-test('parse all examples', async () => {
-  const srt = await glob(path.join(__dirname, '/examples/*.srt'))
-
-  await Promise.all(
-    Object.keys(srt).map(async (filepath) => {
-      const basename = path.basename(filepath, '.srt')
-      const json = await readFile(
-        path.join(__dirname, `/examples/${basename}.json`),
-        'utf8'
-      )
-      const subtitles = JSON.parse(json)
-      expect(parse(srt[filepath])).toEqual(subtitles)
-    })
+test.each(fixtures)('parse SRT fixture: %s.str', async (filename) => {
+  expect(parse(await getFixture(filename, 'srt'))).toEqual(
+    JSON.parse(await getFixture(filename, 'json'))
   )
 })
 

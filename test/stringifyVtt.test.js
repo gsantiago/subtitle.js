@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import promisify from 'pify'
 import glob from 'glob-contents'
-import { stringifyVtt } from '../lib'
+import { stringifyVtt } from '../lib/stringifyVtt'
 
 const readFile = promisify(fs.readFile)
 

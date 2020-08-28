@@ -1,4 +1,4 @@
-import { toSrtTime } from '../lib'
+import { toSrtTime } from '../lib/toSrtTime'
 
 test('should convert time from milliseconds to SRT format', () => {
   const time1 = {

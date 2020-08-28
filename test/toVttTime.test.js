@@ -1,4 +1,4 @@
-import { toVttTime } from '../lib'
+import { toVttTime } from '../lib/toVttTime'
 
 test('should convert time from milliseconds to WebVTT format', () => {
   const time1 = {

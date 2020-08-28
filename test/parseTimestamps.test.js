@@ -1,4 +1,4 @@
-import { parseTimestamps } from '../lib'
+import { parseTimestamps } from '../lib/parseTimestamps'
 
 const check = (val, expected) => expect(parseTimestamps(val)).toEqual(expected)
 

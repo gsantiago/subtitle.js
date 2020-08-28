@@ -1,4 +1,4 @@
-import { toMS } from '../lib'
+import { toMS } from '../lib/toMS'
 
 test('should convert SRT time to milliseconds', () => {
   const time1 = {

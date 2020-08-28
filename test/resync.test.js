@@ -1,4 +1,4 @@
-import { resync } from '../lib'
+import { resync } from '../lib/resync'
 
 const captions = [
   {

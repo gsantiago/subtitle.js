@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import promisify from 'pify'
 import glob from 'glob-contents'
-import { stringify } from '../lib'
+import { stringify } from '../lib/stringify'
 
 const readFile = promisify(fs.readFile)
 

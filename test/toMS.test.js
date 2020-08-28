@@ -1,51 +1,20 @@
-import { toMS } from '../lib'
+import { toMS } from '../lib/toMS'
 
-test('should convert SRT time to milliseconds', () => {
-  const time1 = {
-    srt: '00:02:22,542',
-    ms: 120000 + 22000 + 542
-  }
-
-  const time2 = {
-    srt: '01:51:58,219',
-    ms: 3600000 + 3060000 + 58000 + 219
-  }
-
-  const time3 = {
-    srt: '00:00:00,000',
-    ms: 0
-  }
-
-  expect(toMS(time1.srt)).toBe(time1.ms)
-  expect(toMS(time2.srt)).toBe(time2.ms)
-  expect(toMS(time3.srt)).toBe(time3.ms)
+test.each([
+  ['00:02:22,542', 120000 + 22000 + 542],
+  ['01:51:58,219', 3600000 + 3060000 + 58000 + 219],
+  ['00:00:00,000', 0]
+])('(SRT) toMS(%s) === %d', (srt, ms) => {
+  expect(toMS(srt)).toBe(ms)
 })
 
-test('should convert VTT time to milliseconds including short formats', () => {
-  const time1 = {
-    srt: '02:22.542',
-    ms: 120000 + 22000 + 542
-  }
-
-  const time2 = {
-    srt: '01:51:58.219',
-    ms: 3600000 + 3060000 + 58000 + 219
-  }
-
-  const time3 = {
-    srt: '00:00.000',
-    ms: 0
-  }
-
-  const time4 = {
-    srt: '1201:51:58.219',
-    ms: (1201 * 3600000) + 3060000 + 58000 + 219
-  }
-
-  expect(toMS(time1.srt)).toBe(time1.ms)
-  expect(toMS(time2.srt)).toBe(time2.ms)
-  expect(toMS(time3.srt)).toBe(time3.ms)
-  expect(toMS(time4.srt)).toBe(time4.ms)
+test.each([
+  ['02:22.542', 120000 + 22000 + 542],
+  ['01:51:58.219', 3600000 + 3060000 + 58000 + 219],
+  ['1201:51:58.219', 1201 * 3600000 + 3060000 + 58000 + 219],
+  ['00:00.000', 0]
+])('(VTT) toMS(%s) === %d', (vtt, ms) => {
+  expect(toMS(vtt)).toBe(ms)
 })
 
 test('invalid format should throw an error', () => {

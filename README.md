@@ -1,4 +1,4 @@
-# subtitle.js
+# subtitle
 
 [![Build Status](https://img.shields.io/travis/gsantiago/subtitle.js/master?style=flat-square)](https://travis-ci.org/gsantiago/subtitle.js)
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/gsantiago/subtitle.js?style=flat-square)](https://codeclimate.com/github/gsantiago/subtitle.js)
@@ -18,25 +18,34 @@ also supported.
 
 ## API
 
-The API is minimal and provide only five functions, two of which have SRT and WebVTT variants:
+The API is minimal and provide only six pure functions:
 
-* [`parse`](#parsesrt-string---array)
-* [`stringify`](#stringifycaptions-array---string)
-* [`stringifyVtt`](#stringifycaptions-array---string)
-* [`resync`](#resynccaptions-array-time-number---object)
-* [`toMS`](#tomstimestamp-string---number)
-* [`toSrtTime`](#tosrttimetimestamp-number---string)
-* [`toVttTime`](#tovtttimetimestamp-number---string)
+* [`parse`](#parse)
+* [`stringify`](#stringify)
+* [`resync`](#resync)
+* [`parseTimestamp`](#parseTimestamp)
+* [`parseTimestamps`](#parseTimestamps)
+* [`formatTimestamp`](#formatTimestamp)
 
-### `parse(srt: String) -> Array`
+### parse
 
-Parses a SRT or WebVTT string and returns an array:
+- `parse(input: string): Caption[]`
 
-```js
-parse(mySrtOrVttContent)
+It receives a string containing a SRT or VTT content and returns
+an array of captions:
+
+```ts
+import { parse } from 'subtitle'
+import fs from 'fs'
+
+const input = fs.readFileSync('awesome-movie.srt', 'utf8')
+
+parse(input)
+
+// returns an array like this:
 [
   {
-    start: 20000, // time in ms
+    start: 20000,
     end: 24400,
     text: 'Bla Bla Bla Bla'
   },
@@ -44,10 +53,36 @@ parse(mySrtOrVttContent)
     start: 24600,
     end: 27800,
     text: 'Bla Bla Bla Bla',
-    settings: 'align:middle line:90%' // WebVTT only
-  }
+    settings: 'align:middle line:90%'
+  },
+  // ...
 ]
 ```
+
+### stringify
+
+- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt })`
+
+It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
+
+```ts
+import { stringify } from 'subtitle'
+
+stringify(captions)
+// returns a string in SRT format
+
+stringify(options, { format: 'vtt' })
+// returns a string in VTT format
+```
+
+
+### resync
+
+### parseTimestamp
+
+### parseTimestamps
+
+### formatTimestamp
 
 ### `stringify(captions: Array) -> String`
 

@@ -214,3 +214,30 @@ Who else could be trusted?`
 
   expect(value).toEqual(expected)
 })
+
+test('correctly parse captions with empty first lines', () => {
+  const srt = `
+1
+00:00:00,000 --> 00:00:00,100
+
+[Music]
+
+2
+00:00:00,100 --> 00:00:00,200
+Fora Bolsonaro`
+  const value = parse(srt)
+  expect(value).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 100,
+        "start": 0,
+        "text": "[Music]",
+      },
+      Object {
+        "end": 200,
+        "start": 100,
+        "text": "Fora Bolsonaro",
+      },
+    ]
+  `)
+})

@@ -1,18 +1,11 @@
-import { toSrtTime } from './toSrtTime'
-import { toVttTime } from './toVttTime'
-import { Captions } from './types'
-
-export interface StringifyOptions {
-  format: 'srt' | 'vtt'
-}
+import { formatTimestamp } from './formatTimestamp'
+import { Captions, FormatOptions } from './types'
 
 export function stringify(
   captions: Captions,
-  options: StringifyOptions = { format: 'srt' }
+  options: FormatOptions = { format: 'srt' }
 ): string {
   const isVTT = options.format === 'vtt'
-  const formatTime = isVTT ? toVttTime : toSrtTime
-
   return (
     (isVTT ? 'WEBVTT\n\n' : '') +
     captions
@@ -21,9 +14,10 @@ export function stringify(
           (index > 0 ? '\n' : '') +
           [
             index + 1,
-            `${formatTime(caption.start)} --> ${formatTime(caption.end)}${
-              isVTT && caption.settings ? ' ' + caption.settings : ''
-            }`,
+            `${formatTimestamp(caption.start, options)} --> ${formatTimestamp(
+              caption.end,
+              options
+            )}${isVTT && caption.settings ? ' ' + caption.settings : ''}`,
             caption.text
           ].join('\n')
         )

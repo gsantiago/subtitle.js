@@ -9,3 +9,7 @@ export interface Caption extends Timestamp {
 }
 
 export type Captions = Caption[]
+
+export interface FormatOptions {
+  format: 'srt' | 'vtt'
+}

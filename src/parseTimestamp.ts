@@ -1,4 +1,4 @@
-export function toMS(timestamp: string): number {
+export function parseTimestamp(timestamp: string): number {
   const match = timestamp.match(/^(?:(\d{1,}):)?(\d{2}):(\d{2})[,.](\d{3})$/)
 
   if (!match) {

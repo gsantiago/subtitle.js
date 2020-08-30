@@ -29,6 +29,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"

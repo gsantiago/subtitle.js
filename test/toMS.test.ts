@@ -1,4 +1,4 @@
-import { toMS } from '../src/toMS'
+import { toMS } from '../src'
 
 test.each([
   ['00:02:22,542', 120000 + 22000 + 542],

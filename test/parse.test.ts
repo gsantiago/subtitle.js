@@ -1,5 +1,5 @@
 import { fixtures, getFixture } from '../test-utils'
-import { parse } from '../src/parse'
+import { parse } from '../src'
 
 test.each(fixtures)('parse SRT fixture: %s.srt', async filename => {
   expect(parse(await getFixture(filename, 'srt'))).toEqual(

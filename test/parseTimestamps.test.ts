@@ -1,4 +1,4 @@
-import { parseTimestamps } from '../src/parseTimestamps'
+import { parseTimestamps } from '../src'
 
 test.each([
   [

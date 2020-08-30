@@ -1,5 +1,5 @@
 import { fixtures, getFixture } from '../test-utils'
-import { stringify } from '../src/stringify'
+import { stringify } from '../src'
 
 test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'json'))

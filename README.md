@@ -1,10 +1,10 @@
 # subtitle.js
 
-[![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
-[![Code Climate](https://codeclimate.com/github/gsantiago/subtitle.js/badges/gpa.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
-[![Coverage Status](https://coveralls.io/repos/github/gsantiago/subtitle.js/badge.svg?branch=master)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
-[![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Build Status](https://img.shields.io/travis/gsantiago/subtitle.js/master?style=flat-square)](https://travis-ci.org/gsantiago/subtitle.js)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/gsantiago/subtitle.js?style=flat-square)](https://codeclimate.com/github/gsantiago/subtitle.js)
+[![Coverage Status](https://img.shields.io/coveralls/github/gsantiago/subtitle.js?style=flat-square)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
+![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)
+[![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
 Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is
 also supported.
@@ -15,55 +15,6 @@ also supported.
 ## Installation
 
 `npm install subtitle --save`
-
-## Usage
-
-```js
-// ES2015 modules
-import * as Subtitle from 'subtitle'
-import { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } from 'subtitle'
-```
-
-```js
-// ES6 CommonJS
-const Subtitle = require('subtitle')
-const { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } = require('subtitle')
-```
-
-```js
-// ES5 CommonJS
-var Subtitle = require('subtitle')
-Subtitle.parse
-Subtitle.stringify
-Subtitle.stringifyVtt
-Subtitle.resync
-Subtitle.toMS
-Subtitle.toSrtTime
-Subtitle.toVttTime
-```
-
-### Browser
-
-If you don't use a bundler like Webpack or Browserify, you can just copy the
-script `subtitle.bundle.js` from the `dist` folder and link it to your page.
-
-```html
-<script src="path/to/subtitle.bundle.js"></script>
-<script>
-  // `Subtitle` will be globally available
-  console.log(window.Subtitle)
-  /*
-    {
-      parse: function parse()
-      resync: function resync()
-      stringify: function stringify()
-      stringifyVtt: function stringifyVtt()
-      toMS: function toMS()
-      toSrtTime: function toSrtTime()
-      toVttTime: function toVttTime()
-  */
-</script>
-```
 
 ## API
 

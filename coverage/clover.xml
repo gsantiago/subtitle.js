@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1598749931286" clover="3.2.0">
+  <project timestamp="1598749931286" name="All files">
+    <metrics statements="90" coveredstatements="78" conditionals="36" coveredconditionals="32" methods="16" coveredmethods="16" elements="142" coveredelements="126" complexity="0" loc="90" ncloc="90" packages="1" files="10" classes="10"/>
+    <file name="index.ts" path="/home/guilherme/projects/subtitle.js/src/index.ts">
+      <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="0" type="stmt"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+    </file>
+    <file name="padLeft.ts" path="/home/guilherme/projects/subtitle.js/src/padLeft.ts">
+      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <line num="1" count="118202" type="cond" truecount="2" falsecount="0"/>
+      <line num="2" count="67544" type="stmt"/>
+    </file>
+    <file name="parse.ts" path="/home/guilherme/projects/subtitle.js/src/parse.ts">
+      <metrics statements="34" coveredstatements="32" conditionals="20" coveredconditionals="17" methods="5" coveredmethods="5"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="11" count="12" type="stmt"/>
+      <line num="19" count="28475" type="stmt"/>
+      <line num="20" count="36939" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+      <line num="23" count="12" type="stmt"/>
+      <line num="24" count="12" type="stmt"/>
+      <line num="30" count="12" type="stmt"/>
+      <line num="31" count="36925" type="cond" truecount="2" falsecount="0"/>
+      <line num="32" count="8446" type="cond" truecount="1" falsecount="1"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="35" count="8446" type="stmt"/>
+      <line num="36" count="8446" type="stmt"/>
+      <line num="39" count="28479" type="cond" truecount="2" falsecount="0"/>
+      <line num="40" count="8448" type="cond" truecount="1" falsecount="1"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="45" count="8448" type="stmt"/>
+      <line num="49" count="8448" type="stmt"/>
+      <line num="50" count="8448" type="stmt"/>
+      <line num="53" count="20031" type="cond" truecount="1" falsecount="1"/>
+      <line num="54" count="20031" type="cond" truecount="2" falsecount="0"/>
+      <line num="55" count="2" type="stmt"/>
+      <line num="56" count="2" type="stmt"/>
+      <line num="57" count="2" type="stmt"/>
+      <line num="58" count="2" type="stmt"/>
+      <line num="61" count="20029" type="stmt"/>
+      <line num="63" count="20029" type="cond" truecount="2" falsecount="0"/>
+      <line num="65" count="20029" type="cond" truecount="4" falsecount="0"/>
+      <line num="66" count="8446" type="stmt"/>
+      <line num="67" count="8446" type="stmt"/>
+      <line num="68" count="8446" type="stmt"/>
+      <line num="70" count="11583" type="stmt"/>
+      <line num="77" count="12" type="stmt"/>
+    </file>
+    <file name="parseTimestamps.ts" path="/home/guilherme/projects/subtitle.js/src/parseTimestamps.ts">
+      <metrics statements="10" coveredstatements="9" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="4" count="2" type="stmt"/>
+      <line num="6" count="2" type="stmt"/>
+      <line num="7" count="8461" type="stmt"/>
+      <line num="9" count="8461" type="cond" truecount="1" falsecount="1"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="13" count="8461" type="stmt"/>
+      <line num="18" count="8461" type="cond" truecount="2" falsecount="0"/>
+      <line num="19" count="7" type="stmt"/>
+      <line num="22" count="8461" type="stmt"/>
+    </file>
+    <file name="resync.ts" path="/home/guilherme/projects/subtitle.js/src/resync.ts">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="9" type="stmt"/>
+    </file>
+    <file name="stringify.ts" path="/home/guilherme/projects/subtitle.js/src/stringify.ts">
+      <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="4" type="stmt"/>
+      <line num="8" count="4220" type="stmt"/>
+    </file>
+    <file name="stringifyVtt.ts" path="/home/guilherme/projects/subtitle.js/src/stringifyVtt.ts">
+      <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="4" type="stmt"/>
+      <line num="9" count="4220" type="stmt"/>
+    </file>
+    <file name="toMS.ts" path="/home/guilherme/projects/subtitle.js/src/toMS.ts">
+      <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+      <line num="1" count="3" type="stmt"/>
+      <line num="2" count="16930" type="stmt"/>
+      <line num="4" count="16930" type="cond" truecount="2" falsecount="0"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="8" count="16929" type="cond" truecount="2" falsecount="0"/>
+      <line num="9" count="16929" type="stmt"/>
+      <line num="10" count="16929" type="stmt"/>
+      <line num="11" count="16929" type="stmt"/>
+      <line num="13" count="16929" type="stmt"/>
+    </file>
+    <file name="toSrtTime.ts" path="/home/guilherme/projects/subtitle.js/src/toSrtTime.ts">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="4" count="8443" type="stmt"/>
+      <line num="6" count="8443" type="stmt"/>
+      <line num="7" count="8443" type="stmt"/>
+      <line num="8" count="8443" type="stmt"/>
+      <line num="9" count="8443" type="stmt"/>
+      <line num="11" count="8443" type="stmt"/>
+    </file>
+    <file name="toVttTime.ts" path="/home/guilherme/projects/subtitle.js/src/toVttTime.ts">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="4" count="8443" type="stmt"/>
+      <line num="6" count="8443" type="stmt"/>
+      <line num="7" count="8443" type="stmt"/>
+      <line num="8" count="8443" type="stmt"/>
+      <line num="9" count="8443" type="stmt"/>
+      <line num="11" count="8443" type="stmt"/>
+    </file>
+  </project>
+</coverage>

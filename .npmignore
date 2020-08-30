@@ -1,4 +1,5 @@
-examples
 .codeclimate.yml
 .editorconfig
 .travis.yml
+coverage
+.github

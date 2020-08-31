@@ -23,7 +23,7 @@ Parse, manipulate and stringify SRT (SubRip) format, with partial support for We
 
 ## API
 
-The API is minimal and provide only six pure functions:
+The API is minimal and provides only six pure functions:
 
 * [`parse`](#parse)
 * [`stringify`](#stringify)

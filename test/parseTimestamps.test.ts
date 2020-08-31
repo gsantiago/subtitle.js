@@ -111,3 +111,7 @@ test.each([
 ])('parseTimestamps with VTT settings: "%s" => %o"', (input, expected) => {
   expect(parseTimestamps(input)).toEqual(expected)
 })
+
+test('invalid timestamp format should throw an error', () => {
+  expect(() => parseTimestamps('INVALID FORMAT')).toThrow()
+})

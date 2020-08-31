@@ -1,91 +1,56 @@
-# subtitle.js
+# subtitle
 
-[![Build Status](https://travis-ci.org/gsantiago/subtitle.js.svg?branch=master)](https://travis-ci.org/gsantiago/subtitle.js)
-[![Code Climate](https://codeclimate.com/github/gsantiago/subtitle.js/badges/gpa.svg)](https://codeclimate.com/github/gsantiago/subtitle.js)
-[![Coverage Status](https://coveralls.io/repos/github/gsantiago/subtitle.js/badge.svg?branch=master)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
-[![npm version](https://badge.fury.io/js/subtitle.svg)](http://badge.fury.io/js/subtitle)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Build Status](https://img.shields.io/travis/gsantiago/subtitle.js/master?style=flat-square)](https://travis-ci.org/gsantiago/subtitle.js)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/gsantiago/subtitle.js?style=flat-square)](https://codeclimate.com/github/gsantiago/subtitle.js)
+[![Coverage Status](https://img.shields.io/coveralls/github/gsantiago/subtitle.js?style=flat-square)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
+![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)
+[![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
-Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is
-also supported.
+Parse, manipulate and stringify SRT (SubRip) format, with partial support for WebVTT.
 
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
 
 ## Installation
 
-`npm install subtitle --save`
+### npm
 
-## Usage
+`npm install subtitle`
 
-```js
-// ES2015 modules
-import * as Subtitle from 'subtitle'
-import { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } from 'subtitle'
-```
+### yarn
 
-```js
-// ES6 CommonJS
-const Subtitle = require('subtitle')
-const { parse, stringify, stringifyVtt, resync, toMS, toSrtTime, toVttTime } = require('subtitle')
-```
-
-```js
-// ES5 CommonJS
-var Subtitle = require('subtitle')
-Subtitle.parse
-Subtitle.stringify
-Subtitle.stringifyVtt
-Subtitle.resync
-Subtitle.toMS
-Subtitle.toSrtTime
-Subtitle.toVttTime
-```
-
-### Browser
-
-If you don't use a bundler like Webpack or Browserify, you can just copy the
-script `subtitle.bundle.js` from the `dist` folder and link it to your page.
-
-```html
-<script src="path/to/subtitle.bundle.js"></script>
-<script>
-  // `Subtitle` will be globally available
-  console.log(window.Subtitle)
-  /*
-    {
-      parse: function parse()
-      resync: function resync()
-      stringify: function stringify()
-      stringifyVtt: function stringifyVtt()
-      toMS: function toMS()
-      toSrtTime: function toSrtTime()
-      toVttTime: function toVttTime()
-  */
-</script>
-```
+`yarn add subtitle`
 
 ## API
 
-The API is minimal and provide only five functions, two of which have SRT and WebVTT variants:
+The API is minimal and provides only six pure functions:
 
-* [`parse`](#parsesrt-string---array)
-* [`stringify`](#stringifycaptions-array---string)
-* [`stringifyVtt`](#stringifycaptions-array---string)
-* [`resync`](#resynccaptions-array-time-number---object)
-* [`toMS`](#tomstimestamp-string---number)
-* [`toSrtTime`](#tosrttimetimestamp-number---string)
-* [`toVttTime`](#tovtttimetimestamp-number---string)
+* [`parse`](#parse)
+* [`stringify`](#stringify)
+* [`resync`](#resync)
+* [`parseTimestamp`](#parseTimestamp)
+* [`parseTimestamps`](#parseTimestamps)
+* [`formatTimestamp`](#formatTimestamp)
 
-### `parse(srt: String) -> Array`
+### parse
 
-Parses a SRT or WebVTT string and returns an array:
+- `parse(input: string): Caption[]`
 
-```js
-parse(mySrtOrVttContent)
+It receives a string containing a SRT or VTT content and returns
+an array of captions:
+
+```ts
+import { parse } from 'subtitle'
+import fs from 'fs'
+
+const input = fs.readFileSync('awesome-movie.srt', 'utf8')
+
+parse(input)
+
+// returns an array like this:
 [
   {
-    start: 20000, // time in ms
+    start: 20000, // milliseconds
     end: 24400,
     text: 'Bla Bla Bla Bla'
   },
@@ -93,138 +58,91 @@ parse(mySrtOrVttContent)
     start: 24600,
     end: 27800,
     text: 'Bla Bla Bla Bla',
-    settings: 'align:middle line:90%' // WebVTT only
-  }
+    settings: 'align:middle line:90%'
+  },
+  // ...
 ]
 ```
 
-### `stringify(captions: Array) -> String`
+### stringify
 
-The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
+- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): string`
 
-The `stringifyVtt(captions: Array) -> String` function is also available for converting to a
-valid WebVTT string.
+It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 
-```js
-const subtitles = [
-  {
-    start: '00:00:20,000',
-    end: '00:00:24,400',
-    text: 'Bla Bla Bla Bla'
-  },
-  {
-    start: 24600, // timestamp in milliseconds is supported as well
-    end: 27800,
-    text: 'Bla Bla Bla Bla',
-    settings: 'align:middle line:90%' // Ignored in SRT format
-  }
-]
+```ts
+import { stringify } from 'subtitle'
 
-const srt = stringify(subtitles)
-// returns the following string:
-/*
-1
-00:00:20,000 --> 00:00:24,400
-Bla Bla Bla Bla
+stringify(captions)
+// returns a string in SRT format
 
-2
-00:00:24,600 --> 00:00:27,800
-Bla Bla Bla Bla
-*/
-
-const vtt = stringifyVtt(subtitles)
-// returns the following string:
-/*
-WEBVTT
-
-1
-00:00:20.000 --> 00:00:24.400
-Bla Bla Bla Bla
-
-2
-00:00:24.600 --> 00:00:27.800 align:middle line:90%
-Bla Bla Bla Bla
-*/
+stringify(options, { format: 'vtt' })
+// returns a string in VTT format
 ```
 
-### `resync(captions: Array, time: Number) -> Object`
+### resync
 
-Resync all captions at once.
+- `resync(captions: Caption[], time: number): Caption[]`
 
-```js
-const subtitles = [
-  {
-    start: '00:00:20,000',
-    end: '00:00:24,400',
-    text: 'Bla Bla Bla Bla'
-  },
-  {
-    start: 24600, // timestamp in millseconds is supported as well
-    end: 27800,
-    text: 'Bla Bla Bla Bla'
-  }
-]
+Resync all the given captions at once:
 
-// Advance 1s
-const newSubtitles = resync(subtitles, 1000)
+```ts
+import { resync } from 'subtitle'
+
+// Advance subtitles by 1s
+const newCaptions = resync(captions, 1000)
 
 // Delay 250ms
-const newSubtitles = resync(subtitles, -250) //
-
-// Then, you can stringify your new subtitles:
-stringify(newSubtitles)
+const newCaptions = resync(captions, -250)
 ```
 
-### `toMS(timestamp: String) -> Number`
+### parseTimestamp
 
-Convert a SRT or WebVTT timestamp to milliseconds:
+- `parseTimestamp(timestamp: string): number`
 
-```js
-toMS('00:00:24,400')
-// 24400
+Receives a timestamp (SRT or VTT) and returns its value in milliseconds:
 
-toMS('00:24.400')
-// 24400
+```ts
+import { parseTimestamp } from 'subtitle'
+
+parseTimestamp('00:00:24,400')
+// => 24400
+
+parseTimestamp('00:24.400')
+// => 24400
 ```
 
-### `toSrtTime(timestamp: Number) -> String`
+### parseTimestamps
 
-Convert a time from milliseconds to a SRT timestamp:
+- `parseTimestamps(timestamps: string): Timestamp`
 
-```js
-toSrtTime(24400)
-// '00:00:24,400'
+It receives a timestamps string, like `00:01:00,500 --> 00:01:10,800`. It also supports VTT formats like `12:34:56,789 --> 98:76:54,321 align:middle line:90%`.
+
+```ts
+import { parseTimestamps } from 'subtitle'
+
+parseTimestamps('00:01:00,500 --> 00:01:10,800')
+// => { start: 60500, end: 70800 }
+
+parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
+// => { start: 45296789, end: 357414321, settings: 'align:middle line:90%' }
 ```
 
+### formatTimestamp
 
-### `toVttTime(timestamp: Number) -> String`
+- `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
 
-Convert a time from milliseconds to a WebVTT timestamp:
+It receives a timestamp in milliseconds and returns it formatted as SRT or VTT:
 
-```js
-toVttTime(24400)
-// '00:00:24.400'
+```ts
+import { formatTimestamp } from 'subtitle'
+
+formatTimestamp(142542)
+// => '00:02:22,542'
+
+formatTimestamp(142542, { format: 'vtt' })
+// => '00:02:22.542'
 ```
-
-## Tests
-
-Subtitle.js uses Jest for tests.
-
-If you want to run these tests, you need to install all devDependencies:
-
-`npm install`
-
-Now you can run the tests with the following command:
-
-`npm test`
-
-**Code Coverage**
-
-You can check the code coverage by running the following command:
-
-`npm run test:coverage`
-
-Your report will be available in the `coverage` folder.
 
 ## License
 

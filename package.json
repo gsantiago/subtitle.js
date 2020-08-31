@@ -1,18 +1,10 @@
 {
   "name": "subtitle",
-  "version": "2.0.5",
-  "description": "Parse and manipulate SRT (SubRip)",
+  "version": "3.0.0",
+  "description": "Parse, manipulate and stringify SRT (SubRip) format, with partial support for WebVTT",
   "repository": {
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"
-  },
-  "main": "./dist/subtitle.bundle.js",
-  "module": "./lib/index.js",
-  "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "coveralls": "jest --coverage && coveralls < coverage/lcov.info",
-    "build": "webpack"
   },
   "keywords": [
     "subtitle",
@@ -21,32 +13,50 @@
     "captions",
     "subrip",
     "parser",
-    "stringify"
+    "stringify",
+    "validate",
+    "validation"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
   ],
   "engines": {
-    "node": ">= 10"
+    "node": ">=10"
   },
-  "author": "Guilherme Santiago",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "coveralls": "^2.11.15",
-    "jest": "^26.4.2",
-    "prettier": "^2.1.1",
-    "webpack": "^3.11.0"
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"
   },
-  "jest": {
-    "verbose": true
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   },
   "prettier": {
+    "printWidth": 80,
     "semi": false,
     "singleQuote": true,
     "trailingComma": "none"
   },
-  "dependencies": {}
+  "author": "Guilherme Santiago",
+  "module": "dist/subtitle.esm.js",
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  },
+  "jest": {
+    "verbose": true
+  }
 }

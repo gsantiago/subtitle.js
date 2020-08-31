@@ -1,14 +1,4 @@
-/**
- * Return the given SRT timestamp as milleseconds.
- * @param {string|number} timestamp
- * @returns {number} milliseconds
- */
-
-export function toMS(timestamp) {
-  if (!isNaN(timestamp)) {
-    return timestamp
-  }
-
+export function parseTimestamp(timestamp: string): number {
   const match = timestamp.match(/^(?:(\d{1,}):)?(\d{2}):(\d{2})[,.](\d{3})$/)
 
   if (!match) {

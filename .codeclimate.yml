@@ -1,4 +1,3 @@
 exclude_paths:
 - "dist/*.js"
-- "examples/**/*"
 - "test/**/*"

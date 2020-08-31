@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2020-08-31
+- Rewrite the project with TypeScript
+- Fixes #43 and #39
+- Update the API to export only these functions:
+  - `parse(input: string): Caption[]`
+  - `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): string`
+  - `resync(captions: Caption[], time: number): Caption[]`
+  - `parseTimestamp(timestamp: string): number`
+  - `parseTimestamps(timestamps: string): Timestamp`
+  - `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
+- `parse` supports optional indexes
+
 ## [2.0.5] - 2020-08-28
 - Remove zero-fill dependency
 - Rewrite and refactor tests with Jest

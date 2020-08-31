@@ -1,24 +1,6 @@
-import { resync } from '../lib/resync'
+import { resync } from '../src'
 
 const captions = [
-  {
-    start: '00:00:10,100',
-    end: '00:00:10,500',
-    text: 'Text'
-  },
-  {
-    start: '00:00:20,650',
-    end: '00:00:23,300',
-    text: 'Text'
-  },
-  {
-    start: '00:05:00,000',
-    end: '00:05:10,150',
-    text: 'Text'
-  }
-]
-
-const captionsMS = [
   {
     start: 10100,
     end: 10500,
@@ -44,10 +26,8 @@ test('delay 100ms', () => {
   }
 
   const result = resync(captions, -100)[0]
-  const result2 = resync(captionsMS, -100)[0]
 
   expect(result).toEqual(expected)
-  expect(result2).toEqual(expected)
 })
 
 test('advance 1s', () => {
@@ -58,10 +38,8 @@ test('advance 1s', () => {
   }
 
   const result = resync(captions, 1000)[1]
-  const result2 = resync(captionsMS, 1000)[1]
 
   expect(result).toEqual(expected)
-  expect(result2).toEqual(expected)
 })
 
 test('delay 2 hours', () => {
@@ -72,8 +50,6 @@ test('delay 2 hours', () => {
   }
 
   const result = resync(captions, 2 * 60 * 1000 * -1)[2]
-  const result2 = resync(captionsMS, 2 * 60 * 1000 * -1)[2]
 
   expect(result).toEqual(expected)
-  expect(result2).toEqual(expected)
 })

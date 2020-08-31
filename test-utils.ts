@@ -7,7 +7,7 @@ export const fixtures = [
   'Wonder Woman 2017 (BluRay 1080p x265 10bit 7.1)_track3_eng'
 ]
 
-export const getFixture = (filename, extension) => {
+export const getFixture = (filename: string, extension: string): Promise<string> => {
   const filepath = path.join(
     __dirname,
     `/test/fixtures/${filename}.${extension}`

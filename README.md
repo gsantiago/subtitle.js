@@ -45,7 +45,7 @@ parse(input)
 // returns an array like this:
 [
   {
-    start: 20000,
+    start: 20000, // milliseconds
     end: 24400,
     text: 'Bla Bla Bla Bla'
   },
@@ -61,7 +61,7 @@ parse(input)
 
 ### stringify
 
-- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt })`
+- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): string`
 
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 
@@ -75,91 +75,27 @@ stringify(options, { format: 'vtt' })
 // returns a string in VTT format
 ```
 
-
 ### resync
+
+- `resync(captions: Caption[], time: number): Caption[]`
+
+Resync all the given captions at once:
+
+```ts
+import { resync } from 'subtitle'
+
+// Advance subtitles by 1s
+const newCaptions = resync(captions, 1000)
+
+// Delay 250ms
+const newCaptions = resync(captions, -250)
+```
 
 ### parseTimestamp
 
 ### parseTimestamps
 
 ### formatTimestamp
-
-### `stringify(captions: Array) -> String`
-
-The reverse of `parse`. It gets an array with subtitles and converts it to a valid SRT string.
-
-The `stringifyVtt(captions: Array) -> String` function is also available for converting to a
-valid WebVTT string.
-
-```js
-const subtitles = [
-  {
-    start: '00:00:20,000',
-    end: '00:00:24,400',
-    text: 'Bla Bla Bla Bla'
-  },
-  {
-    start: 24600, // timestamp in milliseconds is supported as well
-    end: 27800,
-    text: 'Bla Bla Bla Bla',
-    settings: 'align:middle line:90%' // Ignored in SRT format
-  }
-]
-
-const srt = stringify(subtitles)
-// returns the following string:
-/*
-1
-00:00:20,000 --> 00:00:24,400
-Bla Bla Bla Bla
-
-2
-00:00:24,600 --> 00:00:27,800
-Bla Bla Bla Bla
-*/
-
-const vtt = stringifyVtt(subtitles)
-// returns the following string:
-/*
-WEBVTT
-
-1
-00:00:20.000 --> 00:00:24.400
-Bla Bla Bla Bla
-
-2
-00:00:24.600 --> 00:00:27.800 align:middle line:90%
-Bla Bla Bla Bla
-*/
-```
-
-### `resync(captions: Array, time: Number) -> Object`
-
-Resync all captions at once.
-
-```js
-const subtitles = [
-  {
-    start: '00:00:20,000',
-    end: '00:00:24,400',
-    text: 'Bla Bla Bla Bla'
-  },
-  {
-    start: 24600, // timestamp in millseconds is supported as well
-    end: 27800,
-    text: 'Bla Bla Bla Bla'
-  }
-]
-
-// Advance 1s
-const newSubtitles = resync(subtitles, 1000)
-
-// Delay 250ms
-const newSubtitles = resync(subtitles, -250) //
-
-// Then, you can stringify your new subtitles:
-stringify(newSubtitles)
-```
 
 ### `toMS(timestamp: String) -> Number`
 
@@ -182,7 +118,6 @@ toSrtTime(24400)
 // '00:00:24,400'
 ```
 
-
 ### `toVttTime(timestamp: Number) -> String`
 
 Convert a time from milliseconds to a WebVTT timestamp:
@@ -191,26 +126,6 @@ Convert a time from milliseconds to a WebVTT timestamp:
 toVttTime(24400)
 // '00:00:24.400'
 ```
-
-## Tests
-
-Subtitle.js uses Jest for tests.
-
-If you want to run these tests, you need to install all devDependencies:
-
-`npm install`
-
-Now you can run the tests with the following command:
-
-`npm test`
-
-**Code Coverage**
-
-You can check the code coverage by running the following command:
-
-`npm run test:coverage`
-
-Your report will be available in the `coverage` folder.
 
 ## License
 

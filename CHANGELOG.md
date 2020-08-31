@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `parseTimestamp(timestamp: string): number`
   - `parseTimestamps(timestamps: string): Timestamp`
   - `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
+- `parse` supports optional indexes
 
 ## [2.0.5] - 2020-08-28
 - Remove zero-fill dependency

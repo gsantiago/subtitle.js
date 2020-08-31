@@ -17,7 +17,14 @@ const normalize = (str: string) =>
     .split('\n')
 
 const isIndex = (str: string): boolean => /\d+/.test(str)
+
 const isTimestamp = (str: string): boolean => RE_TIMESTAMP.test(str)
+
+const throwError = (expected: string, index: number, row: string) => {
+  throw new Error(
+    `expected ${expected} at row ${index + 1}, but received ${row}`
+  )
+}
 
 export function parse(input: string): Captions {
   const source = normalize(input)
@@ -30,7 +37,7 @@ export function parse(input: string): Captions {
   source.forEach((row, index) => {
     if (state.expect === 'index') {
       if (!isIndex(row)) {
-        throw new Error(`expected index token at row ${index}`)
+        throwError('index token', index, row)
       }
       state.expect = 'timestamp'
       return
@@ -38,10 +45,9 @@ export function parse(input: string): Captions {
 
     if (state.expect === 'timestamp') {
       if (!isTimestamp(row)) {
-        throw new Error(
-          `expected timestamp token at row ${index}, but received: ${row}`
-        )
+        throwError('timestamp', index, row)
       }
+
       state.caption = {
         ...state.caption,
         ...parseTimestamps(row)

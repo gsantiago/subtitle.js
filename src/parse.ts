@@ -65,7 +65,7 @@ export function parse(input: string): Captions {
 
       const isLastRow = index === source.length - 1
       const isNextRowCaption =
-        isIndex(source[index + 1] || '') && isTimestamp(source[index + 2] || '')
+        isIndex(source[index + 1] || '') && isTimestamp(source[index + 2])
 
       if (isLastRow || isNextRowCaption) {
         state.expect = 'index'

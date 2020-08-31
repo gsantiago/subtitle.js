@@ -273,3 +273,20 @@ Welcome to the Planet.
     ]
   `)
 })
+
+test('invalid timestamps should throw an error', () => {
+  const srt = `
+02:12:38,584 -- 02:12:40,120
+Invalid timestamp
+  `
+
+  expect(() => parse(srt)).toThrow()
+
+  const srt2 = `
+1
+999Foo
+Invalid timestamp
+  `
+
+  expect(() => parse(srt2)).toThrow()
+})

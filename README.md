@@ -14,7 +14,13 @@ also supported.
 
 ## Installation
 
-`npm install subtitle --save`
+### npm
+
+`npm install subtitle`
+
+### yarn
+
+`yarn add subtitle`
 
 ## API
 
@@ -93,21 +99,23 @@ const newCaptions = resync(captions, -250)
 
 ### parseTimestamp
 
+- `parseTimestamp(timestamp: string): number`
+
+Receives a timestamp (SRT or VTT) and returns its value in milliseconds:
+
+```ts
+import { parseTimestamp } from 'subtitle'
+
+parseTimestamp('00:00:24,400')
+// => 24400
+
+parseTimestamp('00:24.400')
+// => 24400
+```
+
 ### parseTimestamps
 
 ### formatTimestamp
-
-### `toMS(timestamp: String) -> Number`
-
-Convert a SRT or WebVTT timestamp to milliseconds:
-
-```js
-toMS('00:00:24,400')
-// 24400
-
-toMS('00:24.400')
-// 24400
-```
 
 ### `toSrtTime(timestamp: Number) -> String`
 

@@ -16,7 +16,7 @@ const normalize = (str: string) =>
     .replace(/^WEBVTT.*\n(?:.*: .*\n)*\n/, '')
     .split('\n')
 
-const isIndex = (str: string): boolean => /\d+/.test(str)
+const isIndex = (str: string): boolean => /^\d+$/.test(str.trim())
 
 const isTimestamp = (str: string): boolean => RE_TIMESTAMP.test(str)
 
@@ -36,11 +36,10 @@ export function parse(input: string): Captions {
 
   source.forEach((row, index) => {
     if (state.expect === 'index') {
-      if (!isIndex(row)) {
-        throwError('index token', index, row)
-      }
       state.expect = 'timestamp'
-      return
+      if (isIndex(row)) {
+        return
+      }
     }
 
     if (state.expect === 'timestamp') {
@@ -66,7 +65,7 @@ export function parse(input: string): Captions {
 
       const isLastRow = index === source.length - 1
       const isNextRowCaption =
-        isIndex(source[index + 1]) && isTimestamp(source[index + 2])
+        isIndex(source[index + 1] || '') && isTimestamp(source[index + 2])
 
       if (isLastRow || isNextRowCaption) {
         state.expect = 'index'

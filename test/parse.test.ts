@@ -30,27 +30,25 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  const value = parse(srt)
-
-  const expected = [
-    {
-      start: 7954647,
-      end: 7955489,
-      text: 'Hi.'
-    },
-    {
-      start: 7956415,
-      end: 7957758,
-      text: 'Lois Lane.'
-    },
-    {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
-    }
-  ]
-
-  expect(value).toEqual(expected)
+  expect(parse(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 7955489,
+        "start": 7954647,
+        "text": "Hi.",
+      },
+      Object {
+        "end": 7957758,
+        "start": 7956415,
+        "text": "Lois Lane.",
+      },
+      Object {
+        "end": 7960120,
+        "start": 7958584,
+        "text": "Welcome to the Planet.",
+      },
+    ]
+  `)
 })
 
 test('parse VTT captions', () => {
@@ -71,29 +69,27 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  const value = parse(vtt)
-
-  const expected = [
-    {
-      start: 754647,
-      end: 755489,
-      settings: 'align:middle line:90%',
-      text: 'Hi.'
-    },
-    {
-      start: 756415,
-      end: 7957758,
-      settings: 'align:start line:90%',
-      text: 'Lois Lane.'
-    },
-    {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
-    }
-  ]
-
-  expect(value).toEqual(expected)
+  expect(parse(vtt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 755489,
+        "settings": "align:middle line:90%",
+        "start": 754647,
+        "text": "Hi.",
+      },
+      Object {
+        "end": 7957758,
+        "settings": "align:start line:90%",
+        "start": 756415,
+        "text": "Lois Lane.",
+      },
+      Object {
+        "end": 7960120,
+        "start": 7958584,
+        "text": "Welcome to the Planet.",
+      },
+    ]
+  `)
 })
 
 test('parse VTT caption with headers', () => {
@@ -116,29 +112,27 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  const value = parse(vtt)
-
-  const expected = [
-    {
-      start: 754647,
-      end: 755489,
-      settings: 'align:middle line:90%',
-      text: 'Hi.'
-    },
-    {
-      start: 756415,
-      end: 7957758,
-      settings: 'align:start line:90%',
-      text: 'Lois Lane.'
-    },
-    {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
-    }
-  ]
-
-  expect(value).toEqual(expected)
+  expect(parse(vtt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 755489,
+        "settings": "align:middle line:90%",
+        "start": 754647,
+        "text": "Hi.",
+      },
+      Object {
+        "end": 7957758,
+        "settings": "align:start line:90%",
+        "start": 756415,
+        "text": "Lois Lane.",
+      },
+      Object {
+        "end": 7960120,
+        "start": 7958584,
+        "text": "Welcome to the Planet.",
+      },
+    ]
+  `)
 })
 
 test('parse 00:00:00,000 caption', () => {
@@ -147,16 +141,16 @@ test('parse 00:00:00,000 caption', () => {
 00:00:00,000 --> 00:00:00,100
 Hi.
 `
-  const value = parse(srt)
-  const expected = [
-    {
-      start: 0,
-      end: 100,
-      text: 'Hi.'
-    }
-  ]
 
-  expect(value).toEqual(expected)
+  expect(parse(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 100,
+        "start": 0,
+        "text": "Hi.",
+      },
+    ]
+  `)
 })
 
 test('parse text that contains only empty space', () => {
@@ -169,21 +163,22 @@ Something something something... dark side
 2
 00:00:00,100 --> 00:00:00,200
 Hi.`
-  const value = parse(srt)
-  const expected = [
-    {
-      start: 0,
-      end: 100,
-      text: 'Something something something... dark side\n '
-    },
-    {
-      start: 100,
-      end: 200,
-      text: 'Hi.'
-    }
-  ]
 
-  expect(value).toEqual(expected)
+  expect(parse(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 100,
+        "start": 0,
+        "text": "Something something something... dark side
+     ",
+      },
+      Object {
+        "end": 200,
+        "start": 100,
+        "text": "Hi.",
+      },
+    ]
+  `)
 })
 
 test('parse separated texts', () => {
@@ -197,22 +192,23 @@ Who else could they send?
 2
 00:00:00,100 --> 00:00:00,200
 Who else could be trusted?`
-  const value = parse(srt)
 
-  const expected = [
-    {
-      start: 0,
-      end: 100,
-      text: "Dear Michael. Of course it's you.\n\nWho else could they send?"
-    },
-    {
-      start: 100,
-      end: 200,
-      text: 'Who else could be trusted?'
-    }
-  ]
+  expect(parse(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 100,
+        "start": 0,
+        "text": "Dear Michael. Of course it's you.
 
-  expect(value).toEqual(expected)
+    Who else could they send?",
+      },
+      Object {
+        "end": 200,
+        "start": 100,
+        "text": "Who else could be trusted?",
+      },
+    ]
+  `)
 })
 
 test('correctly parse captions with empty first lines', () => {
@@ -257,25 +253,23 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  const value = parse(srt)
-
-  const expected = [
-    {
-      start: 7954647,
-      end: 7955489,
-      text: 'Hi.'
-    },
-    {
-      start: 7956415,
-      end: 7957758,
-      text: 'Lois Lane.'
-    },
-    {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
-    }
-  ]
-
-  expect(value).toEqual(expected)
+  expect(parse(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "end": 7955489,
+        "start": 7954647,
+        "text": "Hi.",
+      },
+      Object {
+        "end": 7957758,
+        "start": 7956415,
+        "text": "Lois Lane.",
+      },
+      Object {
+        "end": 7960120,
+        "start": 7958584,
+        "text": "Welcome to the Planet.",
+      },
+    ]
+  `)
 })

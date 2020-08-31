@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] - ?
+## [3.0.0] - 2020-08-31
 - Rewrite the project with TypeScript
 - Fixes #43 and #39
 - Update the API to export only these functions:

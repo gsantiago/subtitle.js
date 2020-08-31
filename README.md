@@ -116,7 +116,7 @@ parseTimestamp('00:24.400')
 
 - `parseTimestamps(timestamps: string): Timestamp`
 
-Receives a timestamps string, like `00:01:00,500 --> 00:01:10,800`. It also supports VTT formats like `12:34:56,789 --> 98:76:54,321 align:middle line:90%`.
+It receives a timestamps string, like `00:01:00,500 --> 00:01:10,800`. It also supports VTT formats like `12:34:56,789 --> 98:76:54,321 align:middle line:90%`.
 
 ```ts
 import { parseTimestamps } from 'subtitle'
@@ -130,22 +130,18 @@ parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
 
 ### formatTimestamp
 
-### `toSrtTime(timestamp: Number) -> String`
+- `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
 
-Convert a time from milliseconds to a SRT timestamp:
+It receives a timestamp in milliseconds and returns it formatted as SRT or VTT:
 
-```js
-toSrtTime(24400)
-// '00:00:24,400'
-```
+```ts
+import { formatTimestamp } from 'subtitle'
 
-### `toVttTime(timestamp: Number) -> String`
+formatTimestamp(142542)
+// => '00:02:22,542'
 
-Convert a time from milliseconds to a WebVTT timestamp:
-
-```js
-toVttTime(24400)
-// '00:00:24.400'
+formatTimestamp(142542, { format: 'vtt' })
+// => '00:02:22.542'
 ```
 
 ## License

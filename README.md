@@ -6,8 +6,7 @@
 ![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)
 [![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
-Parse, manipulate and stringify SRT (SubRip) format. WebVTT as input is
-also supported.
+Parse, manipulate and stringify SRT (SubRip) format, with partial support for WebVTT.
 
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
@@ -114,6 +113,20 @@ parseTimestamp('00:24.400')
 ```
 
 ### parseTimestamps
+
+- `parseTimestamps(timestamps: string): Timestamp`
+
+Receives a timestamps string, like `00:01:00,500 --> 00:01:10,800`. It also supports VTT formats like `12:34:56,789 --> 98:76:54,321 align:middle line:90%`.
+
+```ts
+import { parseTimestamps } from 'subtitle'
+
+parseTimestamps('00:01:00,500 --> 00:01:10,800')
+// => { start: 60500, end: 70800 }
+
+parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
+// => { start: 45296789, end: 357414321, settings: 'align:middle line:90%' }
+```
 
 ### formatTimestamp
 

@@ -29,7 +29,7 @@ Stream-based library for parsing and manipulating subtitles files.
 
 ## Usage
 
-This library provides some stream-based functions to work with subtitles. The example below, parses a SRT file, resyncs it and outputs a VTT file:
+This library provides some stream-based functions to work with subtitles. The following example parses a SRT file, resyncs it and outputs a VTT file:
 
 ```ts
 import fs from 'fs'
@@ -51,6 +51,25 @@ read(inputStream)
   .pipe(map(caption => ({ ...caption, text: caption.text.toUpperCase() })))
   .pipe(write())
   .pipe(outputStream)
+```
+
+For convenience, it also offers Promise-based functions like `parse` and `stringify`. However, you should avoit it and rather use the Stream-based functions for better performance and memory management:
+
+```ts
+import { parse, stringify } from 'subtitle'
+
+parse(srtContent)
+  .then(captions => {
+    console.log(captions)
+
+    // do something with your captions
+
+    return captions
+  })
+  .then(captions => {
+    // stringies it in vtt format
+    return stringify(captions, { format: 'vtt' })
+  })
 ```
 
 ## API

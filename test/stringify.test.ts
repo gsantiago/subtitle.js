@@ -7,20 +7,17 @@ test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'json'))
   const srt = await getFixture(filename, 'srt')
 
-  expect(stringify(json)).toEqual(normalize(srt))
+  expect(await stringify(json)).toEqual(normalize(srt))
 })
 
-test.each([fixtures[2]])(
-  'stringify fixture to VTT: %s.json',
-  async filename => {
-    const json = JSON.parse(await getFixture(filename, 'json'))
-    const vtt = await getFixture(filename, 'vtt')
+test.each(fixtures)('stringify fixture to VTT: %s.json', async filename => {
+  const json = JSON.parse(await getFixture(filename, 'json'))
+  const vtt = await getFixture(filename, 'vtt')
 
-    expect(stringify(json, { format: 'vtt' })).toEqual(normalize(vtt))
-  }
-)
+  expect(await stringify(json, { format: 'vtt' })).toEqual(normalize(vtt))
+})
 
-test('stringify the given captions to SRT format', () => {
+test('stringify the given captions to SRT format', async () => {
   const captions = [
     {
       start: 7954647,
@@ -55,10 +52,10 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(stringify(captions)).toBe(expected)
+  expect(await stringify(captions)).toBe(expected)
 })
 
-test('stringify the given captions to WebVTT format', () => {
+test('stringify the given captions to WebVTT format', async () => {
   const captions = [
     {
       start: 940647,
@@ -95,5 +92,5 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(stringify(captions, { format: 'vtt' })).toBe(expected)
+  expect(await stringify(captions, { format: 'vtt' })).toBe(expected)
 })

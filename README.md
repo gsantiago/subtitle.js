@@ -6,10 +6,16 @@
 [![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 [![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
-Parse, manipulate and stringify SRT (SubRip) format, with partial support for WebVTT.
+Stream-based library for parsing and manipulating subtitles files.
 
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
+
+- [x] Streams-based API
+- [x] Written in TypeScript
+- [x] SRT (SubRip format) supported
+- [x] Partial support for WebVTT (full support comming soon)
+- [x] 100% code coverage
 
 ## Installation
 
@@ -21,10 +27,38 @@ Parse, manipulate and stringify SRT (SubRip) format, with partial support for We
 
 `yarn add subtitle`
 
+## Usage
+
+This library provides some stream-based functions to work with subtitles. The example below, parses a SRT file, resyncs it and outputs a VTT file:
+
+```ts
+import fs from 'fs'
+import { read, resync, write } from 'subtitle'
+
+read(fs.createReadStrem('./my-subtitles.srt'))
+  .pipe(resync(-100))
+  .pipe(write({ format: 'vtt' }))
+  .pipe(fs.createWriteStream('./my-subtitles.vtt'))
+```
+
+It also provides functions like `map` and `filter`:
+
+```ts
+import { read, map, filter, write } from 'subtitle'
+
+read(inputStream)
+  .pipe(filter(caption => !caption.text.includes('𝅘𝅥𝅮')))
+  .pipe(map(caption => ({ ...caption, text: caption.text.toUpperCase() })))
+  .pipe(write())
+  .pipe(outputStream)
+```
+
 ## API
 
-The API is minimal and provides only six pure functions:
+The API provides the following functions:
 
+* [`read`](#read)
+* [`write`](#write)
 * [`parse`](#parse)
 * [`stringify`](#stringify)
 * [`resync`](#resync)

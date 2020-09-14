@@ -108,7 +108,7 @@ The API exports the following functions:
 
 - `parse(input: string): Promise<Caption[]>`
 
-| **NOTE**: For better perfomance, consider use the `read` function
+> **NOTE**: For better perfomance, consider use the `read` function
 
 It receives a string containing a SRT or VTT content and returns
 an array of captions:
@@ -142,7 +142,7 @@ parse(input)
 
 - `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): Promise<string>`
 
-| **NOTE**: For better perfomance, consider use the `write` function
+> **NOTE**: For better perfomance, consider use the `write` function
 
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 

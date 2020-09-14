@@ -13,7 +13,7 @@ Stream-based library for parsing and manipulating subtitles files.
 
 :white_check_mark: Stream-based API<br>
 :white_check_mark: Written in TypeScript<br>
-:white_check_mark: SRT (SubRip format) supported<br>
+:white_check_mark: SRT (SubRip format) support<br>
 :white_check_mark: Partial support for WebVTT (full support comming soon)<br>
 :white_check_mark: 100% code coverage<br>
 :white_check_mark: Actively maintained since 2015
@@ -36,7 +36,7 @@ This library provides some stream-based functions to work with subtitles. The fo
 import fs from 'fs'
 import { read, resync, write } from 'subtitle'
 
-read(fs.createReadStrem('./my-subtitles.srt'))
+read(fs.createReadStream('./my-subtitles.srt'))
   .pipe(resync(-100))
   .pipe(write({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./my-subtitles.vtt'))
@@ -75,7 +75,7 @@ parse(srtContent)
 
 ## API
 
-The API provides the following functions:
+The API exports the following functions:
 
 * [`read`](#read)
 * [`write`](#write)
@@ -106,7 +106,9 @@ The API provides the following functions:
 
 ### parse
 
-- `parse(input: string): Caption[]`
+- `parse(input: string): Promise<Caption[]>`
+
+| **NOTE**: For better perfomance, consider use the `read` function
 
 It receives a string containing a SRT or VTT content and returns
 an array of captions:
@@ -138,7 +140,9 @@ parse(input)
 
 ### stringify
 
-- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): string`
+- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): Promise<string>`
+
+| **NOTE**: For better perfomance, consider use the `write` function
 
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 

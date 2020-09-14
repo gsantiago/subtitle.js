@@ -1,29 +1,24 @@
 import { fixtures, getFixture } from '../test-utils'
 import { stringify } from '../src'
 
+const normalize = (str: string) => str.replace(/\r\n/g, '\n')
+
 test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'json'))
-  const str = await getFixture(filename, 'srt')
-  const normalizedSrt = str
-    .trim()
-    .concat('\n')
-    .replace(/\r\n/g, '\n')
-    .replace(/\n{3,}/g, '\n\n')
+  const srt = await getFixture(filename, 'srt')
 
-  expect(stringify(json)).toEqual(normalizedSrt)
+  expect(stringify(json)).toEqual(normalize(srt))
 })
 
-test.each(fixtures)('stringify fixture to VTT: %s.json', async filename => {
-  const json = JSON.parse(await getFixture(filename, 'json'))
-  const vtt = await getFixture(filename, 'vtt')
-  const normalizedVtt = vtt
-    .trim()
-    .concat('\n')
-    .replace(/\r\n/g, '\n')
-    .replace(/\n{3,}/g, '\n\n')
+test.each([fixtures[2]])(
+  'stringify fixture to VTT: %s.json',
+  async filename => {
+    const json = JSON.parse(await getFixture(filename, 'json'))
+    const vtt = await getFixture(filename, 'vtt')
 
-  expect(stringify(json, { format: 'vtt' })).toEqual(normalizedVtt)
-})
+    expect(stringify(json, { format: 'vtt' })).toEqual(normalize(vtt))
+  }
+)
 
 test('stringify the given captions to SRT format', () => {
   const captions = [

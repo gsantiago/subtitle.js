@@ -2,9 +2,9 @@ import fs from 'fs'
 import path from 'path'
 
 export const fixtures = [
-  'La.La.Land.2016.1080p.BluRay.x264-SPARKS.EN',
-  'Man.Of.Steel.2013.720p.BluRay.x264.YIFI',
-  'Wonder Woman 2017 (BluRay 1080p x265 10bit 7.1)_track3_eng'
+  'LaLaLand',
+  'ManOfSteel',
+  'WonderWoman'
 ]
 
 export const getFixture = (filename: string, extension: string): Promise<string> => {
@@ -19,4 +19,13 @@ export const getFixture = (filename: string, extension: string): Promise<string>
       resolve(contents)
     })
   )
+}
+
+export const writeFile = (filename: string, contents: string) => {
+  const filepath = path.join(
+    __dirname,
+    `/test/fixtures/${filename}`
+  )
+
+  fs.writeFileSync(filepath, contents)
 }

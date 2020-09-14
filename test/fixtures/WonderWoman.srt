@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:48,842 --> 00:00:51,428
 <i>I used to want to save the world.</i>
 
@@ -6743,4 +6743,3 @@ that lives within their light</i>
 1586
 02:21:07,711 --> 02:21:08,712
 English - SDH
-

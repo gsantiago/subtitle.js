@@ -11,12 +11,17 @@ Stream-based library for parsing and manipulating subtitles files.
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
 
-- :white_check_mark: Stream-based API
-- :white_check_mark: Written in TypeScript
-- :white_check_mark: SRT (SubRip format) supported
-- :white_check_mark: Partial support for WebVTT (full support comming soon)
-- :white_check_mark: 100% code coverage
-- :white_check_mark: Actively maintained since 2015
+:white_check_mark: Stream-based API
+
+:white_check_mark: Written in TypeScript
+
+:white_check_mark: SRT (SubRip format) supported
+
+:white_check_mark: Partial support for WebVTT (full support comming soon)
+
+:white_check_mark: 100% code coverage
+
+:white_check_mark: Actively maintained since 2015
 
 ## Installation
 
@@ -79,12 +84,30 @@ The API provides the following functions:
 
 * [`read`](#read)
 * [`write`](#write)
+* [`map`](#map)
+* [`filter`](#filter)
 * [`parse`](#parse)
 * [`stringify`](#stringify)
 * [`resync`](#resync)
 * [`parseTimestamp`](#parseTimestamp)
 * [`parseTimestamps`](#parseTimestamps)
 * [`formatTimestamp`](#formatTimestamp)
+
+### read
+
+- `read(input: ReadableStream): DuplexStream`
+
+### write
+
+- `write({ format: 'srt' | 'vtt' }): DuplexStream`
+
+### map
+
+- `map(callback: function): DuplexStream`
+
+### filter
+
+- `filter(callback: function): DuplexStream`
 
 ### parse
 

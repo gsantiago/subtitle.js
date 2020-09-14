@@ -1,28 +1,32 @@
-import { formatTimestamp } from './formatTimestamp'
-import { Captions, FormatOptions } from './types'
+import { Readable } from 'stream'
+import { write } from './write'
+import { Tree, FormatOptions } from './types'
 
-export function stringify(
-  captions: Captions,
-  options: FormatOptions = { format: 'srt' }
-): Promise<string> {
-  const isVTT = options.format === 'vtt'
-  return Promise.resolve(
-    (isVTT ? 'WEBVTT\n\n' : '') +
-      captions
-        .map((caption, index) => {
-          return (
-            (index > 0 ? '\n' : '') +
-            [
-              index + 1,
-              `${formatTimestamp(caption.start, options)} --> ${formatTimestamp(
-                caption.end,
-                options
-              )}${isVTT && caption.settings ? ' ' + caption.settings : ''}`,
-              caption.text
-            ].join('\n')
-          )
-        })
-        .join('\n') +
-      '\n'
-  )
-}
+export const stringify = (
+  tree: Tree,
+  options: FormatOptions
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const stream = new Readable({
+      objectMode: true,
+      read() {}
+    })
+
+    let buffer = ''
+
+    tree.forEach(node => {
+      stream.push(node)
+    })
+
+    stream.push(null)
+
+    stream
+      .pipe(write(options))
+      .on('data', chunk => {
+        buffer += chunk
+      })
+      .on('error', reject)
+      .on('finish', () => {
+        resolve(buffer)
+      })
+  })

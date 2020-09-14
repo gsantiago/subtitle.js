@@ -6,7 +6,7 @@
 [![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 [![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
-Stream-based library for parsing and manipulating subtitles files.
+Stream-based library for parsing and manipulating subtitle files.
 
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
@@ -48,9 +48,9 @@ It also provides functions like `map` and `filter`:
 import { read, map, filter, write } from 'subtitle'
 
 read(inputStream)
-  .pipe(filter(caption => !caption.text.includes('𝅘𝅥𝅮')))
-  .pipe(map(caption => ({ ...caption, text: caption.text.toUpperCase() })))
-  .pipe(write())
+  .pipe(filter('cue', cue => !cue.text.includes('𝅘𝅥𝅮')))
+  .pipe(map('cue', cue => ({ ...cue, text: cue.text.toUpperCase() })))
+  .pipe(write({ format: 'vtt' }))
   .pipe(outputStream)
 ```
 
@@ -60,16 +60,16 @@ It also offers promise-based functions like `parse` and `stringify`. However, yo
 import { parse, stringify } from 'subtitle'
 
 parse(srtContent)
-  .then(captions => {
-    console.log(captions)
+  .then(nodes => {
+    console.log(nodes)
 
     // do something with your captions
 
-    return captions
+    return nodes
   })
-  .then(captions => {
+  .then(nodes => {
     // stringifies it in vtt format
-    return stringify(captions, { format: 'vtt' })
+    return stringify(nodes, { format: 'vtt' })
   })
 ```
 
@@ -140,7 +140,7 @@ parse(input)
 
 ### stringify
 
-- `stringify(captions: Caption[], options?: { format: 'srt' | 'vtt }): Promise<string>`
+- `stringify(captions: Caption[], options: { format: 'srt' | 'vtt }): Promise<string>`
 
 > **NOTE**: For better perfomance, consider use the `write` function
 
@@ -149,7 +149,7 @@ It receives an array of captions and returns a string in SRT (default), but it a
 ```ts
 import { stringify } from 'subtitle'
 
-stringify(captions)
+stringify(captions, { format: 'srt' })
 // returns a string in SRT format
 
 stringify(options, { format: 'vtt' })
@@ -218,6 +218,19 @@ formatTimestamp(142542)
 
 formatTimestamp(142542, { format: 'vtt' })
 // => '00:02:22.542'
+```
+
+## Examples
+
+### Convert SRT file to WebVTT
+
+```ts
+import fs from 'fs'
+import { read, write } from 'subtitle'
+
+read(fs.createReadStream('./source.srt'))
+  .pipe(write({ format: 'vtt' }))
+  .pipe(fs.createWriteStream('./dest.vtt'))
 ```
 
 ## License

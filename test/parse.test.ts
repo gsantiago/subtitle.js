@@ -3,13 +3,13 @@ import { parse } from '../src'
 
 test.each(fixtures)('parse SRT fixture: %s.srt', async filename => {
   expect(await parse(await getFixture(filename, 'srt'))).toEqual(
-    JSON.parse(await getFixture(filename, 'json'))
+    JSON.parse(await getFixture(filename, 'srt.json'))
   )
 })
 
 test.each(fixtures)('parse VTT fixture: %s.vtt', async filename => {
-  expect(await parse(await getFixture(filename, 'srt'))).toEqual(
-    JSON.parse(await getFixture(filename, 'json'))
+  expect(await parse(await getFixture(filename, 'vtt'))).toEqual(
+    JSON.parse(await getFixture(filename, 'vtt.json'))
   )
 })
 
@@ -33,19 +33,28 @@ Welcome to the Planet.
   expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 7955489,
-        "start": 7954647,
-        "text": "Hi.",
+        "data": Object {
+          "end": 7955489,
+          "start": 7954647,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7957758,
-        "start": 7956415,
-        "text": "Lois Lane.",
+        "data": Object {
+          "end": 7957758,
+          "start": 7956415,
+          "text": "Lois Lane.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7960120,
-        "start": 7958584,
-        "text": "Welcome to the Planet.",
+        "data": Object {
+          "end": 7960120,
+          "start": 7958584,
+          "text": "Welcome to the Planet.",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -72,21 +81,34 @@ Welcome to the Planet.
   expect(await parse(vtt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 755489,
-        "settings": "align:middle line:90%",
-        "start": 754647,
-        "text": "Hi.",
+        "data": "WEBVTT - Test VTT cues",
+        "type": "header",
       },
       Object {
-        "end": 7957758,
-        "settings": "align:start line:90%",
-        "start": 756415,
-        "text": "Lois Lane.",
+        "data": Object {
+          "end": 755489,
+          "settings": "align:middle line:90%",
+          "start": 754647,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7960120,
-        "start": 7958584,
-        "text": "Welcome to the Planet.",
+        "data": Object {
+          "end": 7957758,
+          "settings": "align:start line:90%",
+          "start": 756415,
+          "text": "Lois Lane.",
+        },
+        "type": "cue",
+      },
+      Object {
+        "data": Object {
+          "end": 7960120,
+          "start": 7958584,
+          "text": "Welcome to the Planet.",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -115,21 +137,36 @@ Welcome to the Planet.
   expect(await parse(vtt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 755489,
-        "settings": "align:middle line:90%",
-        "start": 754647,
-        "text": "Hi.",
+        "data": "WEBVTT - Test VTT cues
+    Kind: captions
+    Language: en-US",
+        "type": "header",
       },
       Object {
-        "end": 7957758,
-        "settings": "align:start line:90%",
-        "start": 756415,
-        "text": "Lois Lane.",
+        "data": Object {
+          "end": 755489,
+          "settings": "align:middle line:90%",
+          "start": 754647,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7960120,
-        "start": 7958584,
-        "text": "Welcome to the Planet.",
+        "data": Object {
+          "end": 7957758,
+          "settings": "align:start line:90%",
+          "start": 756415,
+          "text": "Lois Lane.",
+        },
+        "type": "cue",
+      },
+      Object {
+        "data": Object {
+          "end": 7960120,
+          "start": 7958584,
+          "text": "Welcome to the Planet.",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -141,13 +178,15 @@ test('parse 00:00:00,000 caption', async () => {
 00:00:00,000 --> 00:00:00,100
 Hi.
 `
-
   expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 100,
-        "start": 0,
-        "text": "Hi.",
+        "data": Object {
+          "end": 100,
+          "start": 0,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -163,19 +202,24 @@ Something something something... dark side
 2
 00:00:00,100 --> 00:00:00,200
 Hi.`
-
   expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 100,
-        "start": 0,
-        "text": "Something something something... dark side
+        "data": Object {
+          "end": 100,
+          "start": 0,
+          "text": "Something something something... dark side
      ",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 200,
-        "start": 100,
-        "text": "Hi.",
+        "data": Object {
+          "end": 200,
+          "start": 100,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -192,20 +236,25 @@ Who else could they send?
 2
 00:00:00,100 --> 00:00:00,200
 Who else could be trusted?`
-
   expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 100,
-        "start": 0,
-        "text": "Dear Michael. Of course it's you.
+        "data": Object {
+          "end": 100,
+          "start": 0,
+          "text": "Dear Michael. Of course it's you.
 
     Who else could they send?",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 200,
-        "start": 100,
-        "text": "Who else could be trusted?",
+        "data": Object {
+          "end": 200,
+          "start": 100,
+          "text": "Who else could be trusted?",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -221,18 +270,23 @@ test('correctly parse captions with empty first lines', async () => {
 2
 00:00:00,100 --> 00:00:00,200
 Fora Bolsonaro`
-  const value = await parse(srt)
-  expect(value).toMatchInlineSnapshot(`
+  expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 100,
-        "start": 0,
-        "text": "[Music]",
+        "data": Object {
+          "end": 100,
+          "start": 0,
+          "text": "[Music]",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 200,
-        "start": 100,
-        "text": "Fora Bolsonaro",
+        "data": Object {
+          "end": 200,
+          "start": 100,
+          "text": "Fora Bolsonaro",
+        },
+        "type": "cue",
       },
     ]
   `)
@@ -256,19 +310,28 @@ Welcome to the Planet.
   expect(await parse(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
-        "end": 7955489,
-        "start": 7954647,
-        "text": "Hi.",
+        "data": Object {
+          "end": 7955489,
+          "start": 7954647,
+          "text": "Hi.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7957758,
-        "start": 7956415,
-        "text": "Lois Lane.",
+        "data": Object {
+          "end": 7957758,
+          "start": 7956415,
+          "text": "Lois Lane.",
+        },
+        "type": "cue",
       },
       Object {
-        "end": 7960120,
-        "start": 7958584,
-        "text": "Welcome to the Planet.",
+        "data": Object {
+          "end": 7960120,
+          "start": 7958584,
+          "text": "Welcome to the Planet.",
+        },
+        "type": "cue",
       },
     ]
   `)

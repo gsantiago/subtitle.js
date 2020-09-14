@@ -1,38 +1,47 @@
 import { fixtures, getFixture } from '../test-utils'
-import { stringify } from '../src'
+import { stringify, Tree } from '../src'
 
 const normalize = (str: string) => str.replace(/\r\n/g, '\n')
 
 test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
-  const json = JSON.parse(await getFixture(filename, 'json'))
+  const json = JSON.parse(await getFixture(filename, 'srt.json'))
   const srt = await getFixture(filename, 'srt')
 
-  expect(await stringify(json)).toEqual(normalize(srt))
+  expect(await stringify(json, { format: 'srt' })).toEqual(normalize(srt))
 })
 
 test.each(fixtures)('stringify fixture to VTT: %s.json', async filename => {
-  const json = JSON.parse(await getFixture(filename, 'json'))
+  const json = JSON.parse(await getFixture(filename, 'vtt.json'))
   const vtt = await getFixture(filename, 'vtt')
 
   expect(await stringify(json, { format: 'vtt' })).toEqual(normalize(vtt))
 })
 
-test('stringify the given captions to SRT format', async () => {
-  const captions = [
+test('stringify to SRT format', async () => {
+  const tree: Tree = [
     {
-      start: 7954647,
-      end: 7955489,
-      text: 'Hi.'
+      type: 'cue',
+      data: {
+        start: 7954647,
+        end: 7955489,
+        text: 'Hi.'
+      }
     },
     {
-      start: 7956415,
-      end: 7957758,
-      text: 'Lois Lane.'
+      type: 'cue',
+      data: {
+        start: 7956415,
+        end: 7957758,
+        text: 'Lois Lane.'
+      }
     },
     {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
+      type: 'cue',
+      data: {
+        start: 7958584,
+        end: 7960120,
+        text: 'Welcome to the Planet.'
+      }
     }
   ]
 
@@ -52,26 +61,35 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await stringify(captions)).toBe(expected)
+  expect(await stringify(tree, { format: 'srt' })).toBe(expected)
 })
 
-test('stringify the given captions to WebVTT format', async () => {
-  const captions = [
+test('stringify to WebVTT', async () => {
+  const tree: Tree = [
     {
-      start: 940647,
-      end: 954489,
-      text: 'Hi.'
+      type: 'cue',
+      data: {
+        start: 940647,
+        end: 954489,
+        text: 'Hi.'
+      }
     },
     {
-      start: 7956415,
-      end: 7957758,
-      text: 'Lois Lane.',
-      settings: 'align:middle line:90%'
+      type: 'cue',
+      data: {
+        start: 7956415,
+        end: 7957758,
+        text: 'Lois Lane.',
+        settings: 'align:middle line:90%'
+      }
     },
     {
-      start: 7958584,
-      end: 7960120,
-      text: 'Welcome to the Planet.'
+      type: 'cue',
+      data: {
+        start: 7958584,
+        end: 7960120,
+        text: 'Welcome to the Planet.'
+      }
     }
   ]
 
@@ -92,5 +110,46 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await stringify(captions, { format: 'vtt' })).toBe(expected)
+  expect(await stringify(tree, { format: 'vtt' })).toBe(expected)
+})
+
+test('stringify to WebVTT with custom header', async () => {
+  const tree: Tree = [
+    {
+      type: 'header',
+      data:
+        'WEBVTT - This is a custom header\nBy Michael Scott\nThe Best Boss In The World'
+    },
+    {
+      type: 'cue',
+      data: {
+        start: 0,
+        end: 3000,
+        text: 'Hi there'
+      }
+    },
+    {
+      type: 'cue',
+      data: {
+        start: 3000,
+        end: 4000,
+        text: 'How are you?'
+      }
+    }
+  ]
+
+  expect(await stringify(tree, { format: 'vtt' })).toMatchInlineSnapshot(`
+    "WEBVTT - This is a custom header
+    By Michael Scott
+    The Best Boss In The World
+
+    1
+    00:00:00.000 --> 00:00:03.000
+    Hi there
+
+    2
+    00:00:03.000 --> 00:00:04.000
+    How are you?
+    "
+  `)
 })

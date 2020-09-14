@@ -2,14 +2,14 @@ import readline, { Interface as ReadlineInterface } from 'readline'
 import { Duplex } from 'stream'
 
 import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
-import { Caption } from './types'
+import { Node } from './types'
 
 export interface ParseState {
   expect: 'header' | 'id' | 'timestamp' | 'text'
   row: number
   hasContentStarted: boolean
   isWebVTT: boolean
-  caption: Partial<Caption>
+  node: Partial<Node>
   buffer: string[]
   inputStream: ReadlineInterface
   outputStream: Duplex
@@ -46,7 +46,7 @@ export const read = (input: NodeJS.ReadableStream): Duplex => {
     hasContentStarted: false,
     isWebVTT: false,
     expect: 'header',
-    caption: {},
+    node: {},
     buffer: [],
     inputStream,
     outputStream
@@ -75,7 +75,7 @@ export const read = (input: NodeJS.ReadableStream): Duplex => {
 
   inputStream.on('close', () => {
     if (state.buffer.length > 0) {
-      pushCaption(state)
+      pushNode(state)
     }
 
     outputStream.emit('end')
@@ -87,11 +87,16 @@ export const read = (input: NodeJS.ReadableStream): Duplex => {
 const parseHeader = ({ line, state }: ParseObject) => {
   if (!state.isWebVTT) {
     state.isWebVTT = /^WEBVTT/.test(line)
-    if (!state.isWebVTT) {
+
+    if (state.isWebVTT) {
+      state.node.type = 'header'
+    } else {
       parseId({ line, state })
       return
     }
   }
+
+  state.buffer.push(line)
 
   if (!line) {
     state.expect = 'id'
@@ -101,6 +106,10 @@ const parseHeader = ({ line, state }: ParseObject) => {
 
 const parseId = ({ state, line }: ParseObject) => {
   state.expect = 'timestamp'
+
+  if (state.node.type === 'header') {
+    pushNode(state)
+  }
 
   if (!isIndex(line)) {
     parseTimestamp({ state, line })
@@ -113,9 +122,12 @@ const parseTimestamp = ({ line, state }: ParseObject) => {
     return
   }
 
-  state.caption = {
-    ...state.caption,
-    ...parseTimestamps(line)
+  state.node = {
+    type: 'cue',
+    data: {
+      ...parseTimestamps(line),
+      text: ''
+    }
   }
 
   state.expect = 'text'
@@ -129,39 +141,42 @@ const parseText = ({ line, state }: ParseObject) => {
       state.buffer.pop()
     }
 
-    pushCaption(state)
+    pushNode(state)
     parseTimestamp({ line, state })
   } else {
     state.buffer.push(line)
   }
 }
 
-const pushCaption = (state: ParseState) => {
-  while (true) {
-    const lastItem = state.buffer[state.buffer.length - 1]
-    if (['', '\n'].includes(lastItem)) {
-      state.buffer.pop()
-    } else {
-      break
+const pushNode = (state: ParseState) => {
+  if (state.node.type === 'cue') {
+    while (true) {
+      const lastItem = state.buffer[state.buffer.length - 1]
+      if (['', '\n'].includes(lastItem)) {
+        state.buffer.pop()
+      } else {
+        break
+      }
     }
+
+    while (true) {
+      const firstItem = state.buffer[0]
+      if (['', '\n'].includes(firstItem)) {
+        state.buffer.shift()
+      } else {
+        break
+      }
+    }
+
+    state.node.data!.text = state.buffer.join('\n')
   }
 
-  while (true) {
-    const firstItem = state.buffer[0]
-    if (['', '\n'].includes(firstItem)) {
-      state.buffer.shift()
-    } else {
-      break
-    }
+  if (state.node.type === 'header') {
+    state.node.data = state.buffer.join('\n').trim()
   }
 
-  const text = state.buffer.join('\n')
+  state.outputStream.push(state.node)
 
-  state.outputStream.push({
-    ...state.caption,
-    text
-  })
-
-  state.caption = {}
+  state.node = {}
   state.buffer = []
 }

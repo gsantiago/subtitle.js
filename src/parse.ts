@@ -1,11 +1,11 @@
 import { Readable } from 'stream'
 import { read } from './read'
-import { Captions } from './types'
+import { Tree } from './types'
 
-export const parse = (input: string): Promise<Captions> =>
+export const parse = (input: string): Promise<Tree> =>
   new Promise((resolve, reject) => {
     const stream = new Readable({ read() {} })
-    const captions: Captions = []
+    const captions: Tree = []
 
     stream.push(input)
     stream.push(null)

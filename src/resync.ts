@@ -1,6 +1,6 @@
-import { Tree } from './types'
+import { NodeList } from './types'
 
-export function resync(tree: Tree, time: number): Tree {
+export function resync(tree: NodeList, time: number): NodeList {
   return tree.map(node => {
     if (node.type === 'cue') {
       return {

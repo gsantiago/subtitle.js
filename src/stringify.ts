@@ -1,9 +1,9 @@
 import { Readable } from 'stream'
 import { write } from './write'
-import { Tree, FormatOptions } from './types'
+import { NodeList, FormatOptions } from './types'
 
 export const stringify = (
-  tree: Tree,
+  tree: NodeList,
   options: FormatOptions
 ): Promise<string> =>
   new Promise((resolve, reject) => {

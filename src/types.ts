@@ -24,4 +24,4 @@ export interface NodeCue {
 
 export type Node = NodeHeader | NodeCue
 
-export type Tree = Node[]
+export type NodeList = Node[]

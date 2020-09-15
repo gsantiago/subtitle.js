@@ -1,4 +1,4 @@
-import readline, { Interface as ReadlineInterface } from 'readline'
+import readline from 'readline'
 import { Duplex } from 'stream'
 
 import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
@@ -11,7 +11,6 @@ export interface ParseState {
   isWebVTT: boolean
   node: Partial<Node>
   buffer: string[]
-  inputStream: ReadlineInterface
   outputStream: Duplex
 }
 
@@ -48,7 +47,6 @@ export const read = (input: NodeJS.ReadableStream): Duplex => {
     expect: 'header',
     node: {},
     buffer: [],
-    inputStream,
     outputStream
   }
 

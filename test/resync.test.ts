@@ -1,20 +1,29 @@
-import { resync } from '../src'
+import { resync, Tree } from '../src'
 
-const captions = [
+const cues: Tree = [
   {
-    start: 10100,
-    end: 10500,
-    text: 'Text'
+    type: 'cue',
+    data: {
+      start: 10100,
+      end: 10500,
+      text: 'Text'
+    }
   },
   {
-    start: 20650,
-    end: 23300,
-    text: 'Text'
+    type: 'cue',
+    data: {
+      start: 20650,
+      end: 23300,
+      text: 'Text'
+    }
   },
   {
-    start: 300000,
-    end: 310150,
-    text: 'Text'
+    type: 'cue',
+    data: {
+      start: 300000,
+      end: 310150,
+      text: 'Text'
+    }
   }
 ]
 
@@ -25,7 +34,7 @@ test('delay 100ms', () => {
     text: 'Text'
   }
 
-  const result = resync(captions, -100)[0]
+  const result = resync(cues, -100)[0].data
 
   expect(result).toEqual(expected)
 })
@@ -37,7 +46,7 @@ test('advance 1s', () => {
     text: 'Text'
   }
 
-  const result = resync(captions, 1000)[1]
+  const result = resync(cues, 1000)[1].data
 
   expect(result).toEqual(expected)
 })
@@ -49,7 +58,7 @@ test('delay 2 hours', () => {
     text: 'Text'
   }
 
-  const result = resync(captions, 2 * 60 * 1000 * -1)[2]
+  const result = resync(cues, 2 * 60 * 1000 * -1)[2].data
 
   expect(result).toEqual(expected)
 })

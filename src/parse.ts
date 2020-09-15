@@ -5,13 +5,14 @@ import { Tree } from './types'
 export const parse = (input: string): Promise<Tree> =>
   new Promise((resolve, reject) => {
     const stream = new Readable({ read() {} })
-    const captions: Tree = []
+    const nodes: Tree = []
 
     stream.push(input)
     stream.push(null)
 
-    read(stream)
-      .on('data', chunk => captions.push(chunk))
+    stream
+      .pipe(read())
+      .on('data', chunk => nodes.push(chunk))
       .on('error', err => reject(err))
-      .on('end', () => resolve(captions))
+      .on('finish', () => resolve(nodes))
   })

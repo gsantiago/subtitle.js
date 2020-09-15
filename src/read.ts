@@ -1,5 +1,6 @@
-import readline from 'readline'
 import { Duplex } from 'stream'
+import Pumpify from 'pumpify'
+import split2 from 'split2'
 
 import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
 import { Node } from './types'
@@ -29,15 +30,34 @@ const getError = (expected: string, index: number, row: string) => {
   )
 }
 
-export const read = (input: NodeJS.ReadableStream): Duplex => {
-  const inputStream = readline.createInterface({
-    input,
-    crlfDelay: Infinity
-  })
-
-  const outputStream = new Duplex({
+export const read = (): Duplex => {
+  const stream = new Duplex({
     objectMode: true,
-    read() {}
+    read() {},
+    write(chunk, _encoding, next) {
+      const line = chunk.toString()
+
+      if (!state.hasContentStarted) {
+        if (line.trim()) {
+          state.hasContentStarted = true
+        } else {
+          return next()
+        }
+      }
+
+      const parse = {
+        header: parseHeader,
+        id: parseId,
+        timestamp: parseTimestamp,
+        text: parseText
+      }[state.expect]
+
+      parse({ state, line })
+
+      state.row++
+
+      next()
+    }
   })
 
   const state: ParseState = {
@@ -47,39 +67,18 @@ export const read = (input: NodeJS.ReadableStream): Duplex => {
     expect: 'header',
     node: {},
     buffer: [],
-    outputStream
+    outputStream: stream
   }
 
-  inputStream.on('line', line => {
-    if (!state.hasContentStarted) {
-      if (line.trim()) {
-        state.hasContentStarted = true
-      } else {
-        return
-      }
-    }
+  const splitStream = split2()
 
-    const parse = {
-      header: parseHeader,
-      id: parseId,
-      timestamp: parseTimestamp,
-      text: parseText
-    }[state.expect]
-
-    parse({ state, line })
-
-    state.row++
-  })
-
-  inputStream.on('close', () => {
+  splitStream.on('finish', () => {
     if (state.buffer.length > 0) {
       pushNode(state)
     }
-
-    outputStream.emit('end')
   })
 
-  return outputStream
+  return new Pumpify.obj(splitStream, stream)
 }
 
 const parseHeader = ({ line, state }: ParseObject) => {

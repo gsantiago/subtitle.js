@@ -36,7 +36,8 @@ This library provides some stream-based functions to work with subtitles. The fo
 import fs from 'fs'
 import { read, resync, write } from 'subtitle'
 
-read(fs.createReadStream('./my-subtitles.srt'))
+fs.createReadStream('./my-subtitles.srt')
+  .pipe(read())
   .pipe(resync(-100))
   .pipe(write({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./my-subtitles.vtt'))
@@ -47,7 +48,8 @@ It also provides functions like `map` and `filter`:
 ```ts
 import { read, map, filter, write } from 'subtitle'
 
-read(inputStream)
+inputStream
+  .pipe(read())
   .pipe(filter('cue', cue => !cue.text.includes('𝅘𝅥𝅮')))
   .pipe(map('cue', cue => ({ ...cue, text: cue.text.toUpperCase() })))
   .pipe(write({ format: 'vtt' }))
@@ -228,7 +230,8 @@ formatTimestamp(142542, { format: 'vtt' })
 import fs from 'fs'
 import { read, write } from 'subtitle'
 
-read(fs.createReadStream('./source.srt'))
+fs.createReadStream('./source.srt')
+  .pipe(read())
   .pipe(write({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./dest.vtt'))
 ```

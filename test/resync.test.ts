@@ -1,6 +1,6 @@
-import { resync, Tree } from '../src'
+import { resync, NodeList } from '../src'
 
-const cues: Tree = [
+const cues: NodeList = [
   {
     type: 'cue',
     data: {

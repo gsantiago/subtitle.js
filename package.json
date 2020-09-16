@@ -59,7 +59,6 @@
   "author": "Guilherme Santiago",
   "module": "dist/subtitle.esm.js",
   "devDependencies": {
-    "@types/pumpify": "^1.4.1",
     "@types/split2": "^2.1.6",
     "husky": "^4.2.5",
     "tsdx": "^0.13.3",
@@ -70,7 +69,8 @@
     "verbose": true
   },
   "dependencies": {
-    "pumpify": "^2.0.1",
+    "@types/multipipe": "^3.0.0",
+    "multipipe": "^4.0.0",
     "split2": "^3.2.2"
   }
 }

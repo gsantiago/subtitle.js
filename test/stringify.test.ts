@@ -1,5 +1,5 @@
 import { fixtures, getFixture } from '../test-utils'
-import { stringify, Tree } from '../src'
+import { stringify, NodeList } from '../src'
 
 const normalize = (str: string) => str.replace(/\r\n/g, '\n')
 
@@ -18,7 +18,7 @@ test.each(fixtures)('stringify fixture to VTT: %s.json', async filename => {
 })
 
 test('stringify to SRT format', async () => {
-  const tree: Tree = [
+  const tree: NodeList = [
     {
       type: 'cue',
       data: {
@@ -65,7 +65,7 @@ Welcome to the Planet.
 })
 
 test('stringify to WebVTT', async () => {
-  const tree: Tree = [
+  const tree: NodeList = [
     {
       type: 'cue',
       data: {
@@ -114,7 +114,7 @@ Welcome to the Planet.
 })
 
 test('stringify to WebVTT with custom header', async () => {
-  const tree: Tree = [
+  const tree: NodeList = [
     {
       type: 'header',
       data:

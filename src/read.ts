@@ -1,5 +1,6 @@
 import { Duplex } from 'stream'
-import Pumpify from 'pumpify'
+// import Pumpify from 'pumpify'
+import multipipe from 'multipipe'
 import split2 from 'split2'
 
 import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
@@ -72,13 +73,19 @@ export const read = (): Duplex => {
 
   const splitStream = split2()
 
+  const outputStream = multipipe(splitStream, stream, {
+    objectMode: true
+  })
+
   splitStream.on('finish', () => {
     if (state.buffer.length > 0) {
       pushNode(state)
     }
+
+    stream.push(null)
   })
 
-  return new Pumpify.obj(splitStream, stream)
+  return outputStream
 }
 
 const parseHeader = ({ line, state }: ParseObject) => {

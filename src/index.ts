@@ -1,4 +1,5 @@
 export * from './formatTimestamp'
+export * from './map'
 export * from './parse'
 export * from './parseTimestamp'
 export * from './parseTimestamps'

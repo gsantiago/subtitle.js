@@ -2,12 +2,12 @@
 // `stringify.test` contains the tests for writing/formatting logic.
 
 import { Readable } from 'stream'
-import { write, Tree } from '../src'
+import { write, NodeList } from '../src'
 
 test('write SRT files', done => {
   expect.assertions(1)
 
-  const tree: Tree = [
+  const tree: NodeList = [
     {
       type: 'cue',
       data: {

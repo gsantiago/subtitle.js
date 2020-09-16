@@ -1,33 +1,28 @@
-import { Duplex } from 'stream'
-import { Cue, FormatOptions, formatTimestamp } from '.'
+import { Cue, Node, FormatOptions, formatTimestamp, map } from '.'
 
 export const write = (options: FormatOptions) => {
   const isVTT = options.format === 'vtt'
-  let index = 1
   let hasReceivedHeader = false
+  let index = 1
 
-  return new Duplex({
-    objectMode: true,
-    write(chunk, _encoding, next) {
-      if (chunk.type === 'header' && isVTT) {
+  return map((chunk: Node) => {
+    let buffer = ''
+
+    if (chunk.type === 'header' && isVTT) {
+      hasReceivedHeader = true
+      buffer += `${chunk.data}\n\n`
+    }
+
+    if (chunk.type === 'cue') {
+      if (!hasReceivedHeader && isVTT) {
         hasReceivedHeader = true
-        this.push(`${chunk.data}\n\n`)
+        buffer += 'WEBVTT\n\n'
       }
 
-      if (chunk.type === 'cue') {
-        if (!hasReceivedHeader && isVTT) {
-          hasReceivedHeader = true
-          this.push('WEBVTT\n\n')
-        }
+      buffer += formatCue(chunk.data, index++, options)
+    }
 
-        this.push(formatCue(chunk.data, index, options))
-
-        index++
-      }
-
-      next()
-    },
-    read() {}
+    return buffer
   })
 }
 

@@ -1,10 +1,7 @@
 import { Duplex } from 'stream'
-// import Pumpify from 'pumpify'
 import multipipe from 'multipipe'
 import split2 from 'split2'
-
-import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
-import { Node } from './types'
+import { parseTimestamps, RE_TIMESTAMP, Node } from '.'
 
 export interface ParseState {
   expect: 'header' | 'id' | 'timestamp' | 'text'

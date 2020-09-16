@@ -1,6 +1,5 @@
 import { Duplex } from 'stream'
-import { formatTimestamp } from './formatTimestamp'
-import { Cue, FormatOptions } from './types'
+import { Cue, FormatOptions, formatTimestamp } from '.'
 
 export const write = (options: FormatOptions) => {
   const isVTT = options.format === 'vtt'

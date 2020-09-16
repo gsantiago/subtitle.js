@@ -1,5 +1,5 @@
 import { Transform } from 'stream'
-import { Node } from './types'
+import { Node } from '.'
 
 export const map = (mapper: (node: Node, index: number) => any) => {
   let index = 0

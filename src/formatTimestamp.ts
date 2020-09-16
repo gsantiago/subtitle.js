@@ -1,5 +1,5 @@
 import { padLeft } from './padLeft'
-import { FormatOptions } from './types'
+import { FormatOptions } from '.'
 
 export function formatTimestamp(
   timestamp: number,

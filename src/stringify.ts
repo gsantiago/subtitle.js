@@ -1,6 +1,5 @@
 import { Readable } from 'stream'
-import { write } from './write'
-import { NodeList, FormatOptions } from './types'
+import { write, NodeList, FormatOptions } from '.'
 
 export const stringify = (
   tree: NodeList,

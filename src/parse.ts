@@ -1,6 +1,5 @@
 import { Readable } from 'stream'
-import { read } from './read'
-import { NodeList } from './types'
+import { read, NodeList } from '.'
 
 export const parse = (input: string): Promise<NodeList> =>
   new Promise((resolve, reject) => {

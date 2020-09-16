@@ -1,3 +1,4 @@
+export * from './filter'
 export * from './formatTimestamp'
 export * from './map'
 export * from './parse'

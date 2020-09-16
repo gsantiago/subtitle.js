@@ -1,5 +1,7 @@
 import fs from 'fs'
 import path from 'path'
+import { Readable } from 'stream'
+import { NodeList, Node } from './src'
 
 export const fixtures = [
   'LaLaLand',
@@ -29,3 +31,22 @@ export const writeFile = (filename: string, contents: string) => {
 
   fs.writeFileSync(filepath, contents)
 }
+
+export const createStreamFromString = (contents: string) => {
+  const stream = new Readable({
+    read() {}
+  })
+
+  stream.push(contents)
+  stream.push(null)
+
+  return stream
+}
+
+export const pipeline = (stream: Readable): Promise<NodeList> =>
+  new Promise((resolve, reject) => {
+    const buffer: NodeList = []
+    stream.on('data', (chunk: Node) => buffer.push(chunk))
+    stream.on('error', reject)
+    stream.on('finish', () => resolve(buffer))
+  })

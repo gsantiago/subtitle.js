@@ -43,6 +43,13 @@ export const createStreamFromString = (contents: string) => {
   return stream
 }
 
+export const createStreamFromNodes = (nodes: NodeList) => {
+  const stream = new Readable({ objectMode: true, read() {} })
+  nodes.forEach(node => stream.push(node))
+  stream.push(null)
+  return stream
+}
+
 export const pipeline = (stream: Readable): Promise<NodeList> =>
   new Promise((resolve, reject) => {
     const buffer: NodeList = []

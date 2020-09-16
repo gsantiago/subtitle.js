@@ -1,12 +1,8 @@
-import { Readable } from 'stream'
+import { createStreamFromString } from '../test-utils'
 import { read, map, NodeList, Node } from '../src'
 
 test('map nodes', done => {
-  const stream = new Readable({
-    read() {}
-  })
-
-  stream.push(`
+  const stream = createStreamFromString(`
 1
 02:12:34,647 --> 02:12:35,489
 Hi.
@@ -18,8 +14,6 @@ Lois Lane.
 3
 02:12:38,584 --> 02:12:40,120
 Welcome to the Planet.\n`)
-
-  stream.push(null)
 
   let count: number = 0
 

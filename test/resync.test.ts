@@ -1,7 +1,7 @@
-import { Readable } from 'stream'
-import { resync, NodeList, Node } from '../src'
+import { pipeline, createStreamFromNodes } from '../test-utils'
+import { resync, NodeList } from '../src'
 
-const cues: NodeList = [
+const nodes: NodeList = [
   {
     type: 'cue',
     data: {
@@ -28,21 +28,6 @@ const cues: NodeList = [
   }
 ]
 
-const createStream = () => {
-  const stream = new Readable({ objectMode: true, read() {} })
-  cues.forEach(node => stream.push(node))
-  stream.push(null)
-  return stream
-}
-
-const pipeline = (stream: Readable): Promise<NodeList> =>
-  new Promise((resolve, reject) => {
-    const buffer: NodeList = []
-    stream.on('data', (chunk: Node) => buffer.push(chunk))
-    stream.on('error', reject)
-    stream.on('finish', () => resolve(buffer))
-  })
-
 test('delay 100ms', async () => {
   const expected = {
     start: 10000,
@@ -50,7 +35,7 @@ test('delay 100ms', async () => {
     text: 'Text'
   }
 
-  const result = await pipeline(createStream().pipe(resync(-100)))
+  const result = await pipeline(createStreamFromNodes(nodes).pipe(resync(-100)))
 
   expect(result[0].data).toEqual(expected)
 })
@@ -62,7 +47,7 @@ test('advance 1s', async () => {
     text: 'Text'
   }
 
-  const result = await pipeline(createStream().pipe(resync(1000)))
+  const result = await pipeline(createStreamFromNodes(nodes).pipe(resync(1000)))
 
   expect(result[1].data).toEqual(expected)
 })
@@ -74,7 +59,9 @@ test('delay 2 hours', async () => {
     text: 'Text'
   }
 
-  const result = await pipeline(createStream().pipe(resync(2 * 60 * 1000 * -1)))
+  const result = await pipeline(
+    createStreamFromNodes(nodes).pipe(resync(2 * 60 * 1000 * -1))
+  )
 
   expect(result[2].data).toEqual(expected)
 })

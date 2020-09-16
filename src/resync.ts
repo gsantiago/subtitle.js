@@ -1,7 +1,7 @@
-import { NodeList } from './types'
+import { map, Node } from '.'
 
-export function resync(tree: NodeList, time: number): NodeList {
-  return tree.map(node => {
+export const resync = (time: number) =>
+  map((node: Node) => {
     if (node.type === 'cue') {
       return {
         ...node,
@@ -15,4 +15,3 @@ export function resync(tree: NodeList, time: number): NodeList {
 
     return node
   })
-}

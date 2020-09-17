@@ -1,4 +1,4 @@
-import { padLeft } from './padLeft'
+import { padLeft } from './utils'
 import { FormatOptions } from '.'
 
 export function formatTimestamp(

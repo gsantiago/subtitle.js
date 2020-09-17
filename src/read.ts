@@ -2,6 +2,7 @@ import { Duplex } from 'stream'
 import multipipe from 'multipipe'
 import split2 from 'split2'
 import { parseTimestamps, RE_TIMESTAMP, Node } from '.'
+import { createDuplex } from './utils'
 
 export interface ParseState {
   expect: 'header' | 'id' | 'timestamp' | 'text'
@@ -29,9 +30,7 @@ const getError = (expected: string, index: number, row: string) => {
 }
 
 export const read = (): Duplex => {
-  const stream = new Duplex({
-    objectMode: true,
-    read() {},
+  const stream = createDuplex({
     write(chunk, _encoding, next) {
       const line = chunk.toString()
 

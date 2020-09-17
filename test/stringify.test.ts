@@ -1,7 +1,8 @@
+import stripBom from 'strip-bom'
 import { fixtures, getFixture } from '../test-utils'
 import { stringify, NodeList } from '../src'
 
-const normalize = (str: string) => str.replace(/\r\n/g, '\n')
+const normalize = (str: string) => stripBom(str.replace(/\r\n/g, '\n'))
 
 test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'srt.json'))

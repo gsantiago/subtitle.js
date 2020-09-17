@@ -1,6 +1,7 @@
 import { Duplex } from 'stream'
 import multipipe from 'multipipe'
 import split2 from 'split2'
+import stripBom from 'strip-bom'
 import { parseTimestamps, RE_TIMESTAMP, Node } from '.'
 import { createDuplex } from './utils'
 
@@ -32,7 +33,8 @@ const getError = (expected: string, index: number, row: string) => {
 export const read = (): Duplex => {
   const stream = createDuplex({
     write(chunk, _encoding, next) {
-      const line = chunk.toString()
+      const chunkString = chunk.toString()
+      const line = state.row === 0 ? stripBom(chunkString) : chunkString
 
       if (!state.hasContentStarted) {
         if (line.trim()) {

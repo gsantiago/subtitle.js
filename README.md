@@ -50,13 +50,27 @@ import { parse, map, filter, stringify } from 'subtitle'
 
 inputStream
   .pipe(parse())
-  .pipe(filter('cue', cue => !cue.text.includes('𝅘𝅥𝅮')))
-  .pipe(map('cue', cue => ({ ...cue, text: cue.text.toUpperCase() })))
+  .pipe(
+    filter(
+      // strips all cues that contains "𝅘𝅥𝅮"
+      node => !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮'))
+    )
+  )
+  .pipe(
+    map(node => {
+      if (node.type === 'cue') {
+        // convert all cues to uppercase
+        node.data.text = node.data.text.toUpperCase()
+      }
+
+      return node
+    })
+  )
   .pipe(stringify({ format: 'vtt' }))
   .pipe(outputStream)
 ```
 
-It also offers synchronous functions like `parseSync` and `stringifySync`. However, you should avoit them and rather use the stream-based functions for better performance and memory management:
+Besides the stream functions, this module also provides synchronous functions like `parseSync` and `stringifySync`. However, you should avoid them and rather use the stream-based functions for better performance:
 
 ```ts
 import { parseSync, stringifySync } from 'subtitle'

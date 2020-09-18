@@ -34,69 +34,63 @@ This library provides some stream-based functions to work with subtitles. The fo
 
 ```ts
 import fs from 'fs'
-import { read, resync, write } from 'subtitle'
+import { parse, resync, stringify } from 'subtitle'
 
 fs.createReadStream('./my-subtitles.srt')
-  .pipe(read())
+  .pipe(parse())
   .pipe(resync(-100))
-  .pipe(write({ format: 'vtt' }))
+  .pipe(stringify({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./my-subtitles.vtt'))
 ```
 
 It also provides functions like `map` and `filter`:
 
 ```ts
-import { read, map, filter, write } from 'subtitle'
+import { parse, map, filter, stringify } from 'subtitle'
 
 inputStream
-  .pipe(read())
+  .pipe(parse())
   .pipe(filter('cue', cue => !cue.text.includes('𝅘𝅥𝅮')))
   .pipe(map('cue', cue => ({ ...cue, text: cue.text.toUpperCase() })))
-  .pipe(write({ format: 'vtt' }))
+  .pipe(stringify({ format: 'vtt' }))
   .pipe(outputStream)
 ```
 
-It also offers promise-based functions like `parse` and `stringify`. However, you should avoit it and rather use the stream-based functions for better performance and memory management:
+It also offers synchronous functions like `parseSync` and `stringifySync`. However, you should avoit them and rather use the stream-based functions for better performance and memory management:
 
 ```ts
-import { parse, stringify } from 'subtitle'
+import { parseSync, stringifySync } from 'subtitle'
 
-parse(srtContent)
-  .then(nodes => {
-    console.log(nodes)
+const nodes = parseSync(srtContent)
 
-    // do something with your captions
+// do something with your subtitles
+// ...
 
-    return nodes
-  })
-  .then(nodes => {
-    // stringifies it in vtt format
-    return stringify(nodes, { format: 'vtt' })
-  })
+const output = stringify(nodes, { format: 'vtt' })
 ```
 
 ## API
 
 The API exports the following functions:
 
-* [`read`](#read)
-* [`write`](#write)
-* [`map`](#map)
-* [`filter`](#filter)
 * [`parse`](#parse)
 * [`stringify`](#stringify)
+* [`map`](#map)
+* [`filter`](#filter)
+* [`parseSync`](#parseSync)
+* [`stringifySync`](#stringifySync)
 * [`resync`](#resync)
 * [`parseTimestamp`](#parseTimestamp)
 * [`parseTimestamps`](#parseTimestamps)
 * [`formatTimestamp`](#formatTimestamp)
 
-### read
+### parse
 
-- `read(input: ReadableStream): DuplexStream`
+- `parse(input: ReadableStream): DuplexStream`
 
-### write
+### stringify
 
-- `write({ format: 'srt' | 'vtt' }): DuplexStream`
+- `stringify({ format: 'srt' | 'vtt' }): DuplexStream`
 
 ### map
 
@@ -106,72 +100,81 @@ The API exports the following functions:
 
 - `filter(callback: function): DuplexStream`
 
-### parse
+### parseSync
 
-- `parse(input: string): Promise<Caption[]>`
+- `parseSync(input: string): Node[]`
 
-> **NOTE**: For better perfomance, consider use the `read` function
+> **NOTE**: For better perfomance, consider to use the stream-based `parse` function
 
 It receives a string containing a SRT or VTT content and returns
-an array of captions:
+an array of nodes:
 
 ```ts
-import { parse } from 'subtitle'
+import { parseSync } from 'subtitle'
 import fs from 'fs'
 
 const input = fs.readFileSync('awesome-movie.srt', 'utf8')
 
-parse(input)
+parseSync(input)
 
 // returns an array like this:
 [
   {
-    start: 20000, // milliseconds
-    end: 24400,
-    text: 'Bla Bla Bla Bla'
+    type: 'cue',
+    data: {
+      start: 20000, // milliseconds
+      end: 24400,
+      text: 'Bla Bla Bla Bla'
+    }
   },
   {
-    start: 24600,
-    end: 27800,
-    text: 'Bla Bla Bla Bla',
-    settings: 'align:middle line:90%'
+    type: 'cue',
+    data: {
+      start: 24600,
+      end: 27800,
+      text: 'Bla Bla Bla Bla',
+      settings: 'align:middle line:90%'
+    }
   },
   // ...
 ]
 ```
 
-### stringify
+### stringifySync
 
-- `stringify(captions: Caption[], options: { format: 'srt' | 'vtt }): Promise<string>`
+- `stringify(nodes: Node[], options: { format: 'srt' | 'vtt }): string`
 
-> **NOTE**: For better perfomance, consider use the `write` function
+> **NOTE**: For better perfomance, consider to use the stream-based `stringify` function
 
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 
 ```ts
-import { stringify } from 'subtitle'
+import { stringifySync } from 'subtitle'
 
-stringify(captions, { format: 'srt' })
+stringifySync(nodes, { format: 'srt' })
 // returns a string in SRT format
 
-stringify(options, { format: 'vtt' })
+stringifySync(nodes, { format: 'vtt' })
 // returns a string in VTT format
 ```
 
 ### resync
 
-- `resync(captions: Caption[], time: number): Caption[]`
+- `resync(time: number): DuplexStream`
 
-Resync all the given captions at once:
+Resync all cues from the stream:
 
 ```ts
-import { resync } from 'subtitle'
+import { parse, resync, stringify } from 'subtitle'
 
 // Advance subtitles by 1s
-const newCaptions = resync(captions, 1000)
+readableStream
+  .pipe(parse())
+  .pipe(resync(1000))
+  .pipe(outputStream)
 
 // Delay 250ms
-const newCaptions = resync(captions, -250)
+stream.pipe(resync(captions, -250))
 ```
 
 ### parseTimestamp
@@ -228,11 +231,11 @@ formatTimestamp(142542, { format: 'vtt' })
 
 ```ts
 import fs from 'fs'
-import { read, write } from 'subtitle'
+import { parse, stringify } from 'subtitle'
 
 fs.createReadStream('./source.srt')
-  .pipe(read())
-  .pipe(write({ format: 'vtt' }))
+  .pipe(parse())
+  .pipe(stringify({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./dest.vtt'))
 ```
 

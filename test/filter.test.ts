@@ -1,5 +1,5 @@
 import { createStreamFromString, pipeline } from '../test-utils'
-import { filter, read } from '../src'
+import { filter, parse } from '../src'
 
 test('filter nodes', async () => {
   const stream = createStreamFromString(`
@@ -17,7 +17,7 @@ Welcome to the Planet.\n`)
 
   const data = await pipeline(
     stream
-      .pipe(read())
+      .pipe(parse())
       .pipe(
         filter(node => !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮')))
       )

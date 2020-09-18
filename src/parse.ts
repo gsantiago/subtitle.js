@@ -3,7 +3,7 @@ import split2 from 'split2'
 import { createDuplex } from './utils'
 import { Parser } from './Parser'
 
-export const read = () => {
+export const parse = () => {
   const parser = new Parser({
     push: node => outputStream.push(node)
   })

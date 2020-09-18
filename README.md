@@ -11,9 +11,9 @@ Stream-based library for parsing and manipulating subtitle files.
 >["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
 >John-David Dalton, creator of Lodash
 
-:white_check_mark: Stream-based API<br>
+:white_check_mark: Stream API<br>
 :white_check_mark: Written in TypeScript<br>
-:white_check_mark: SRT (SubRip format) support<br>
+:white_check_mark: SRT support<br>
 :white_check_mark: Partial support for WebVTT (full support comming soon)<br>
 :white_check_mark: 100% code coverage<br>
 :white_check_mark: Actively maintained since 2015
@@ -85,7 +85,7 @@ const output = stringify(nodes, { format: 'vtt' })
 
 ## API
 
-The API exports the following functions:
+The module exports the following functions:
 
 * [`parse`](#parse)
 * [`stringify`](#stringify)
@@ -100,19 +100,23 @@ The API exports the following functions:
 
 ### parse
 
-- `parse(input: ReadableStream): DuplexStream`
+- `parse(): DuplexStream`
 
-### stringify
+It returns a Duplex stream for parsing subtitle contents (SRT or WebVTT).
 
-- `stringify({ format: 'srt' | 'vtt' }): DuplexStream`
+```ts
+import { parse } from 'subtitle'
 
-### map
+inputStream
+  .pipe(parse())
+  .on('data', node => {
+    console.log('parsed node:', node)
+  })
+  .on('error', console.error)
+  .on('finish', () => console.log('parser has finished'))
+```
 
-- `map(callback: function): DuplexStream`
-
-### filter
-
-- `filter(callback: function): DuplexStream`
+Check out the [Examples](#examples) section for more examples.
 
 ### parseSync
 
@@ -154,6 +158,22 @@ parseSync(input)
 ]
 ```
 
+### stringify
+
+- `stringify({ format: 'srt' | 'vtt' }): DuplexStream`
+
+It returns a Duplex that receives parsed nodes and transmits the node formatted in SRT or WebVTT:
+
+```ts
+import { parse, stringify } from 'subtitle'
+
+inputStream
+  .pipe(parse())
+  .pipe(stringify({ format: 'vtt' }))
+```
+
+Check out the [Examples](#examples) section for more examples.
+
 ### stringifySync
 
 - `stringify(nodes: Node[], options: { format: 'srt' | 'vtt }): string`
@@ -170,6 +190,46 @@ stringifySync(nodes, { format: 'srt' })
 
 stringifySync(nodes, { format: 'vtt' })
 // returns a string in VTT format
+```
+
+### map
+
+- `map(callback: function): DuplexStream`
+
+A useful Duplex for manipulating parsed nodes. It works similar to the `Array.map` function, but for streams:
+
+```ts
+import { parse, map, stringify } from 'subtitle'
+
+inputStream
+  .pipe(parse())
+  .pipe(map((node, index) => {
+    if (node.type === 'cue') {
+      node.data.text = node.data.text.toUpperCase()
+    }
+
+    return node
+  }))
+  .pipe(stringify({ format: 'srt' }))
+  .pipe(outputStream)
+```
+
+### filter
+
+- `filter(callback: function): DuplexStream`
+
+A useful Duplex for filtering parsed nodes. It works similar to the `Array.filter` function, but for streams:
+
+```ts
+import { parse, filter, stringify } from 'subtitle'
+
+inputStream
+  .pipe(parse())
+  .pipe(filter((node, index) => {
+    return !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮'))
+  }))
+  .pipe(stringify({ format: 'srt' }))
+  .pipe(outputStream)
 ```
 
 ### resync

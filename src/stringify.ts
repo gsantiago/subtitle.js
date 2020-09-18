@@ -1,31 +1,7 @@
-import { Readable } from 'stream'
-import { write, NodeList, FormatOptions } from '.'
+import { map, FormatOptions, Node } from '.'
+import { Formatter } from './Formatter'
 
-export const stringify = (
-  tree: NodeList,
-  options: FormatOptions
-): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const stream = new Readable({
-      objectMode: true,
-      read() {}
-    })
-
-    let buffer = ''
-
-    tree.forEach(node => {
-      stream.push(node)
-    })
-
-    stream.push(null)
-
-    stream
-      .pipe(write(options))
-      .on('data', chunk => {
-        buffer += chunk
-      })
-      .on('error', reject)
-      .on('finish', () => {
-        resolve(buffer)
-      })
-  })
+export const stringify = (options: FormatOptions) => {
+  const formatter = new Formatter(options)
+  return map((chunk: Node) => formatter.format(chunk))
+}

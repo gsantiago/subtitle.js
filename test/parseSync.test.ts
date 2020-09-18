@@ -1,19 +1,19 @@
 import { fixtures, getFixture } from '../test-utils'
-import { parse } from '../src'
+import { parseSync } from '../src'
 
 test.each(fixtures)('parse SRT fixture: %s.srt', async filename => {
-  expect(await parse(await getFixture(filename, 'srt'))).toEqual(
+  expect(parseSync(await getFixture(filename, 'srt'))).toEqual(
     JSON.parse(await getFixture(filename, 'srt.json'))
   )
 })
 
 test.each(fixtures)('parse VTT fixture: %s.vtt', async filename => {
-  expect(await parse(await getFixture(filename, 'vtt'))).toEqual(
+  expect(parseSync(await getFixture(filename, 'vtt'))).toEqual(
     JSON.parse(await getFixture(filename, 'vtt.json'))
   )
 })
 
-test('parse SRT captions', async () => {
+test('parse SRT captions', () => {
   const srt = `
 1
 02:12:34,647 --> 02:12:35,489
@@ -30,7 +30,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -60,7 +60,7 @@ Welcome to the Planet.
   `)
 })
 
-test('parse VTT captions', async () => {
+test('parse VTT captions', () => {
   const vtt = `
 WEBVTT - Test VTT cues
 
@@ -78,7 +78,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await parse(vtt)).toMatchInlineSnapshot(`
+  expect(parseSync(vtt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": "WEBVTT - Test VTT cues",
@@ -114,7 +114,7 @@ Welcome to the Planet.
   `)
 })
 
-test('parse VTT caption with headers', async () => {
+test('parse VTT caption with headers', () => {
   const vtt = `
 WEBVTT - Test VTT cues
 Kind: captions
@@ -134,7 +134,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await parse(vtt)).toMatchInlineSnapshot(`
+  expect(parseSync(vtt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": "WEBVTT - Test VTT cues
@@ -172,13 +172,13 @@ Welcome to the Planet.
   `)
 })
 
-test('parse 00:00:00,000 caption', async () => {
+test('parse 00:00:00,000 caption', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
 Hi.
 `
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -192,7 +192,7 @@ Hi.
   `)
 })
 
-test('parse text that contains only empty space', async () => {
+test('parse text that contains only empty space', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -202,7 +202,7 @@ Something something something... dark side
 2
 00:00:00,100 --> 00:00:00,200
 Hi.`
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -225,7 +225,7 @@ Hi.`
   `)
 })
 
-test('parse separated texts', async () => {
+test('parse separated texts', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -236,7 +236,7 @@ Who else could they send?
 2
 00:00:00,100 --> 00:00:00,200
 Who else could be trusted?`
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -260,7 +260,7 @@ Who else could be trusted?`
   `)
 })
 
-test('correctly parse captions with empty first lines', async () => {
+test('correctly parse captions with empty first lines', () => {
   const srt = `
 1
 00:00:00,000 --> 00:00:00,100
@@ -270,7 +270,7 @@ test('correctly parse captions with empty first lines', async () => {
 2
 00:00:00,100 --> 00:00:00,200
 Fora Bolsonaro`
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -292,7 +292,7 @@ Fora Bolsonaro`
   `)
 })
 
-test('indexes should be optional', async () => {
+test('indexes should be optional', () => {
   const srt = `
 02:12:34,647 --> 02:12:35,489
 Hi.
@@ -307,7 +307,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(await parse(srt)).toMatchInlineSnapshot(`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
     Array [
       Object {
         "data": Object {
@@ -337,12 +337,12 @@ Welcome to the Planet.
   `)
 })
 
-test('invalid timestamps should throw an error', async () => {
+test('invalid timestamps should throw an error', () => {
   const srt = `
 Invalid timestamp
   `
 
-  await expect(parse(srt)).rejects.toEqual(
+  expect(() => parseSync(srt)).toThrow(
     new Error('expected timestamp at row 1, but received: "Invalid timestamp"')
   )
 
@@ -352,7 +352,7 @@ Invalid timestamp
 Invalid timestamp
   `
 
-  await expect(parse(srt2)).rejects.toEqual(
+  expect(() => parseSync(srt2)).toThrow(
     new Error('expected timestamp at row 2, but received: "999Foo"')
   )
 })

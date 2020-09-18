@@ -301,6 +301,31 @@ formatTimestamp(142542, { format: 'vtt' })
 
 ## Examples
 
+### Nodes
+
+This is what a list of nodes looks like:
+
+```ts
+[
+  {
+    type: 'header',
+    data: 'WEBVTT - Header content'
+  },
+  {
+    type: 'cue',
+    data: {
+      start: 150066, // timestamp in milliseconds,
+      end: 158952,
+      text: 'With great power comes great responsibility'
+    }
+  },
+  ...
+]
+```
+
+For now, it only supports two types of node: `header` and `cue`. Soon, it will support more types
+like `comment`.
+
 ### Convert SRT file to WebVTT
 
 ```ts
@@ -311,6 +336,40 @@ fs.createReadStream('./source.srt')
   .pipe(parse())
   .pipe(stringify({ format: 'vtt' }))
   .pipe(fs.createWriteStream('./dest.vtt'))
+```
+
+### Extract subtitles from a video
+
+The following example uses the `rip-subtitles` for extracting subtitles from a mkv video and save it
+as WebVTT.
+
+```ts
+import extract from 'rip-subtitles'
+import { parse, stringify } from 'subtitle'
+
+extract('video.mkv')
+  .pipe(parse())
+  .pipe(stringify({ format: 'vtt' }))
+  .pipe(fs.createWriteStream('./video.vtt'))
+```
+
+### Create subtitles
+
+```ts
+import { stringifySync } from 'subtitle'
+
+const list = []
+
+list.push({
+  type: 'cue',
+  data: {
+    start: 1200,
+    end: 1300,
+    text: 'Something'
+  }
+})
+
+stringifySync(list)
 ```
 
 ## License

@@ -88,11 +88,11 @@ const output = stringify(nodes, { format: 'vtt' })
 The module exports the following functions:
 
 * [`parse`](#parse)
+* [`parseSync`](#parseSync)
 * [`stringify`](#stringify)
+* [`stringifySync`](#stringifySync)
 * [`map`](#map)
 * [`filter`](#filter)
-* [`parseSync`](#parseSync)
-* [`stringifySync`](#stringifySync)
 * [`resync`](#resync)
 * [`parseTimestamp`](#parseTimestamp)
 * [`parseTimestamps`](#parseTimestamps)

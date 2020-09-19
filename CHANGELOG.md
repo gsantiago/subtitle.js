@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - 2020-09-XX
+## [4.0.0] - 2020-09-19
 - Fixes #6 by introducing the stream interface (`parse`, `stringify` and `resync` are now stream-based functions)
 - Add `parseSync` and `stringifySync` as synchronous version of `parse` and `stringify`
 - Add `map` and `filter` to manipulate the parse stream

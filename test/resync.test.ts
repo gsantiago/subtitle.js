@@ -3,6 +3,10 @@ import { resync, NodeList } from '../src'
 
 const nodes: NodeList = [
   {
+    type: 'header',
+    data: 'WEBVTT'
+  },
+  {
     type: 'cue',
     data: {
       start: 10100,
@@ -37,7 +41,7 @@ test('delay 100ms', async () => {
 
   const result = await pipeline(createStreamFromNodes(nodes).pipe(resync(-100)))
 
-  expect(result[0].data).toEqual(expected)
+  expect(result[1].data).toEqual(expected)
 })
 
 test('advance 1s', async () => {
@@ -49,7 +53,7 @@ test('advance 1s', async () => {
 
   const result = await pipeline(createStreamFromNodes(nodes).pipe(resync(1000)))
 
-  expect(result[1].data).toEqual(expected)
+  expect(result[2].data).toEqual(expected)
 })
 
 test('delay 2 hours', async () => {
@@ -63,5 +67,5 @@ test('delay 2 hours', async () => {
     createStreamFromNodes(nodes).pipe(resync(2 * 60 * 1000 * -1))
   )
 
-  expect(result[2].data).toEqual(expected)
+  expect(result[3].data).toEqual(expected)
 })

@@ -70,7 +70,7 @@ inputStream
   .pipe(outputStream)
 ```
 
-Besides the stream functions, this module also provides synchronous functions like `parseSync` and `stringifySync`. However, you should avoid them and rather use the stream-based functions for better performance:
+Besides the stream functions, this module also provides synchronous functions like `parseSync` and `stringifySync`. However, you should avoid them and use the stream-based functions for better performance:
 
 ```ts
 import { parseSync, stringifySync } from 'subtitle'
@@ -116,13 +116,13 @@ inputStream
   .on('finish', () => console.log('parser has finished'))
 ```
 
-Check out the [Examples](#examples) section for more examples.
+Check out the [Examples](#examples) section for more use cases.
 
 ### parseSync
 
 - `parseSync(input: string): Node[]`
 
-> **NOTE**: For better perfomance, consider to use the stream-based `parse` function
+> **NOTE**: For better perfomance, consider using the stream-based `parse` function
 
 It receives a string containing a SRT or VTT content and returns
 an array of nodes:
@@ -172,13 +172,13 @@ inputStream
   .pipe(stringify({ format: 'WebVTT' }))
 ```
 
-Check out the [Examples](#examples) section for more examples.
+Check out the [Examples](#examples) section for more use cases.
 
 ### stringifySync
 
 - `stringify(nodes: Node[], options: { format: 'SRT' | 'vtt }): string`
 
-> **NOTE**: For better perfomance, consider to use the stream-based `stringify` function
+> **NOTE**: For better perfomance, consider using the stream-based `stringify` function
 
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 

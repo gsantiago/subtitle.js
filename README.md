@@ -39,7 +39,7 @@ import { parse, resync, stringify } from 'subtitle'
 fs.createReadStream('./my-subtitles.srt')
   .pipe(parse())
   .pipe(resync(-100))
-  .pipe(stringify({ format: 'vtt' }))
+  .pipe(stringify({ format: 'WebVTT' }))
   .pipe(fs.createWriteStream('./my-subtitles.vtt'))
 ```
 
@@ -66,7 +66,7 @@ inputStream
       return node
     })
   )
-  .pipe(stringify({ format: 'vtt' }))
+  .pipe(stringify({ format: 'WebVTT' }))
   .pipe(outputStream)
 ```
 
@@ -80,7 +80,7 @@ const nodes = parseSync(srtContent)
 // do something with your subtitles
 // ...
 
-const output = stringify(nodes, { format: 'vtt' })
+const output = stringify(nodes, { format: 'WebVTT' })
 ```
 
 ## API
@@ -160,7 +160,7 @@ parseSync(input)
 
 ### stringify
 
-- `stringify({ format: 'srt' | 'vtt' }): DuplexStream`
+- `stringify({ format: 'SRT' | 'vtt' }): DuplexStream`
 
 It returns a Duplex that receives parsed nodes and transmits the node formatted in SRT or WebVTT:
 
@@ -169,14 +169,14 @@ import { parse, stringify } from 'subtitle'
 
 inputStream
   .pipe(parse())
-  .pipe(stringify({ format: 'vtt' }))
+  .pipe(stringify({ format: 'WebVTT' }))
 ```
 
 Check out the [Examples](#examples) section for more examples.
 
 ### stringifySync
 
-- `stringify(nodes: Node[], options: { format: 'srt' | 'vtt }): string`
+- `stringify(nodes: Node[], options: { format: 'SRT' | 'vtt }): string`
 
 > **NOTE**: For better perfomance, consider to use the stream-based `stringify` function
 
@@ -185,10 +185,10 @@ It receives an array of captions and returns a string in SRT (default), but it a
 ```ts
 import { stringifySync } from 'subtitle'
 
-stringifySync(nodes, { format: 'srt' })
+stringifySync(nodes, { format: 'SRT' })
 // returns a string in SRT format
 
-stringifySync(nodes, { format: 'vtt' })
+stringifySync(nodes, { format: 'WebVTT' })
 // returns a string in VTT format
 ```
 
@@ -210,7 +210,7 @@ inputStream
 
     return node
   }))
-  .pipe(stringify({ format: 'srt' }))
+  .pipe(stringify({ format: 'SRT' }))
   .pipe(outputStream)
 ```
 
@@ -228,7 +228,7 @@ inputStream
   .pipe(filter((node, index) => {
     return !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮'))
   }))
-  .pipe(stringify({ format: 'srt' }))
+  .pipe(stringify({ format: 'SRT' }))
   .pipe(outputStream)
 ```
 
@@ -285,7 +285,7 @@ parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
 
 ### formatTimestamp
 
-- `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
+- `formatTimestamp(timestamp: number, options?: { format: 'SRT' | 'vtt' }): string`
 
 It receives a timestamp in milliseconds and returns it formatted as SRT or VTT:
 
@@ -295,7 +295,7 @@ import { formatTimestamp } from 'subtitle'
 formatTimestamp(142542)
 // => '00:02:22,542'
 
-formatTimestamp(142542, { format: 'vtt' })
+formatTimestamp(142542, { format: 'WebVTT' })
 // => '00:02:22.542'
 ```
 
@@ -334,7 +334,7 @@ import { parse, stringify } from 'subtitle'
 
 fs.createReadStream('./source.srt')
   .pipe(parse())
-  .pipe(stringify({ format: 'vtt' }))
+  .pipe(stringify({ format: 'WebVTT' }))
   .pipe(fs.createWriteStream('./dest.vtt'))
 ```
 
@@ -349,7 +349,7 @@ import { parse, stringify } from 'subtitle'
 
 extract('video.mkv')
   .pipe(parse())
-  .pipe(stringify({ format: 'vtt' }))
+  .pipe(stringify({ format: 'WebVTT' }))
   .pipe(fs.createWriteStream('./video.vtt'))
 ```
 

@@ -8,14 +8,14 @@ test.each(fixtures)('stringify fixture SRT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'srt.json'))
   const srt = await getFixture(filename, 'srt')
 
-  expect(stringifySync(json, { format: 'srt' })).toEqual(normalize(srt))
+  expect(stringifySync(json, { format: 'SRT' })).toEqual(normalize(srt))
 })
 
 test.each(fixtures)('stringify fixture to VTT: %s.json', async filename => {
   const json = JSON.parse(await getFixture(filename, 'vtt.json'))
   const vtt = await getFixture(filename, 'vtt')
 
-  expect(stringifySync(json, { format: 'vtt' })).toEqual(normalize(vtt))
+  expect(stringifySync(json, { format: 'WebVTT' })).toEqual(normalize(vtt))
 })
 
 test('stringify to SRT format', () => {
@@ -62,7 +62,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(stringifySync(tree, { format: 'srt' })).toBe(expected)
+  expect(stringifySync(tree, { format: 'SRT' })).toBe(expected)
 })
 
 test('stringify to WebVTT', () => {
@@ -111,7 +111,7 @@ Welcome to the Planet.
     .trim()
     .concat('\n')
 
-  expect(stringifySync(tree, { format: 'vtt' })).toBe(expected)
+  expect(stringifySync(tree, { format: 'WebVTT' })).toBe(expected)
 })
 
 test('stringify to WebVTT with custom header', () => {
@@ -139,7 +139,7 @@ test('stringify to WebVTT with custom header', () => {
     }
   ]
 
-  expect(stringifySync(tree, { format: 'vtt' })).toMatchInlineSnapshot(`
+  expect(stringifySync(tree, { format: 'WebVTT' })).toMatchInlineSnapshot(`
     "WEBVTT - This is a custom header
     By Michael Scott
     The Best Boss In The World

@@ -8,8 +8,10 @@ export interface Cue extends Timestamp {
   text: string
 }
 
+export type Format = 'SRT' | 'WebVTT'
+
 export interface FormatOptions {
-  format: 'srt' | 'vtt'
+  format: Format
 }
 
 export interface NodeHeader {

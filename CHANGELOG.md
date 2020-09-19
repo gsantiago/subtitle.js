@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `map` and `filter` to manipulate the parse stream
 - Update the nodes tree so it can support more types than just a cue
 - Refactor the internals by creating the Parser and Formatter classes
+- Format types are now `"SRT"` and `"WebVTT"` instead of `"srt"` and `"vtt"`
 
 ## [3.0.0] - 2020-08-31
 - Rewrite the project with TypeScript

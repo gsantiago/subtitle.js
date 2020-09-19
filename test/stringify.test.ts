@@ -1,6 +1,3 @@
-// This file only tests the stream interface.
-// `stringifySync.test` contains the tests for writing/formatting logic.
-
 import { Readable } from 'stream'
 import { stringify, NodeList } from '../src'
 
@@ -24,7 +21,7 @@ test('stringify SRT files', done => {
   sourceStream.push(null)
 
   sourceStream
-    .pipe(stringify({ format: 'srt' }))
+    .pipe(stringify({ format: 'SRT' }))
     .on('data', chunk => {
       buffer += chunk
     })

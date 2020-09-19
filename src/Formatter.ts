@@ -9,7 +9,7 @@ export class Formatter {
   constructor(options: FormatOptions) {
     this.options = options
     this.hasReceivedHeader = false
-    this.isVTT = options.format === 'vtt'
+    this.isVTT = options.format === 'WebVTT'
     this.index = 1
   }
 
@@ -39,7 +39,9 @@ export class Formatter {
       `${formatTimestamp(cue.start, options)} --> ${formatTimestamp(
         cue.end,
         options
-      )}${options.format === 'vtt' && cue.settings ? ' ' + cue.settings : ''}`,
+      )}${
+        options.format === 'WebVTT' && cue.settings ? ' ' + cue.settings : ''
+      }`,
       cue.text,
       ''
     ].join('\n')

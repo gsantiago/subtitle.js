@@ -1,14 +1,16 @@
-// This file only tests the stream interface.
-// `parseSync.test` contains the tests for the parsing logic.
-
-import fs from 'fs'
+import { fixtures, getFixtureStream, getFixture, pipeline } from '../test-utils'
 import { parse } from '../src'
 
-test('read SRT content', done => {
-  fs.createReadStream('./test/fixtures/LaLaLand.srt')
-    .pipe(parse())
-    .on('data', _chunk => {
-      // console.log(chunk)
-    })
-    .on('finish', done)
+test.each(fixtures)('parse SRT fixture: %s', async fixture => {
+  const buffer = await pipeline(getFixtureStream(fixture, 'srt').pipe(parse()))
+  const expected = JSON.parse(await getFixture(fixture, 'srt.json'))
+
+  expect(buffer).toEqual(expected)
+})
+
+test.each(fixtures)('parse VTT fixture: %s', async fixture => {
+  const buffer = await pipeline(getFixtureStream(fixture, 'vtt').pipe(parse()))
+  const expected = JSON.parse(await getFixture(fixture, 'vtt.json'))
+
+  expect(buffer).toEqual(expected)
 })

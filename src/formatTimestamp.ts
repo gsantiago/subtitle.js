@@ -1,9 +1,9 @@
-import { padLeft } from './padLeft'
-import { FormatOptions } from './types'
+import { padLeft } from './utils'
+import { FormatOptions } from '.'
 
 export function formatTimestamp(
   timestamp: number,
-  options: FormatOptions = { format: 'srt' }
+  options: FormatOptions = { format: 'SRT' }
 ) {
   const date = new Date(0, 0, 0, 0, 0, 0, timestamp)
 
@@ -13,6 +13,6 @@ export function formatTimestamp(
   const ms = timestamp - (hours * 3600000 + minutes * 60000 + seconds * 1000)
 
   return `${padLeft(hours)}:${padLeft(minutes)}:${padLeft(seconds)}${
-    options.format === 'vtt' ? '.' : ','
+    options.format === 'WebVTT' ? '.' : ','
   }${padLeft(ms, 3)}`
 }

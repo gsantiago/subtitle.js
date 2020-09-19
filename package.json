@@ -1,7 +1,7 @@
 {
   "name": "subtitle",
-  "version": "3.0.0",
-  "description": "Parse, manipulate and stringify SRT (SubRip) format, with partial support for WebVTT",
+  "version": "4.0.0",
+  "description": "Stream-based library for parsing and manipulating subtitles",
   "repository": {
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"
@@ -10,12 +10,20 @@
     "subtitle",
     "webvtt",
     "srt",
+    "vtt",
     "captions",
     "subrip",
+    "parse",
     "parser",
     "stringify",
     "validate",
-    "validation"
+    "validation",
+    "stream",
+    "streams",
+    "read",
+    "write",
+    "map",
+    "filter"
   ],
   "license": "MIT",
   "main": "dist/index.js",
@@ -51,6 +59,7 @@
   "author": "Guilherme Santiago",
   "module": "dist/subtitle.esm.js",
   "devDependencies": {
+    "@types/split2": "^2.1.6",
     "husky": "^4.2.5",
     "tsdx": "^0.13.3",
     "tslib": "^2.0.1",
@@ -58,5 +67,11 @@
   },
   "jest": {
     "verbose": true
+  },
+  "dependencies": {
+    "@types/multipipe": "^3.0.0",
+    "multipipe": "^4.0.0",
+    "split2": "^3.2.2",
+    "strip-bom": "^4.0.0"
   }
 }

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2020-09-19
+- Fixes #6 by introducing the stream interface (`parse`, `stringify` and `resync` are now stream-based functions)
+- Add `parseSync` and `stringifySync` as synchronous version of `parse` and `stringify`
+- Add `map` and `filter` to manipulate the parse stream
+- Update the nodes tree so it can support more types than just a cue
+- Refactor the internals by creating the Parser and Formatter classes
+- Format types are now `"SRT"` and `"WebVTT"` instead of `"srt"` and `"vtt"`
+
 ## [3.0.0] - 2020-08-31
 - Rewrite the project with TypeScript
 - Fixes #43 and #39
@@ -15,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `parseTimestamp(timestamp: string): number`
   - `parseTimestamps(timestamps: string): Timestamp`
   - `formatTimestamp(timestamp: number, options?: { format: 'srt' | 'vtt' }): string`
-- `parse` supports optional indexes
+  - `parse` supports optional indexes
 
 ## [2.0.5] - 2020-08-28
 - Remove zero-fill dependency

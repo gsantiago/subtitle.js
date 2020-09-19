@@ -1,28 +1,7 @@
-import { formatTimestamp } from './formatTimestamp'
-import { Captions, FormatOptions } from './types'
+import { map, FormatOptions, Node } from '.'
+import { Formatter } from './Formatter'
 
-export function stringify(
-  captions: Captions,
-  options: FormatOptions = { format: 'srt' }
-): string {
-  const isVTT = options.format === 'vtt'
-  return (
-    (isVTT ? 'WEBVTT\n\n' : '') +
-    captions
-      .map((caption, index) => {
-        return (
-          (index > 0 ? '\n' : '') +
-          [
-            index + 1,
-            `${formatTimestamp(caption.start, options)} --> ${formatTimestamp(
-              caption.end,
-              options
-            )}${isVTT && caption.settings ? ' ' + caption.settings : ''}`,
-            caption.text
-          ].join('\n')
-        )
-      })
-      .join('\n') +
-    '\n'
-  )
+export const stringify = (options: FormatOptions) => {
+  const formatter = new Formatter(options)
+  return map((chunk: Node) => formatter.format(chunk))
 }

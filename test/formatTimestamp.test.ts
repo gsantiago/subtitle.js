@@ -13,5 +13,5 @@ test.each([
   [3600000 + 3060000 + 58000 + 219, '01:51:58.219'],
   [0, '00:00:00.000']
 ])('format timestamp to VTT format: %d -> %s', (ms, vtt) => {
-  expect(formatTimestamp(ms, { format: 'vtt' })).toBe(vtt)
+  expect(formatTimestamp(ms, { format: 'WebVTT' })).toBe(vtt)
 })

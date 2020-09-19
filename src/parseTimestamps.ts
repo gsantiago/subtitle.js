@@ -1,5 +1,4 @@
-import { parseTimestamp } from './parseTimestamp'
-import { Timestamp } from './types'
+import { parseTimestamp, Timestamp } from '.'
 
 export const RE_TIMESTAMP = /^((?:\d{1,}:)?\d{2}:\d{2}[,.]\d{3}) --> ((?:\d{1,}:)?\d{2}:\d{2}[,.]\d{3})(?: (.*))?$/
 

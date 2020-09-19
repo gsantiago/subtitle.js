@@ -9,7 +9,7 @@ here in Southern California.
 
 3
 00:00:28,801 --> 00:00:30,900
-Temperature is 84°F
+Temperature is 84ï¿½F
 for downtown Los Angeles.
 
 4
@@ -6140,7 +6140,6 @@ The End
 1333
 01:59:55,801 --> 02:00:00,800
 Subtitles: @marlonrock1986 (^^V^^)
-
 										
  
 

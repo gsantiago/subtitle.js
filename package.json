@@ -1,6 +1,6 @@
 {
   "name": "subtitle",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Stream-based library for parsing and manipulating subtitles",
   "repository": {
     "type": "git",

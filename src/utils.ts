@@ -6,6 +6,7 @@ export const padLeft = (value: number, length = 2): string =>
 export const createDuplex = (options: DuplexOptions) =>
   new Duplex({
     objectMode: true,
+    autoDestroy: false,
     read() {},
     ...options
   })

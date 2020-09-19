@@ -13,8 +13,7 @@ export const parse = () => {
       try {
         parser.parseLine(chunk.toString())
       } catch (err) {
-        next(err)
-        return
+        return next(err)
       }
 
       next()

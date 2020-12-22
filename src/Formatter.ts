@@ -37,7 +37,7 @@ export class Formatter {
     return [
       `${index > 1 ? '\n' : ''}${index}`,
       `${formatTimestamp(cue.start, options)} --> ${formatTimestamp(
-        cue.end,
+        cue.end || cue.start + 1,
         options
       )}${
         options.format === 'WebVTT' && cue.settings ? ' ' + cue.settings : ''

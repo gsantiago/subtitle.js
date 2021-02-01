@@ -154,3 +154,26 @@ test('stringify to WebVTT with custom header', () => {
     "
   `)
 })
+
+test('optional cue end', () => {
+  const tree: NodeList = [
+    {
+      type: 'cue',
+      data: {
+        start: 940647,
+        text: 'Hi.'
+      }
+    }
+  ]
+
+  const expected = `WEBVTT
+
+1
+00:15:40.647 --> 00:15:40.648
+Hi.
+  `
+    .trim()
+    .concat('\n')
+
+  expect(stringifySync(tree, { format: 'WebVTT' })).toBe(expected)
+})

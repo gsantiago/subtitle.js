@@ -60,10 +60,10 @@
   "module": "dist/subtitle.esm.js",
   "devDependencies": {
     "@types/split2": "^2.1.6",
-    "husky": "^4.2.5",
-    "tsdx": "^0.13.3",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
+    "husky": "^4.3.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
   },
   "jest": {
     "verbose": true

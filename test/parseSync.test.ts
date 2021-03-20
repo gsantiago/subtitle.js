@@ -172,6 +172,62 @@ Welcome to the Planet.
   `)
 })
 
+// https://w3c.github.io/webvtt/#introduction-comments
+test('parse VTT caption and ignore comments', () => {
+  const vtt = `
+WEBVTT - Test VTT Comments
+
+NOTE
+This file was written by Jill. I hope
+you enjoy reading it. Some things to
+bear in mind:
+- I was lip-reading, so the cues may
+not be 100% accurate
+- I didn’t pay too close attention to
+when the cues should start or end.
+
+00:01.000 --> 00:04.000
+Never drink liquid nitrogen.
+
+NOTE check next cue
+
+00:05.000 --> 00:09.000 align:middle line:90%
+— It will perforate your stomach.
+— You could die.
+
+NOTE end of file
+  `
+    .trim()
+    .concat('\n')
+
+  expect(parseSync(vtt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "data": "WEBVTT - Test VTT Comments",
+        "type": "header",
+      },
+      Object {
+        "data": Object {
+          "end": 4000,
+          "start": 1000,
+          "text": "Never drink liquid nitrogen.",
+        },
+        "type": "cue",
+      },
+      Object {
+        "data": Object {
+          "end": 9000,
+          "settings": "align:middle line:90%",
+          "start": 5000,
+          "text": "— It will perforate your stomach.
+    — You could die.",
+        },
+        "type": "cue",
+      },
+    ]
+  `)
+})
+
 test('parse 00:00:00,000 caption', () => {
   const srt = `
 1

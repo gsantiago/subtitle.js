@@ -1,8 +1,13 @@
 {
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types"
+  ],
   "compilerOptions": {
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "module": "es6",
+    "lib": [
+      "es6"
+    ],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
@@ -10,10 +15,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "jsx": "react",
     "esModuleInterop": true
   }
 }

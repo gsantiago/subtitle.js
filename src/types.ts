@@ -27,3 +27,5 @@ export interface NodeCue {
 export type Node = NodeHeader | NodeCue
 
 export type NodeList = Node[]
+
+export type SubtitleStream = {}

@@ -22,11 +22,7 @@ Stream-based library for parsing and manipulating subtitle files.
 
 ### npm
 
-`npm install subtitle`
-
-### yarn
-
-`yarn add subtitle`
+`npm install @dcl/subtitle-helper`
 
 ## Usage
 

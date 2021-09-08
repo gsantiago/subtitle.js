@@ -35,7 +35,7 @@ export const writeFile = (filename: string, contents: string) => {
   fs.writeFileSync(filepath, contents)
 }
 
-export const createStreamFromString = (contents: string) => {
+export const createStreamFrom = (contents: any) => {
   const stream = new Readable({
     read() {}
   })

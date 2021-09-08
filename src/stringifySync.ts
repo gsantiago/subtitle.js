@@ -1,5 +1,5 @@
-import { NodeList, FormatOptions } from '.'
 import { Formatter } from './Formatter'
+import { FormatOptions, NodeList } from './types'
 
 export const stringifySync = (
   list: NodeList,

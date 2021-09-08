@@ -1,7 +1,17 @@
-import stripBom from 'strip-bom'
-import { Node, RE_TIMESTAMP, parseTimestamps } from '.'
+import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
+import { Node } from './types'
 
 export type Pusher = (node: Node) => void
+
+export function stripBom(string: string): string {
+  // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
+  // conversion translates it to FEFF (UTF-16 BOM)
+  if (string.charCodeAt(0) === 0xfeff) {
+    return string.slice(1)
+  }
+
+  return string
+}
 
 export interface ParseState {
   expect: 'header' | 'id' | 'timestamp' | 'text' | 'vtt_comment'

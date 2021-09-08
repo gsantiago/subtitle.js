@@ -1,5 +1,5 @@
 import { Parser } from './Parser'
-import { NodeList } from '.'
+import { NodeList } from './types'
 
 export const parseSync = (input: string): NodeList => {
   const buffer: NodeList = []

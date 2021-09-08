@@ -1,4 +1,5 @@
-import { map, Node } from '.'
+import { map } from './map'
+import { Node } from './types'
 
 export const resync = (time: number) =>
   map((node: Node) => {

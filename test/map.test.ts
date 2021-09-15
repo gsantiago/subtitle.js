@@ -2,7 +2,8 @@ import { map, NodeList, Node, parseSync } from '../src'
 import { createStreamFrom } from '../test-utils'
 
 test.skip('map nodes', done => {
-  const stream = createStreamFrom(parseSync(`
+  const stream = createStreamFrom(
+    parseSync(`
 1
 02:12:34,647 --> 02:12:35,489
 Hi.
@@ -13,7 +14,8 @@ Lois Lane.
 
 3
 02:12:38,584 --> 02:12:40,120
-Welcome to the Planet.\n`))
+Welcome to the Planet.\n`)
+  )
 
   let count: number = 0
 

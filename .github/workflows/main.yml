@@ -1,5 +1,14 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  release:
+    types:
+      - created
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,3 +35,11 @@ jobs:
         run: npm run build
         env:
           CI: true
+
+      - name: Publish
+        uses: menduz/oddish-action@master
+        with:
+          registry-url: "https://registry.npmjs.org"
+          access: public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

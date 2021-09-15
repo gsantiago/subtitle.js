@@ -24,9 +24,10 @@
   },
   "decentralandLibrary": {},
   "scripts": {
-    "build": "rollup -c ./rollup.config.js",
+    "build": "rollup -c ./rollup.config.js && tsdx lint --fix",
     "test": "tsdx test",
     "test:coverage": "tsdx test --coverage",
+    "lint:fix": "tsdx lint",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"

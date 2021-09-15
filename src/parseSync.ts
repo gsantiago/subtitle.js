@@ -1,6 +1,9 @@
 import { Parser } from './Parser'
 import { NodeList } from './types'
 
+/**
+ * @public
+ */
 export const parseSync = (input: string): NodeList => {
   const buffer: NodeList = []
   const parser = new Parser({

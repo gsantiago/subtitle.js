@@ -1,6 +1,9 @@
 import { map } from './map'
 import { Node } from './types'
 
+/**
+ * @public
+ */
 export const resync = (time: number) =>
   map((node: Node) => {
     if (node.type === 'cue') {

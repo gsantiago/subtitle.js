@@ -1,8 +1,14 @@
 import { parseTimestamps, RE_TIMESTAMP } from './parseTimestamps'
 import { Node } from './types'
 
+/**
+ * @public
+ */
 export type Pusher = (node: Node) => void
 
+/**
+ * @public
+ */
 export function stripBom(string: string): string {
   // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
   // conversion translates it to FEFF (UTF-16 BOM)
@@ -13,6 +19,9 @@ export function stripBom(string: string): string {
   return string
 }
 
+/**
+ * @public
+ */
 export interface ParseState {
   expect: 'header' | 'id' | 'timestamp' | 'text' | 'vtt_comment'
   row: number
@@ -22,6 +31,9 @@ export interface ParseState {
   buffer: string[]
 }
 
+/**
+ * @public
+ */
 export class Parser {
   private push: Pusher
   private state: ParseState

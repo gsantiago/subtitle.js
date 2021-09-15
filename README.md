@@ -30,7 +30,7 @@ This library provides some stream-based functions to work with subtitles. The fo
 
 ```ts
 import fs from 'fs'
-import { parse, resync, stringify } from 'subtitle'
+import { parse, resync, stringify } from '@dcl/subtitle-helper'
 
 fs.createReadStream('./my-subtitles.srt')
   .pipe(parse())
@@ -42,7 +42,7 @@ fs.createReadStream('./my-subtitles.srt')
 It also provides functions like `map` and `filter`:
 
 ```ts
-import { parse, map, filter, stringify } from 'subtitle'
+import { parse, map, filter, stringify } from '@dcl/subtitle-helper'
 
 inputStream
   .pipe(parse())
@@ -69,7 +69,7 @@ inputStream
 Besides the stream functions, this module also provides synchronous functions like `parseSync` and `stringifySync`. However, you should avoid them and use the stream-based functions for better performance:
 
 ```ts
-import { parseSync, stringifySync } from 'subtitle'
+import { parseSync, stringifySync } from '@dcl/subtitle-helper'
 
 const nodes = parseSync(srtContent)
 
@@ -101,7 +101,7 @@ The module exports the following functions:
 It returns a Duplex stream for parsing subtitle contents (SRT or WebVTT).
 
 ```ts
-import { parse } from 'subtitle'
+import { parse } from '@dcl/subtitle-helper'
 
 inputStream
   .pipe(parse())
@@ -124,7 +124,7 @@ It receives a string containing a SRT or VTT content and returns
 an array of nodes:
 
 ```ts
-import { parseSync } from 'subtitle'
+import { parseSync } from '@dcl/subtitle-helper'
 import fs from 'fs'
 
 const input = fs.readFileSync('awesome-movie.srt', 'utf8')
@@ -161,7 +161,7 @@ parseSync(input)
 It returns a Duplex that receives parsed nodes and transmits the node formatted in SRT or WebVTT:
 
 ```ts
-import { parse, stringify } from 'subtitle'
+import { parse, stringify } from '@dcl/subtitle-helper'
 
 inputStream
   .pipe(parse())
@@ -179,7 +179,7 @@ Check out the [Examples](#examples) section for more use cases.
 It receives an array of captions and returns a string in SRT (default), but it also supports VTT format through the options.
 
 ```ts
-import { stringifySync } from 'subtitle'
+import { stringifySync } from '@dcl/subtitle-helper'
 
 stringifySync(nodes, { format: 'SRT' })
 // returns a string in SRT format
@@ -195,7 +195,7 @@ stringifySync(nodes, { format: 'WebVTT' })
 A useful Duplex for manipulating parsed nodes. It works similar to the `Array.map` function, but for streams:
 
 ```ts
-import { parse, map, stringify } from 'subtitle'
+import { parse, map, stringify } from '@dcl/subtitle-helper'
 
 inputStream
   .pipe(parse())
@@ -217,7 +217,7 @@ inputStream
 A useful Duplex for filtering parsed nodes. It works similar to the `Array.filter` function, but for streams:
 
 ```ts
-import { parse, filter, stringify } from 'subtitle'
+import { parse, filter, stringify } from '@dcl/subtitle-helper'
 
 inputStream
   .pipe(parse())
@@ -235,7 +235,7 @@ inputStream
 Resync all cues from the stream:
 
 ```ts
-import { parse, resync, stringify } from 'subtitle'
+import { parse, resync, stringify } from '@dcl/subtitle-helper'
 
 // Advance subtitles by 1s
 readableStream
@@ -254,7 +254,7 @@ stream.pipe(resync(captions, -250))
 Receives a timestamp (SRT or VTT) and returns its value in milliseconds:
 
 ```ts
-import { parseTimestamp } from 'subtitle'
+import { parseTimestamp } from '@dcl/subtitle-helper'
 
 parseTimestamp('00:00:24,400')
 // => 24400
@@ -270,7 +270,7 @@ parseTimestamp('00:24.400')
 It receives a timestamps string, like `00:01:00,500 --> 00:01:10,800`. It also supports VTT formats like `12:34:56,789 --> 98:76:54,321 align:middle line:90%`.
 
 ```ts
-import { parseTimestamps } from 'subtitle'
+import { parseTimestamps } from '@dcl/subtitle-helper'
 
 parseTimestamps('00:01:00,500 --> 00:01:10,800')
 // => { start: 60500, end: 70800 }
@@ -286,7 +286,7 @@ parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
 It receives a timestamp in milliseconds and returns it formatted as SRT or VTT:
 
 ```ts
-import { formatTimestamp } from 'subtitle'
+import { formatTimestamp } from '@dcl/subtitle-helper'
 
 formatTimestamp(142542)
 // => '00:02:22,542'
@@ -326,7 +326,7 @@ like `comment`.
 
 ```ts
 import fs from 'fs'
-import { parse, stringify } from 'subtitle'
+import { parse, stringify } from '@dcl/subtitle-helper'
 
 fs.createReadStream('./source.srt')
   .pipe(parse())
@@ -341,7 +341,7 @@ as WebVTT.
 
 ```ts
 import extract from 'rip-subtitles'
-import { parse, stringify } from 'subtitle'
+import { parse, stringify } from '@dcl/subtitle-helper'
 
 extract('video.mkv')
   .pipe(parse())
@@ -352,7 +352,7 @@ extract('video.mkv')
 ### Create subtitles
 
 ```ts
-import { stringifySync } from 'subtitle'
+import { stringifySync } from '@dcl/subtitle-helper'
 
 const list = []
 

@@ -1,12 +1,11 @@
 import { Node } from '.'
-import { createDuplex } from './utils'
+import { Transform } from 'stream'
 
 export const filter = (callback: (node: Node) => boolean) =>
-  createDuplex({
-    write(chunk, _encoding, next) {
-      if (callback(chunk)) {
-        this.push(chunk)
-      }
-      next()
+  new Transform({
+    objectMode: true,
+    autoDestroy: false,
+    transform: function transform(chunk, _encoding, next) {
+      callback(chunk) ? next(null, chunk) : next()
     }
   })

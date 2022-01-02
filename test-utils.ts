@@ -60,3 +60,11 @@ export const pipeline = (stream: Readable): Promise<NodeList> =>
     stream.on('error', reject)
     stream.on('finish', () => resolve(buffer))
   })
+
+export const streamToString = (stream: Readable): Promise<string> =>
+  new Promise((resolve, reject) => {
+    let buffer = ''
+    stream.on('data', (chunk: string) => buffer += chunk)
+    stream.on('error', reject)
+    stream.on('finish', () => resolve(buffer))
+  })

@@ -190,7 +190,7 @@ export class Parser {
     if (this.state.node.type === 'cue') {
       while (true) {
         const lastItem = this.state.buffer[this.state.buffer.length - 1]
-        if (['', '\n'].includes(lastItem)) {
+        if (['', '\n'].indexOf(lastItem) !== -1) {
           this.state.buffer.pop()
         } else {
           break
@@ -199,7 +199,7 @@ export class Parser {
 
       while (true) {
         const firstItem = this.state.buffer[0]
-        if (['', '\n'].includes(firstItem)) {
+        if (['', '\n'].indexOf(firstItem) !== -1) {
           this.state.buffer.shift()
         } else {
           break

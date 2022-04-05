@@ -56,10 +56,5 @@
     "verbose": true
   },
   "dependencies": {
-    "@dcl/dcl-rollup": "^6.6.6",
-    "@rollup/plugin-commonjs": "^20.0.0",
-    "@types/multipipe": "^3.0.0",
-    "multipipe": "^4.0.0",
-    "split2": "^3.2.2"
   }
 }

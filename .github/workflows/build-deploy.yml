@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+  release:
+    types:
+      - created
+
+name: Publish NPM package
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: install
+        run: npm install
+      - name: build
+        run: npm run build
+      - name: Publish
+        uses: menduz/oddish-action@master
+        with:
+          #cwd: ./dist
+          access: public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

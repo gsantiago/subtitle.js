@@ -1,13 +1,33 @@
-const base = require('@dcl/dcl-rollup/libs.config')
-const builtins = require('rollup-plugin-node-builtins')
-const commonjs = require('@rollup/plugin-commonjs')
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import { terser } from 'rollup-plugin-terser';
 
-base.default.plugins.push(
-  commonjs({
-    ignoreGlobal: true,
-    include: [/node_modules/],
-  })
-)
-base.default.plugins.push(builtins({ fs: false, crypto: false }))
+const packageJson = require('./package.json');
+const PROD = !!process.env.CI
 
-module.exports = base.default
+export default {
+  input: 'src/index.ts',
+  context: 'globalThis',
+  output: [
+    {
+      file: packageJson.main,
+      format: 'amd',
+      amd: {
+        id: packageJson.name
+      },
+    },
+  ],
+  plugins: [
+    resolve({
+      preferBuiltins: false,
+      browser: true
+    }),
+    typescript({ tsconfig: './tsconfig.json' }),
+    commonjs({
+      exclude: 'node_modules',
+      ignoreGlobal: true,
+    }),
+    PROD && terser({ format: { comments: false } }),
+  ],
+};

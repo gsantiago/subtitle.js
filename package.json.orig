@@ -1,0 +1,71 @@
+{
+<<<<<<< HEAD
+  "name": "@dcl/subtitle-helper",
+  "version": "5.0.0",
+  "description": "Stream-based library for parsing and manipulating subtitles for Decentraland",
+=======
+  "name": "subtitle",
+  "version": "4.1.2",
+  "description": "Stream-based library for parsing and manipulating subtitles",
+>>>>>>> original/master
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/subtitle-helper"
+  },
+  "keywords": [
+    "subtitle",
+    "webvtt",
+    "srt",
+    "vtt",
+    "decentraland"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "decentralandLibrary": {},
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js && tsdx lint --fix",
+    "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
+    "lint:fix": "tsdx lint",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "author": "Guilherme Santiago",
+  "devDependencies": {
+    "@types/split2": "^2.1.6",
+    "husky": "^4.2.5",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "dependencies": {
+    "@dcl/dcl-rollup": "^6.6.6",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@types/multipipe": "^3.0.0",
+    "multipipe": "^4.0.0",
+    "split2": "^3.2.2"
+  }
+}

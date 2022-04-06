@@ -1,6 +1,6 @@
 {
   "name": "@dcl/subtitle-helper",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Stream-based library for parsing and manipulating subtitles for Decentraland",
   "main": "./dist/index.js",
   "scripts": {

@@ -1,65 +1,65 @@
 {
   "name": "@dcl/subtitle-helper",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Stream-based library for parsing and manipulating subtitles for Decentraland",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/decentraland/subtitle-helper"
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "rollup -c --environment BUILD:production",
+    "link": "npm link && rollup --watch -c --environment BUILD:production",
+    "test": "jest"
+  },
+  "typings": "./dist/index.d.ts",
+  "decentralandLibrary": {
+    "main": "./dist/index.js"
   },
   "keywords": [
+    "dcl",
+    "decentraland",
+    "sdk",
+    "library",
     "subtitle",
     "webvtt",
     "srt",
     "vtt",
-    "decentraland"
+    "captions",
+    "subrip",
+    "parse",
+    "parser",
+    "stringify",
+    "validate",
+    "validation",
+    "stream",
+    "streams",
+    "read",
+    "write",
+    "map",
+    "filter"
   ],
+  "author": "-",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/subtitle-helper"
+  },
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": ">=12"
-  },
-  "decentralandLibrary": {},
-  "scripts": {
-    "build": "rollup -c ./rollup.config.js && tsdx lint --fix",
-    "test": "tsdx test",
-    "test:coverage": "tsdx test --coverage",
-    "lint:fix": "tsdx lint",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
-  "author": "Guilherme Santiago",
   "devDependencies": {
-    "@types/split2": "^2.1.6",
-    "husky": "^4.2.5",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "tsdx": "^0.13.3",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
-  },
-  "jest": {
-    "verbose": true
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@rollup/plugin-typescript": "^8.3.1",
+    "decentraland-ecs": "latest",
+    "rollup": "^2.70.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4"
   },
   "dependencies": {
-    "@dcl/dcl-rollup": "^6.6.6",
-    "@rollup/plugin-commonjs": "^20.0.0",
-    "@types/multipipe": "^3.0.0",
-    "multipipe": "^4.0.0",
-    "split2": "^3.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0",
+    "yarn": "please use npm"
   }
 }

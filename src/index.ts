@@ -1,10 +1,12 @@
-export * from './filter'
 export * from './formatTimestamp'
-export * from './map'
 export * from './parseSync'
 export * from './parseTimestamp'
 export * from './parseTimestamps'
-export * from './resync'
-export * from './stringify'
-export * from './stringifySync'
 export * from './types'
+/**
+ * A function that does something
+ * @public
+ */
+ export function example(){
+    return true
+  }

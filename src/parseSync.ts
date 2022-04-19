@@ -3,6 +3,8 @@ import { NodeList } from './types'
 
 /**
  * @public
+ * @param input string subtitle file to be parsed into NodeList
+ * @returns 
  */
 export const parseSync = (input: string): NodeList => {
   const buffer: NodeList = []

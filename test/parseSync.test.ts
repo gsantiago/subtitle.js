@@ -459,3 +459,34 @@ The most beautiful planet in the whole universe.
     ]
   `)
 })
+
+test('parse SRT timestamp μs digit', () => {
+  const srt = `
+1
+00:00:26,190 --> 00:00:31,50
+Hi.
+
+2
+00:00:31,380 --> 00:00:32,190
+Lois Lane.`
+  expect(parseSync(srt)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "data": Object {
+          "end": 31050,
+          "start": 26190,
+          "text": "Hi.",
+        },
+        "type": "cue",
+      },
+      Object {
+        "data": Object {
+          "end": 32190,
+          "start": 31380,
+          "text": "Lois Lane.",
+        },
+        "type": "cue",
+      },
+    ]
+  `)
+})

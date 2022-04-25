@@ -22,3 +22,9 @@ test('invalid format should throw an error', () => {
     parseTimestamp('12,34:56,78')
   }).toThrow()
 })
+
+test('timestamp digit', () => {
+  expect(parseTimestamp('00:00:31,5')).toBe(parseTimestamp('00:00:31,005'))
+  expect(parseTimestamp('00:00:31,50')).toBe(parseTimestamp('00:00:31,050'))
+  expect(parseTimestamp('00:00:31,06')).toBe(parseTimestamp('00:00:31,006'))
+})

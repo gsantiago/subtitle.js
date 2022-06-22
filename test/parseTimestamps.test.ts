@@ -42,6 +42,13 @@ test.each([
       start: 20000,
       end: 24400
     }
+  ],
+  [
+    '0:0:0.0 --> 1:00:20.070',
+    {
+      start: 0,
+      end: 3620070
+    }
   ]
 ])('parseTimestamps with SRT input: "%s" => %o', (input, expected) => {
   expect(parseTimestamps(input)).toEqual(expected)
@@ -73,6 +80,13 @@ test.each([
     '0:59:50.050 --> 1:00:20.070',
     {
       start: 3590050,
+      end: 3620070
+    }
+  ],
+  [
+    '0:0:0.0 --> 1:00:20.070',
+    {
+      start: 0,
       end: 3620070
     }
   ]

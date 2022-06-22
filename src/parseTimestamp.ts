@@ -1,5 +1,7 @@
 export function parseTimestamp(timestamp: string): number {
-  const match = timestamp.match(/^(?:(\d{1,}):)?(\d{2}):(\d{2})[,.](\d{3})$/)
+  const match = timestamp.match(
+    /^(?:(\d{1,}):)?(\d{1,2}):(\d{1,2})[,.](\d{1,3})$/
+  )
 
   if (!match) {
     throw new Error('Invalid SRT or VTT time format: "' + timestamp + '"')

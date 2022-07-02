@@ -8,8 +8,8 @@
 
 Stream-based library for parsing and manipulating subtitle files.
 
->["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
->John-David Dalton, creator of Lodash
+> ["Thanks for this rad package!"](https://github.com/gsantiago/subtitle.js/pull/15#issuecomment-282879854)
+> John-David Dalton, creator of Lodash
 
 :white_check_mark: Stream API<br>
 :white_check_mark: Written in TypeScript<br>
@@ -87,16 +87,16 @@ const output = stringify(nodes, { format: 'WebVTT' })
 
 The module exports the following functions:
 
-* [`parse`](#parse)
-* [`parseSync`](#parseSync)
-* [`stringify`](#stringify)
-* [`stringifySync`](#stringifySync)
-* [`map`](#map)
-* [`filter`](#filter)
-* [`resync`](#resync)
-* [`parseTimestamp`](#parseTimestamp)
-* [`parseTimestamps`](#parseTimestamps)
-* [`formatTimestamp`](#formatTimestamp)
+- [`parse`](#parse)
+- [`parseSync`](#parseSync)
+- [`stringify`](#stringify)
+- [`stringifySync`](#stringifySync)
+- [`map`](#map)
+- [`filter`](#filter)
+- [`resync`](#resync)
+- [`parseTimestamp`](#parseTimestamp)
+- [`parseTimestamps`](#parseTimestamps)
+- [`formatTimestamp`](#formatTimestamp)
 
 ### parse
 
@@ -167,9 +167,7 @@ It returns a Duplex that receives parsed nodes and transmits the node formatted 
 ```ts
 import { parse, stringify } from 'subtitle'
 
-inputStream
-  .pipe(parse())
-  .pipe(stringify({ format: 'WebVTT' }))
+inputStream.pipe(parse()).pipe(stringify({ format: 'WebVTT' }))
 ```
 
 Check out the [Examples](#examples) section for more use cases.
@@ -203,13 +201,15 @@ import { parse, map, stringify } from 'subtitle'
 
 inputStream
   .pipe(parse())
-  .pipe(map((node, index) => {
-    if (node.type === 'cue') {
-      node.data.text = node.data.text.toUpperCase()
-    }
+  .pipe(
+    map((node, index) => {
+      if (node.type === 'cue') {
+        node.data.text = node.data.text.toUpperCase()
+      }
 
-    return node
-  }))
+      return node
+    })
+  )
   .pipe(stringify({ format: 'SRT' }))
   .pipe(outputStream)
 ```
@@ -225,9 +225,11 @@ import { parse, filter, stringify } from 'subtitle'
 
 inputStream
   .pipe(parse())
-  .pipe(filter((node, index) => {
-    return !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮'))
-  }))
+  .pipe(
+    filter((node, index) => {
+      return !(node.type === 'cue' && node.data.text.includes('𝅘𝅥𝅮'))
+    })
+  )
   .pipe(stringify({ format: 'SRT' }))
   .pipe(outputStream)
 ```

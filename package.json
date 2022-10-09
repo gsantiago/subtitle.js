@@ -1,7 +1,7 @@
 {
-  "name": "subtitle",
+  "name": "subtitle-patch",
   "version": "4.1.2",
-  "description": "Stream-based library for parsing and manipulating subtitles",
+  "description": "just fork subtitle, support ms",
   "repository": {
     "type": "git",
     "url": "https://github.com/gsantiago/subtitle.js"

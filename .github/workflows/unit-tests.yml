@@ -1,0 +1,21 @@
+name: Unit Tests
+
+on: pull_request
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4\
+        with:
+          node-version: '24'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run tests
+        run: npm test

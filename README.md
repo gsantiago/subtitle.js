@@ -1,8 +1,5 @@
 # subtitle
 
-[![Build Status](https://img.shields.io/travis/gsantiago/subtitle.js/master?style=flat-square)](https://travis-ci.org/gsantiago/subtitle.js)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/gsantiago/subtitle.js?style=flat-square)](https://codeclimate.com/github/gsantiago/subtitle.js)
-[![Coverage Status](https://img.shields.io/coveralls/github/gsantiago/subtitle.js?style=flat-square)](https://coveralls.io/github/gsantiago/subtitle.js?branch=master)
 [![downloads](https://img.shields.io/npm/dm/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 [![npm](https://img.shields.io/npm/v/subtitle?style=flat-square)](https://www.npmjs.com/package/subtitle)
 
@@ -14,9 +11,9 @@ Stream-based library for parsing and manipulating subtitle files.
 :white_check_mark: Stream API<br>
 :white_check_mark: Written in TypeScript<br>
 :white_check_mark: SRT support<br>
-:white_check_mark: Partial support for WebVTT (full support comming soon)<br>
+:white_check_mark: Partial support for WebVTT<br>
 :white_check_mark: 100% code coverage<br>
-:white_check_mark: Actively maintained since 2015
+:white_check_mark: Maintained since 2015
 
 ## Installation
 
@@ -160,7 +157,7 @@ parseSync(input)
 
 ### stringify
 
-- `stringify({ format: 'SRT' | 'vtt' }): DuplexStream`
+- `stringify({ format: 'SRT' | 'WebVTT' }): DuplexStream`
 
 It returns a Duplex that receives parsed nodes and transmits the node formatted in SRT or WebVTT:
 
@@ -174,7 +171,7 @@ Check out the [Examples](#examples) section for more use cases.
 
 ### stringifySync
 
-- `stringify(nodes: Node[], options: { format: 'SRT' | 'vtt }): string`
+- `stringify(nodes: Node[], options: { format: 'SRT' | 'WebVTT }): string`
 
 > **NOTE**: For better perfomance, consider using the stream-based `stringify` function
 
@@ -287,7 +284,7 @@ parseTimestamps('12:34:56,789 --> 98:76:54,321 align:middle line:90%')
 
 ### formatTimestamp
 
-- `formatTimestamp(timestamp: number, options?: { format: 'SRT' | 'vtt' }): string`
+- `formatTimestamp(timestamp: number, options?: { format: 'SRT' | 'WebVTT' }): string`
 
 It receives a timestamp in milliseconds and returns it formatted as SRT or VTT:
 

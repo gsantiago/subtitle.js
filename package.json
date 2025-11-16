@@ -1,6 +1,6 @@
 {
   "name": "subtitle",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Stream-based library for parsing and manipulating subtitles",
   "repository": {
     "type": "git",
@@ -41,8 +41,7 @@
     "test": "tsdx test",
     "test:coverage": "tsdx test --coverage",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "coveralls": "tsdx test --coverage && coveralls < coverage/lcov.info"
+    "prepare": "tsdx build"
   },
   "peerDependencies": {},
   "husky": {

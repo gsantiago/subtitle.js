@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.2] - 2025-11-16
+
+- Remove `codeclimate`, `travis` and `coveralls` integrations
+- Use GitHub Actions for CI and code coverage reporting
+- Fix some typos in README
+- Update some information in README
+
 ## [4.2.1] - 2022-07-02
 
 - Add support for single digits in timestamps by @nbarnett
